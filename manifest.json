@@ -1,0 +1,22 @@
+{
+  "name": "智心同检知识库",
+  "short_name": "智心同检",
+  "description": "基于HRV心率变异分析的精神压力管理知识库",
+  "start_url": "./zhi-xin-tong-jian-kb-pwa.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1890ff",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
