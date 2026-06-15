@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>智心同检-新员工培训知识库</title>
+    <style>
+        :root{--primary:#1890ff;--primary-dark:#096dd9;--bg:#f5f7fa;--card:#fff;--text:#1a1a1a;--text2:#666;--border:#e8e8e8}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.6;color:var(--text);background:var(--bg)}
+        .navbar{position:fixed;top:0;left:0;right:0;height:52px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;display:flex;align-items:center;padding:0 16px;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+        .menu-btn,.top-btn{width:38px;height:38px;border:none;background:transparent;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:8px}
+        .navbar-title{flex:1;text-align:center;font-size:16px;font-weight:600;letter-spacing:1px}
+        .sidebar-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1999;opacity:0;visibility:hidden;transition:all .3s}
+        .sidebar-overlay.active{opacity:1;visibility:visible}
+        .sidebar{position:fixed;top:0;left:-260px;width:260px;height:100%;background:#fff;z-index:2000;transition:left .3s;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,.1)}
+        .sidebar.active{left:0}
+        .sidebar-head{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:56px 18px 18px;text-align:center}
+        .sidebar-head h3{font-size:16px;margin-bottom:4px}
+        .sidebar-head p{font-size:12px;opacity:.9}
+        .nav-item{display:flex;align-items:center;padding:13px 18px;color:var(--text);cursor:pointer;font-size:14px;border-left:3px solid transparent;transition:all .2s}
+        .nav-item:hover,.nav-item.active{background:#f0f7ff;border-left-color:var(--primary);color:var(--primary)}
+        .nav-icon{width:30px;height:30px;background:linear-gradient(135deg,#69c0ff,var(--primary));border-radius:7px;display:flex;align-items:center;justify-content:center;margin-right:11px;font-size:14px;color:#fff;flex-shrink:0}
+        .main{margin-top:52px;padding:14px;min-height:calc(100vh - 52px)}
+        .page{display:none}.page.active{display:block}
+        .hero{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:14px;padding:24px 20px;color:#fff;margin-bottom:16px;box-shadow:0 4px 16px rgba(24,144,255,.3)}
+        .hero h1{font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:1px}
+        .hero p{font-size:13px;line-height:1.7;opacity:.95}
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+        .stat{background:rgba(255,255,255,.15);border-radius:10px;padding:12px 8px;text-align:center;backdrop-filter:blur(10px)}
+        .stat-num{font-size:22px;font-weight:700;display:block}
+        .stat-lbl{font-size:11px;opacity:.9}
+        .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+        .card{background:var(--card);border-radius:12px;padding:16px 14px;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;transition:all .25s;border:1px solid var(--border)}
+        .card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.1);border-color:#69c0ff}
+        .card-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:10px}
+        .ci-blue{background:linear-gradient(135deg,#e6f7ff,#bae7ff)}.ci-red{background:linear-gradient(135deg,#fff1f0,#ffccc7)}.ci-green{background:linear-gradient(135deg,#f6ffed,#d9f7be)}.ci-orange{background:linear-gradient(135deg,#fff7e6,#ffe7ba)}.ci-purple{background:linear-gradient(135deg,#f9f0ff,#efdbff)}.ci-gold{background:linear-gradient(135deg,#fffbe6,#ffe58f)}.ci-cyan{background:linear-gradient(135deg,#e6fffb,#87e8de)}
+        .card-title{font-size:14px;font-weight:600;margin-bottom:5px}
+        .card-desc{font-size:11px;color:var(--text2);line-height:1.5}
+        .ph{background:var(--card);border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.04);border-left:4px solid var(--primary)}
+        .ph h2{font-size:17px;font-weight:700;margin-bottom:6px}
+        .ph p{font-size:12px;color:var(--text2);line-height:1.6}
+        .sec{background:var(--card);border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+        .sec-title{font-size:15px;font-weight:600;color:var(--primary);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center}
+        .sec-title::before{content:"";width:4px;height:16px;background:var(--primary);border-radius:2px;margin-right:8px}
+        .sec p{font-size:13px;line-height:1.75;color:var(--text2);margin-bottom:10px}
+        .sec ul{list-style:none;padding:0;margin:8px 0}
+        .sec li{font-size:13px;line-height:1.7;color:var(--text2);padding:5px 0 5px 18px;position:relative}
+        .sec li::before{content:"•";position:absolute;left:4px;color:var(--primary);font-weight:bold}
+        .sec ol{padding-left:18px;margin:8px 0}
+        .sec ol li{font-size:13px;line-height:1.7;color:var(--text2);padding:4px 0;list-style-type:decimal}
+        .tag{display:inline-block;padding:2px 8px;border-radius:16px;font-size:11px;font-weight:500;margin:2px 3px 2px 0}
+        .t-red{background:#fff1f0;color:#ff4d4f}.t-orange{background:#fff7e6;color:#fa8c16}.t-blue{background:#e6f7ff;color:#1890ff}.t-green{background:#f6ffed;color:#52c41a}.t-purple{background:#f9f0ff;color:#722ed1}
+        .tbl-wrap{overflow-x:auto;margin:12px 0;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+        table{width:100%;border-collapse:collapse;font-size:12px}
+        thead th{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-weight:600;padding:10px 12px;text-align:left;white-space:nowrap}
+        tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;color:var(--text2)}
+        tbody tr:nth-child(even){background:#fafbfc}
+        .ibox{border-radius:0 10px 10px 0;padding:12px 14px;margin:12px 0;font-size:12px;line-height:1.7;color:var(--text2);border-left:4px solid}
+        .ibox-warn{background:linear-gradient(135deg,#fffbe6,#fff7e6);border-color:#faad14}
+        .ibox-danger{background:linear-gradient(135deg,#fff1f0,#fff2f0);border-color:#ff4d4f}
+        .ibox-info{background:linear-gradient(135deg,#e6f7ff,#f0f9ff);border-color:var(--primary)}
+        .ibox-success{background:linear-gradient(135deg,#f6ffed,#fcffe6);border-color:#52c41a}
+        .ibox strong{color:var(--text)}
+        .panel{background:var(--card);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+        .panel-hd{padding:14px;background:#fafbfc;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:13px;color:var(--text)}
+        .panel-hd:hover{background:#f0f2f5}
+        .panel-hd::after{content:"▼";font-size:11px;color:#999;transition:transform .3s}
+        .panel.open .panel-hd::after{transform:rotate(180deg)}
+        .panel-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
+        .panel.open .panel-bd{max-height:2000px}
+        .panel-body{padding:14px}
+        .panel-body p{font-size:13px;line-height:1.7;color:var(--text2)}
+        .back-btn{display:inline-flex;align-items:center;gap:5px;padding:9px 16px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:14px;transition:all .2s}
+        .back-btn:hover{background:#f5f5f5;border-color:var(--primary);color:var(--primary)}
+        .hl{display:inline-block;background:linear-gradient(135deg,var(--primary),#69c0ff);color:#fff;padding:1px 8px;border-radius:5px;font-weight:600;font-size:13px;margin:0 2px}
+        .spacer{height:36px}
+        @media(max-width:380px){.grid{grid-template-columns:1fr}}
+        @media(min-width:768px){.main{max-width:680px;margin-left:auto;margin-right:auto;padding:20px}.grid{grid-template-columns:repeat(3,1fr)}}
+        @media print{.navbar,.sidebar,.sidebar-overlay,.back-btn,.top-btn,.menu-btn{display:none!important}.main{margin-top:0}body{background:#fff}}
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="navbar-title">智心同检·培训知识库</div>
+    <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+</div>
+
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+<div class="sidebar">
+    <div class="sidebar-head"><h3>📚 知识导航</h3><p>北京择天众康科技有限公司</p></div>
+    <div class="nav-item active" data-p="home" onclick="showPage('home')"><div class="nav-icon">🏠</div><span>首页概览</span></div>
+    <div class="nav-item" data-p="mechanism" onclick="showPage('mechanism')"><div class="nav-icon">🔬</div><span>压力医学机制</span></div>
+    <div class="nav-item" data-p="hrv" onclick="showPage('hrv')"><div class="nav-icon">💓</div><span>HRV技术原理</span></div>
+    <div class="nav-item" data-p="product" onclick="showPage('product')"><div class="nav-icon">⚙️</div><span>产品方案配置</span></div>
+    <div class="nav-item" data-p="clinical" onclick="showPage('clinical')"><div class="nav-icon">🏥</div><span>临床应用解读</span></div>
+    <div class="nav-item" data-p="policy" onclick="showPage('policy')"><div class="nav-icon">📊</div><span>政策与市场数据</span></div>
+    <div class="nav-item" data-p="business" onclick="showPage('business')"><div class="nav-icon">💰</div><span>商业效益收费</span></div>
+    <div class="nav-item" data-p="competition" onclick="showPage('competition')"><div class="nav-icon">🎯</div><span>竞争定位特色</span></div>
+</div>
+
+<div class="main">
+
+<!-- ==================== 首页 ==================== -->
+<div id="p-home" class="page active">
+
+<div class="hero">
+    <h1>智心同检 · 新员工培训知识库</h1>
+    <p>集成式精神压力管理系统「智心同检 ZTZK-C」完整培训资料，涵盖压力医学机制、HRV技术原理、产品方案、临床应用、政策市场等全维度核心知识。</p>
+    <div class="stats">
+        <div class="stat"><span class="stat-num">218</span><span class="stat-lbl">培训页数</span></div>
+        <div class="stat"><span class="stat-num">7+</span><span class="stat-lbl">知识模块</span></div>
+        <div class="stat"><span class="stat-num">110万+</span><span class="stat-lbl">样本数据</span></div>
+    </div>
+</div>
+
+<h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--text)">📖 知识模块</h3>
+<div class="grid">
+    <div class="card" onclick="showPage('mechanism')"><div class="card-icon ci-blue">🔬</div><div class="card-title">压力医学机制</div><div class="card-desc">HPA轴、皮质醇、肾上腺疲劳三阶段、七大人体系统影响</div></div>
+    <div class="card" onclick="showPage('hrv')"><div class="card-icon ci-red">💓</div><div class="card-title">HRV技术原理</div><div class="card-desc">时域/频域/非线性指标详解，自主神经评估方法</div></div>
+    <div class="card" onclick="showPage('product')"><div class="card-icon ci-green">⚙️</div><div class="card-title">产品方案配置</div><div class="card-desc">ZT10+/ZT20+配置清单、使用流程、六维报告体系</div></div>
+    <div class="card" onclick="showPage('clinical')"><div class="card-icon ci-orange">🏥</div><div class="card-title">临床应用解读</div><div class="card-desc">三大应用方向、报告指标详细解读、心理韧性</div></div>
+    <div class="card" onclick="showPage('policy')"><div class="card-icon ci-purple">📊</div><div class="card-title">政策与市场数据</div><div class="card-desc">110万+样本调查、慢病与心理关联、社会心理服务体系</div></div>
+    <div class="card" onclick="showPage('business')"><div class="card-icon ci-gold">💰</div><div class="card-title">商业效益收费</div><div class="card-desc">适用科室行业、收费标准、投资回报分析</div></div>
+    <div class="card" onclick="showPage('competition')" style="grid-column:span 2"><div class="card-icon ci-cyan">🎯</div><div class="card-title">竞争定位与产品特色</div><div class="card-desc">首创母子机设计、国际指南算法、多通道采集、团体检测模式</div></div>
+</div>
+
+<div class="ibox ibox-success"><strong>💡 使用提示：</strong>点击上方任意模块卡片即可进入对应知识详情页。左侧菜单可快速切换模块，支持手机端流畅浏览。</div>
+<div class="spacer"></div>
+</div>
+
+<!-- JavaScript -->
+<script>
+function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('active');
+    document.querySelector('.sidebar-overlay').classList.toggle('active');
+}
+
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('p-' + pageId).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const activeNav = document.querySelector(`[data-p="${pageId}"]`);
+    if (activeNav) activeNav.classList.add('active');
+    document.querySelector('.sidebar').classList.remove('active');
+    document.querySelector('.sidebar-overlay').classList.remove('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function togglePanel(header) {
+    header.parentElement.classList.toggle('open');
+}
+
+// 默认打开第一个面板
+document.addEventListener('DOMContentLoaded', function() {
+    const firstPanel = document.querySelector('.panel');
+    if (firstPanel) firstPanel.classList.add('open');
+});
+</script>
+
+</div>
+</body>
+</html>
