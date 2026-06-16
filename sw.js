@@ -1,6 +1,7 @@
 // Service Worker for 智心同检知识库 - Offline PWA
-const CACHE_NAME = 'zhixin-knowledge-v1';
+const CACHE_NAME = 'zhixin-knowledge-v2';
 const ASSETS = [
+  './index.html',
   './zhi-xin-tong-jian-kb-pwa.html',
   './manifest.json',
   './icon-192.png',
@@ -29,16 +30,28 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch: cache-first strategy
+// Fetch: network-first for HTML, cache-first for assets
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  // Network-first for HTML (always try network to get latest)
+  if (event.request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return response;
+      }).catch(() => {
+        return caches.match(event.request);
+      })
+    );
+    return;
+  }
+  // Cache-first for other assets
   event.respondWith(
     caches.match(event.request).then(cached => {
       return cached || fetch(event.request).then(response => {
-        // Cache dynamic requests for offline use
         const clone = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, clone);
-        });
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         return response;
       });
     })
