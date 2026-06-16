@@ -371,8 +371,19 @@ td{padding:9px 12px;border-bottom:1px solid #f0f0f0;color:var(--t2)}tr:nth-child
 <div class="ph"><h2>&#9881; 设备操作指南</h2><p>短程心率压力检测设备使用说明与操作规范</p></div>
 <div class="cs"><div class="cs-h">设备操作总览</div><div class="cs-b">
 
-<div class="sec"><div class="stitle">设备操作流程</div>
-<p style="font-weight:600;color:var(--t);margin:6px 0 4px;font-size:14px;">团检版本（共11页）</p>
+<div id="biz-overview">
+<div class="gd">
+    <div class="cd" onclick="showBizPage('biz-flow')"><div class="ci cib">&#128196;</div><div class="ct">设备操作流程</div><div class="cdesc">团检版本(11页) + 个检版本(8页) 操作说明</div></div>
+    <div class="cd" onclick="showBizPage('biz-notice')"><div class="ci cir">&#9888;&#65039;</div><div class="ct">注意事项</div><div class="cdesc">设备使用注意事项与安全规范</div></div>
+    <div class="cd" onclick="showBizPage('biz-repair')"><div class="ci cio">&#128295;</div><div class="ct">设备修复流程</div><div class="cdesc">常见问题排查与修复指南</div></div>
+</div>
+</div>
+</div></div>
+
+<div id="biz-flow" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#128196; 设备操作流程</h2><p>心率变异性系统使用说明 - 团检版本 &amp; 个检版本</p></div>
+<div class="sec"><div class="stitle">团检版本（共11页）</div>
 <div class="img-gallery-flex">
 <div class="img-card"><img src="tuanjian_page01.png" alt="团检版本-第1页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-01</div></div>
 <div class="img-card"><img src="tuanjian_page02.png" alt="团检版本-第2页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-02</div></div>
@@ -385,9 +396,8 @@ td{padding:9px 12px;border-bottom:1px solid #f0f0f0;color:var(--t2)}tr:nth-child
 <div class="img-card"><img src="tuanjian_page09.png" alt="团检版本-第9页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-09</div></div>
 <div class="img-card"><img src="tuanjian_page10.png" alt="团检版本-第10页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-10</div></div>
 <div class="img-card"><img src="tuanjian_page11.png" alt="团检版本-第11页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-11</div></div>
-</div>
-
-<p style="font-weight:600;color:var(--t);margin:14px 0 4px;font-size:14px;">个检版本（共8页）</p>
+</div></div>
+<div class="sec"><div class="stitle">个检版本（共8页）</div>
 <div class="img-gallery-flex">
 <div class="img-card"><img src="gejian_page01.png" alt="个检版本-第1页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-01</div></div>
 <div class="img-card"><img src="gejian_page02.png" alt="个检版本-第2页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-02</div></div>
@@ -397,18 +407,21 @@ td{padding:9px 12px;border-bottom:1px solid #f0f0f0;color:var(--t2)}tr:nth-child
 <div class="img-card"><img src="gejian_page06.png" alt="个检版本-第6页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-06</div></div>
 <div class="img-card"><img src="gejian_page07.png" alt="个检版本-第7页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-07</div></div>
 <div class="img-card"><img src="gejian_page08.png" alt="个检版本-第8页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-08</div></div>
-</div>
-</div>
-
-<div class="sec"><div class="stitle">注意事项</div>
-<p style="color:#888;font-size:13px;"><em>（内容待补充）</em></p>
-</div>
-
-<div class="sec"><div class="stitle">设备修复流程</div>
-<p style="color:#888;font-size:13px;"><em>（内容待补充）</em></p>
-</div>
-
 </div></div>
+</div>
+
+<div id="biz-notice" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#9888;&#65039; 注意事项</h2><p>设备使用注意事项与安全规范</p></div>
+<div class="sec"><p style="color:#888;font-size:13px;"><em>注意事项内容待补充</em></p></div>
+</div>
+
+<div id="biz-repair" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#128295; 设备修复流程</h2><p>常见问题排查与修复指南</p></div>
+<div class="sec"><p style="color:#888;font-size:13px;"><em>设备修复流程内容待补充</em></p></div>
+</div>
+
 <div class="spacer"></div></div>
 </div>
 
@@ -452,7 +465,10 @@ function showPage(id){document.querySelectorAll('.pg').forEach(function(p){p.cla
 document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});
 var activeNav=document.querySelector('[data-p="'+id+'"]');if(activeNav)activeNav.classList.add('active');
 document.querySelector('.sb').classList.remove('active');document.querySelector('.so').classList.remove('active');
+if(id==='business'){var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';var ov=document.getElementById('biz-overview');if(ov)ov.style.display='block';}
 window.scrollTo({top:0,behavior:'smooth'});}
+function showBizPage(id){document.getElementById('biz-overview').style.display='none';var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+function showBizOverview(){document.getElementById('biz-overview').style.display='block';var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';window.scrollTo({top:0,behavior:'smooth'});}
 function togglePanel(h){h.parentElement.classList.toggle('open');}
 function searchQA(){var q=document.getElementById('qaInput').value.trim().toLowerCase();if(!q)return;
 var r=document.getElementById('qaResults');r.innerHTML='';r.className='qa-results show';
