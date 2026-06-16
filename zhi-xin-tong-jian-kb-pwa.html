@@ -2,6 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>智心同检知识库 2.0</title>
 <link rel="manifest" href="manifest.json">
@@ -714,7 +717,7 @@ var knowledgeBase=[{"q":"CRH是什么","a":"CRH促皮质素释放激素是HPA轴
 function toggleSidebar(){document.querySelector('.sb').classList.toggle('active');document.querySelector('.so').classList.toggle('active');}
 var pageHistory=[];
 
-function goParent(){var ap=document.querySelector('.pg.active');if(!ap||ap.id==='p-home')return;var pid=ap.id.replace('p-','');if(pid==='business'){var fsub=document.querySelector('.biz-flow-sub[style*="display: block"]');if(fsub){document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById('biz-flow').style.display='block';window.scrollTo({top:0,behavior:'smooth'});return;}var bsub=document.querySelector('.biz-sub[style*="display: block"]');if(bsub){document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub,.biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});return;}}var mods=['mech','interv','hrv','prod','clinical','policy'];for(var i=0;i<mods.length;i++){var m=mods[i];var msub=document.querySelector('.'+m+'-sub[style*="display: block"]');if(msub){document.getElementById(m+'-overview').style.display='block';document.querySelectorAll('.'+m+'-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});return;}}showPage('home');}
+function goParent(){var ap=document.querySelector('.pg.active');if(!ap||ap.id==='p-home')return;var pid=ap.id.replace('p-','');if(pid==='business'){var fsub=document.querySelector('.biz-flow-sub[style*="display: block"]');if(fsub){document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById('biz-flow').style.display='block';window.scrollTo({top:0,behavior:'smooth'});return;}var bsub=document.querySelector('.biz-sub[style*="display: block"]');if(bsub){document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub,.biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});return;}}var mods=['mechanism','intervention','hrv','product','clinical','policy'];for(var i=0;i<mods.length;i++){var m=mods[i];var msub=document.querySelector('.'+m+'-sub[style*="display: block"]');if(msub){document.getElementById(m+'-overview').style.display='block';document.querySelectorAll('.'+m+'-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});return;}}showPage('home');}
 
 function showModuleSub(module, subId) {
     document.getElementById(module + '-overview').style.display = 'none';
@@ -747,7 +750,7 @@ function showPage(id){document.querySelectorAll('.pg').forEach(function(p){p.cla
 document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});
 var activeNav=document.querySelector('[data-p="'+id+'"]');if(activeNav)activeNav.classList.add('active');
 document.querySelector('.sb').classList.remove('active');document.querySelector('.so').classList.remove('active');
-if(id==='business'){document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});var ov=document.getElementById('biz-overview');if(ov)ov.style.display='block';}var mods2=['mech','interv','hrv','prod','clinical','policy'];for(var mi=0;mi<mods2.length;mi++){var mm=mods2[mi];var mov=document.getElementById(mm+'-overview');if(mov)mov.style.display='block';document.querySelectorAll('.'+mm+'-sub').forEach(function(f){f.style.display='none';});}var mods2=['mech','interv','hrv','prod','clinical','policy'];for(var mi=0;mi<mods2.length;mi++){var mm=mods2[mi];var mov=document.getElementById(mm+'-overview');if(mov)mov.style.display='block';document.querySelectorAll('.'+mm+'-sub').forEach(function(f){f.style.display='none';});}var mods2=['mech','interv','hrv','prod','clinical','policy'];for(var mi=0;mi<mods2.length;mi++){var mm=mods2[mi];var mov=document.getElementById(mm+'-overview');if(mov)mov.style.display='block';document.querySelectorAll('.'+mm+'-sub').forEach(function(f){f.style.display='none';});}
+if(id==='business'){document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});var ov=document.getElementById('biz-overview');if(ov)ov.style.display='block';}var mods2=['mechanism','intervention','hrv','product','clinical','policy'];for(var mi=0;mi<mods2.length;mi++){var mm=mods2[mi];var mov=document.getElementById(mm+'-overview');if(mov)mov.style.display='block';document.querySelectorAll('.'+mm+'-sub').forEach(function(f){f.style.display='none';});}
 window.scrollTo({top:0,behavior:'smooth'});}
 function showBizPage(id){document.getElementById('biz-overview').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
 function showBizOverview(){document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});}
@@ -840,9 +843,20 @@ function installPWA() {
 
 function closeInstallBanner() { instBanner.classList.remove('show'); }
 
-// Service Worker
+// Clear old Service Workers & caches
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (var i = 0; i < registrations.length; i++) {
+      registrations[i].unregister();
+    }
+  });
+  if (window.caches) {
+    caches.keys().then(function(names) {
+      for (var i = 0; i < names.length; i++) {
+        caches.delete(names[i]);
+      }
+    });
+  }
 }
 
 function openLightbox(src) {
