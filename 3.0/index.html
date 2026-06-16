@@ -305,6 +305,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .img-card img{width:100%;height:auto;max-height:55vh;object-fit:contain;display:block;border-radius:12px;opacity:1;transition:opacity .35s ease}
 .img-card img[src$=".webp"]{animation:imgReveal .5s ease}
 @keyframes imgReveal{from{opacity:.15;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+/* ===== Standalone Image Fix (report images, etc.) ===== */
+.sec>img,.cs-b>img{max-width:100%;height:auto!important;object-fit:contain;display:block}
 
 /* ===== Image Carousel ===== */
 .img-carousel{position:relative;overflow:hidden;border-radius:12px;margin:14px 0;background:transparent;-webkit-user-select:none;user-select:none}
@@ -695,39 +697,39 @@ tr:hover td{background:rgba(155,133,149,.03)}
 </div>
 
 <div class="sec"><div class="stitle" id="report-s0">报告概览</div>
-<img src="images/report/report-page-01.webp" alt="报告概览" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-01.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="报告概览" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s1">疲劳指数（身体压力）</div>
-<img src="images/report/report-page-02.webp" alt="疲劳指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-02.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="疲劳指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s2">压力指数（心理压力）</div>
-<img src="images/report/report-page-03.webp" alt="压力指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-03.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="压力指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s3">抗压能力</div>
-<img src="images/report/report-page-04.webp" alt="抗压能力" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-04.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="抗压能力" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s4">平均心率</div>
-<img src="images/report/report-page-05.webp" alt="平均心率" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-05.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="平均心率" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s5">心脏稳定性</div>
-<img src="images/report/report-page-06.webp" alt="心脏稳定性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-06.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="心脏稳定性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s6">自主神经活性</div>
-<img src="images/report/report-page-08.webp" alt="自主神经活性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-08.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="自主神经活性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s7">自主神经平衡</div>
-<img src="images/report/report-page-07.webp" alt="自主神经平衡" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-07.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="自主神经平衡" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s8">综合压力指数解读</div>
-<img src="images/report/report-page-10.webp" alt="综合压力指数解读" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+<img data-src="images/report/report-page-10.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="综合压力指数解读" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="spacer"></div></div>
@@ -1119,5 +1121,129 @@ function updateIdxHighlight(pageId){var items=document.querySelectorAll('#p-'+pa
 </script>
 
 <div class="float-home-btn" onclick="goParent()" title="返回上一级">&#8962;</div>
+
+<script>
+/* ===== Lazy Load Manager with IntersectionObserver ===== */
+(function(){
+    if(!('IntersectionObserver' in window)){
+        // Fallback: load all data-src images immediately
+        window._loadAllLazy = function(){
+            var imgs = document.querySelectorAll('img[data-src]');
+            for(var i=0;i<imgs.length;i++){
+                var img=imgs[i];
+                img.src=img.dataset.src;
+                img.removeAttribute('data-src');
+            }
+        };
+        if(document.readyState==='complete') window._loadAllLazy();
+        else window.addEventListener('load',window._loadAllLazy);
+        return;
+    }
+
+    var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+            if(entry.isIntersecting){
+                var img = entry.target;
+                if(img.dataset.src){
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    img.style.opacity = '0';
+                    img.onload = function(){ img.style.transition='opacity .35s ease'; img.style.opacity='1'; };
+                    // Fallback if onload doesn't fire
+                    setTimeout(function(){ img.style.opacity='1'; }, 800);
+                }
+                io.unobserve(img);
+            }
+        });
+    }, { rootMargin: '400px 0px' });
+
+    // Observe all images with data-src
+    function scanLazyImgs(root){
+        root = root || document;
+        var imgs = root.querySelectorAll('img[data-src]');
+        for(var i=0;i<imgs.length;i++){
+            io.observe(imgs[i]);
+        }
+    }
+
+    // Preload a specific image immediately (for carousel adjacent images)
+    window._preloadImg = function(img){
+        if(img && img.dataset.src){
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            io.unobserve(img);
+        }
+    };
+
+    window._scanLazyImgs = scanLazyImgs;
+
+    // Initial scan on DOM ready
+    if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded', function(){ scanLazyImgs(); });
+    } else {
+        scanLazyImgs();
+    }
+})();
+
+/* ===== Report Page Lazy Loading Hook ===== */
+(function(){
+    var origShowBizPage = showBizPage;
+    showBizPage = function(id){
+        origShowBizPage(id);
+        // When report page is shown, load all its images
+        if(id === 'biz-report'){
+            setTimeout(function(){
+                var reportImgs = document.querySelectorAll('#biz-report img[data-src]');
+                for(var i=0;i<reportImgs.length;i++){
+                    window._preloadImg && window._preloadImg(reportImgs[i]);
+                }
+            }, 50);
+        }
+    };
+})();
+
+/* ===== Carousel Lazy Preloading ===== */
+(function(){
+    var _Carousel = Carousel;
+    Carousel = function(container){
+        _Carousel.call(this, container);
+        if(this.total <= 1) return;
+
+        // Convert all but first slide's image to data-src
+        var self = this;
+        for(var i=1;i<this.total;i++){
+            var slideImg = this.slides[i].querySelector('img');
+            if(slideImg && !slideImg.dataset.src && slideImg.src){
+                slideImg.dataset.src = slideImg.src;
+                slideImg.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E';
+                if(window._scanLazyImgs) window._scanLazyImgs(container);
+            }
+        }
+        // Preload adjacent image (index 1)
+        if(this.total > 1){
+            var adjImg = this.slides[1].querySelector('img');
+            if(adjImg && adjImg.dataset.src){
+                window._preloadImg && window._preloadImg(adjImg);
+            }
+        }
+
+        // Override goTo to preload adjacent images
+        var _goTo = this.goTo;
+        this.goTo = function(idx){
+            _goTo.call(self, idx);
+            // Preload next and previous images
+            [-1, 1].forEach(function(offset){
+                var adjIdx = idx + offset;
+                if(adjIdx >= 0 && adjIdx < self.total){
+                    var adjImg = self.slides[adjIdx].querySelector('img');
+                    if(adjImg && adjImg.dataset.src){
+                        window._preloadImg && window._preloadImg(adjImg);
+                    }
+                }
+            });
+        };
+    };
+})();
+</script>
 </body>
 </html>
