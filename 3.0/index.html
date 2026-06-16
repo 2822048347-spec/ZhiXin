@@ -300,7 +300,7 @@ tr:hover td{background:rgba(155,133,149,.03)}
 
 /* ===== Image Gallery ===== */
 .sec:has(.img-gallery-flex),.cs:has(.img-gallery-flex){overflow:visible}
-.img-gallery-flex{display:flex;flex-wrap:nowrap;gap:18px;margin-top:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(155,133,149,.2) transparent;padding-bottom:8px}
+.img-gallery-flex{display:flex;flex-wrap:nowrap;gap:18px;margin-top:14px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(155,133,149,.2) transparent;padding-bottom:8px;touch-action:pan-y pinch-zoom;-webkit-overflow-scrolling:touch}
 .img-card{flex:0 0 auto;width:175px;text-align:center;cursor:pointer;transition:all var(--duration) var(--ease);scroll-snap-align:start}
 .img-card:hover{transform:scale(1.06) translateY(-4px)}
 .img-card img{width:100%;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.05);object-fit:cover;aspect-ratio:3/4;border:1px solid rgba(0,0,0,.03)}
@@ -967,6 +967,17 @@ function lightboxPrev(){
 
 function scrollToSection(pageId,idx){var el=document.getElementById(pageId+'-s'+idx);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){updateIdxHighlight(pageId);},500);}
 function updateIdxHighlight(pageId){var items=document.querySelectorAll('#p-'+pageId+' .idx-item');items.forEach(function(item){item.classList.remove('hl-idx');});var sections=document.querySelectorAll('#p-'+pageId+' [id^="'+pageId+'-s"]');var closest=null,minDist=Infinity;sections.forEach(function(s){var rect=s.getBoundingClientRect();var dist=Math.abs(rect.top-100);if(dist<minDist){minDist=dist;closest=s;}});if(closest){var activeIdx=closest.id.replace(pageId+'-s','');items.forEach(function(item){if(item.getAttribute('onclick')&&item.getAttribute('onclick').indexOf(','+activeIdx+')')!==-1){item.classList.add('hl-idx');}});}}
+
+(function(){
+    var gals=document.querySelectorAll('.img-gallery-flex');
+    for(var i=0;i<gals.length;i++){
+        var p=gals[i].parentElement;
+        while(p){
+            if(p.matches('.sec,.cs')){p.style.overflow='visible';}
+            p=p.parentElement;
+        }
+    }
+})();
 
 </script>
 
