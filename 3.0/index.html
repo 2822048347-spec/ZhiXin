@@ -14,11 +14,11 @@
 :root{
   --p:#7c3aed;--pd:#6d28d9;--ps:#a78bfa;--pl:#c4b5fd;
   --ac1:#06b6d4;--ac2:#10b981;--ac3:#f43f5e;--ac4:#f97316;--ac5:#eab308;
-  --bg:#0b0b1a;--bg2:#12122a;--bg3:#1a1a3e;
-  --cs:rgba(255,255,255,.03);--c2:rgba(255,255,255,.05);
-  --glass:rgba(255,255,255,.04);--glass2:rgba(255,255,255,.07);
+  --bg:#1a1a35;--bg2:#232344;--bg3:#2b2b52;
+  --cs:rgba(255,255,255,.05);--c2:rgba(255,255,255,.08);
+  --glass:rgba(255,255,255,.07);--glass2:rgba(255,255,255,.11);
   --t:#f1f5f9;--t2:#cbd5e1;--t3:#64748b;--t4:#475569;
-  --b:rgba(255,255,255,.06);--b2:rgba(255,255,255,.1);
+  --b:rgba(255,255,255,.09);--b2:rgba(255,255,255,.14);
   --glow1:rgba(124,58,237,.25);--glow2:rgba(139,92,246,.15);
   --r:20px;--rm:16px;--rs:12px;
   --sh-sm:0 1px 2px rgba(0,0,0,.2),0 0 0 1px rgba(255,255,255,.03);
@@ -42,17 +42,17 @@ body{
 body::before{
   content:"";position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(124,58,237,.12) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 70%,rgba(139,92,246,.08) 0%,transparent 55%),
-    radial-gradient(ellipse 50% 50% at 50% 40%,rgba(6,182,212,.05) 0%,transparent 70%),
-    radial-gradient(ellipse 40% 50% at 90% 20%,rgba(16,185,129,.04) 0%,transparent 65%),
-    radial-gradient(ellipse 30% 40% at 10% 80%,rgba(244,63,94,.04) 0%,transparent 70%);
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(124,58,237,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 70%,rgba(139,92,246,.12) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 40%,rgba(6,182,212,.08) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 50% at 90% 20%,rgba(16,185,129,.07) 0%,transparent 65%),
+    radial-gradient(ellipse 30% 40% at 10% 80%,rgba(244,63,94,.07) 0%,transparent 70%);
 }
 body::after{
   content:"";position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
   background:
-    radial-gradient(circle at 25% 30%,rgba(124,58,237,.03) 0%,transparent 40%),
-    radial-gradient(circle at 75% 60%,rgba(139,92,246,.03) 0%,transparent 40%);
+    radial-gradient(circle at 25% 30%,rgba(124,58,237,.06) 0%,transparent 40%),
+    radial-gradient(circle at 75% 60%,rgba(139,92,246,.06) 0%,transparent 40%);
   animation:bgPulse 8s ease-in-out infinite alternate;
 }
 @keyframes bgPulse{
@@ -64,7 +64,7 @@ body::after{
 /* ===== Top Nav ===== */
 .nb{
   position:fixed;top:0;left:0;right:0;height:56px;
-  background:rgba(15,15,40,.85);
+  background:rgba(22,22,55,.85);
   -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
   color:#fff;display:flex;align-items:center;padding:0 18px;
   z-index:1000;
@@ -75,15 +75,15 @@ body::after{
   content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(124,58,237,.4),rgba(139,92,246,.2),transparent);
 }
-.mb,.tb{width:40px;height:40px;border:none;background:rgba(255,255,255,.06);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:12px;transition:all var(--duration) var(--ease);border:1px solid rgba(255,255,255,.04);position:relative;overflow:hidden}
+.mb,.tb{width:40px;height:40px;border:none;background:rgba(255,255,255,.09);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:12px;transition:all var(--duration) var(--ease);border:1px solid rgba(255,255,255,.04);position:relative;overflow:hidden}
 .mb::after,.tb::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);opacity:0;transition:opacity var(--duration)}
 .mb:hover,.tb:hover{background:rgba(255,255,255,.12);transform:scale(1.05);border-color:rgba(255,255,255,.15);box-shadow:0 0 20px rgba(124,58,237,.2)}
 .mb:hover::after,.tb:hover::after{opacity:1}
 .nt{flex:1;text-align:center;font-size:16px;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,#fff 0%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* ===== Sidebar ===== */
-.so{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(5,5,20,.7);z-index:1999;opacity:0;visibility:hidden;transition:all .4s var(--ease);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}.so.active{opacity:1;visibility:visible}
-.sb{position:fixed;top:0;left:-285px;width:285px;height:100%;background:rgba(15,15,40,.96);z-index:2000;transition:left .4s var(--ease);overflow-y:auto;box-shadow:8px 0 40px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-right:1px solid rgba(255,255,255,.06)}.sb.active{left:0}
+.so{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,30,.7);z-index:1999;opacity:0;visibility:hidden;transition:all .4s var(--ease);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}.so.active{opacity:1;visibility:visible}
+.sb{position:fixed;top:0;left:-285px;width:285px;height:100%;background:rgba(22,22,55,.96);z-index:2000;transition:left .4s var(--ease);overflow-y:auto;box-shadow:8px 0 40px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-right:1px solid rgba(255,255,255,.06)}.sb.active{left:0}
 .sh{background:linear-gradient(160deg,#4c1d95 0%,#7c3aed 40%,#8b5cf6 70%,#a78bfa 100%);color:#fff;padding:60px 20px 26px;text-align:center;position:relative;overflow:hidden}
 .sh::before{content:"";position:absolute;top:-60px;left:-40px;width:160px;height:160px;background:rgba(255,255,255,.04);border-radius:50%;animation:shOrb1 6s ease-in-out infinite}
 .sh::after{content:"";position:absolute;bottom:-40px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.05);border-radius:50%;animation:shOrb2 8s ease-in-out infinite}
@@ -154,7 +154,7 @@ body::after{
 .cd:nth-child(6)::before{background:linear-gradient(90deg,#22d3ee,#67e8f9)}
 .cd:nth-child(7)::before{background:linear-gradient(90deg,#facc15,#fde047)}
 .cd:nth-child(8)::before{background:linear-gradient(90deg,#a3e635,#bef264)}
-.cd:hover{transform:translateY(-6px);box-shadow:var(--sh-card-hover);border-color:rgba(124,58,237,.15);background:rgba(255,255,255,.06)}
+.cd:hover{transform:translateY(-6px);box-shadow:var(--sh-card-hover);border-color:rgba(124,58,237,.15);background:rgba(255,255,255,.09)}
 .cd:hover::before{opacity:1}
 .cd:hover::after{opacity:1}
 .cd:nth-child(1):hover::after{box-shadow:0 0 40px rgba(99,102,241,.15),inset 0 0 40px rgba(99,102,241,.03)}
@@ -331,7 +331,7 @@ tr:hover td{background:rgba(124,58,237,.06)}
 .float-home-btn:active{transform:scale(.85)}
 
 /* ===== Install Banner ===== */
-.install-banner{position:fixed;bottom:0;left:0;right:0;background:rgba(15,15,40,.96);color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;z-index:3000;box-shadow:0 -4px 24px rgba(0,0,0,.4);transform:translateY(100%);transition:transform .4s var(--ease);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06)}
+.install-banner{position:fixed;bottom:0;left:0;right:0;background:rgba(22,22,55,.96);color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;z-index:3000;box-shadow:0 -4px 24px rgba(0,0,0,.4);transform:translateY(100%);transition:transform .4s var(--ease);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06)}
 .install-banner.show{transform:translateY(0)}
 .install-banner .ibx{font-size:13px;line-height:1.5;flex:1}
 .install-banner .ibb{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;border:none;padding:10px 20px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;margin-left:16px;white-space:nowrap;box-shadow:0 4px 16px rgba(124,58,237,.3);transition:all var(--duration) var(--ease)}
