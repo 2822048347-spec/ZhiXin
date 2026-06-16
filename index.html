@@ -194,8 +194,8 @@ body::after{
 .stitle::before{content:"";width:5px;height:22px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:12px;flex-shrink:0;box-shadow:0 0 14px rgba(155,133,149,.2)}
 .sec p{font-size:13px;line-height:1.9;color:var(--t2);margin-bottom:12px}
 .sec ul{list-style:none;padding:0;margin:10px 0}
-.sec li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 24px;position:relative}
-.sec li::before{content:"";position:absolute;left:6px;top:15px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 10px rgba(155,133,149,.2)}
+.sec li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 28px;position:relative}
+.sec li::before{content:"";position:absolute;left:8px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 10px rgba(155,133,149,.2)}
 .sec ol{padding-left:24px;margin:10px 0}
 .sec ol li{font-size:13px;line-height:1.8;color:var(--t2);padding:7px 0}
 .sec ol li::marker{color:var(--ps);font-weight:700}
@@ -248,8 +248,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .cs-h::before{content:"";width:5px;height:20px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:14px;box-shadow:0 0 12px rgba(155,133,149,.2)}
 .cs-b{padding:22px}.cs-b p{font-size:13px;line-height:1.9;color:var(--t2);margin-bottom:12px}
 .cs-b ul{list-style:none;padding:0;margin:10px 0}
-.cs-b li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 24px;position:relative}
-.cs-b li::before{content:"";position:absolute;left:6px;top:15px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 8px rgba(155,133,149,.15)}
+.cs-b li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 28px;position:relative}
+.cs-b li::before{content:"";position:absolute;left:8px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 8px rgba(155,133,149,.15)}
 
 /* ===== Back Button ===== */
 .bb{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#fffdfc;border:1px solid rgba(0,0,0,.05);border-radius:24px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:18px;transition:all var(--duration) var(--ease);box-shadow:0 2px 8px rgba(0,0,0,.02)}
@@ -299,17 +299,26 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .hot-tag:hover{background:rgba(155,133,149,.06);border-color:rgba(155,133,149,.15);transform:translateY(-2px);box-shadow:0 4px 12px rgba(155,133,149,.06);color:var(--pd)}
 
 /* ===== Image Gallery ===== */
-.img-gallery-flex{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
-.img-card{flex:0 0 auto;width:175px;text-align:center;cursor:pointer;transition:all var(--duration) var(--ease)}
+.img-gallery-flex{display:flex;flex-wrap:nowrap;gap:18px;margin-top:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(155,133,149,.2) transparent;padding-bottom:8px}
+.img-card{flex:0 0 auto;width:175px;text-align:center;cursor:pointer;transition:all var(--duration) var(--ease);scroll-snap-align:start}
 .img-card:hover{transform:scale(1.06) translateY(-4px)}
 .img-card img{width:100%;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.05);object-fit:cover;aspect-ratio:3/4;border:1px solid rgba(0,0,0,.03)}
 .img-card:hover img{box-shadow:0 14px 40px rgba(155,133,149,.15);border-color:rgba(155,133,149,.15)}
 .img-label{font-size:11px;color:var(--t3);margin-top:10px;font-weight:500;letter-spacing:.2px}
+.img-gallery-flex::-webkit-scrollbar{height:6px}
+.img-gallery-flex::-webkit-scrollbar-track{background:transparent}
+.img-gallery-flex::-webkit-scrollbar-thumb{background:rgba(155,133,149,.2);border-radius:3px}
 
 /* ===== Lightbox ===== */
 .lightbox-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,28,32,.96);z-index:10000;justify-content:center;align-items:center;cursor:pointer;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .lightbox-overlay.active{display:flex;animation:fadeIn .4s var(--ease)}
-.lightbox-overlay img{max-width:92%;max-height:92%;border-radius:24px;box-shadow:0 20px 64px rgba(0,0,0,.2);border:1px solid rgba(0,0,0,.03)}
+.lightbox-overlay img{max-width:92%;max-height:92%;border-radius:24px;box-shadow:0 20px 64px rgba(0,0,0,.2);border:1px solid rgba(0,0,0,.03);user-select:none;-webkit-user-select:none}
+.lb-nav{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.12);border:none;border-radius:50%;color:#fff;font-size:22px;cursor:pointer;z-index:10001;display:flex;align-items:center;justify-content:center;transition:all .3s;outline:none}
+.lb-nav:hover{background:rgba(255,255,255,.22);transform:translateY(-50%) scale(1.1)}
+.lb-nav:active{transform:translateY(-50%) scale(.9)}
+.lb-prev{left:16px}
+.lb-next{right:16px}
+@media(min-width:768px){.lb-prev{left:32px}.lb-next{right:32px}}
 
 /* ===== Floating Button ===== */
 .float-home-btn{
@@ -836,20 +845,115 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 
-function openLightbox(src) {
-    var overlay = document.getElementById('lightbox-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.id = 'lightbox-overlay';
-        overlay.className = 'lightbox-overlay';
-        overlay.onclick = function() { this.classList.remove('active'); };
-        var img = document.createElement('img');
-        img.id = 'lightbox-img';
-        overlay.appendChild(img);
-        document.body.appendChild(overlay);
-    }
-    document.getElementById('lightbox-img').src = src;
-    overlay.classList.add('active');
+var lbImages=[],lbIndex=-1,lbTouchStartX=0,lbTouchStartY=0,lbMouseDown=false,lbMouseStartX=0;
+
+function openLightbox(src){
+    lbImages=[];lbIndex=-1;
+    var galleries=document.querySelectorAll('.img-gallery-flex');
+    galleries.forEach(function(g){
+        if(g.offsetParent===null)return;
+        var imgs=g.querySelectorAll('.img-card img');
+        imgs.forEach(function(img){
+            if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
+            lbImages.push(img.src);
+        });
+    });
+    if(!lbImages.length){lbImages=[src];lbIndex=0;}
+    if(lbIndex===-1){lbImages=[src];lbIndex=0;}
+    ensureLightbox();
+    updateLightboxImage();
+    document.getElementById('lightbox-overlay').classList.add('active');
+    updateNavButtons();
+}
+
+function ensureLightbox(){
+    if(document.getElementById('lightbox-overlay'))return;
+    var overlay=document.createElement('div');
+    overlay.id='lightbox-overlay';
+    overlay.className='lightbox-overlay';
+    overlay.addEventListener('click',function(e){
+        if(e.target===overlay||e.target===document.getElementById('lightbox-img-wrap')){
+            overlay.classList.remove('active');
+        }
+    });
+    var wrap=document.createElement('div');
+    wrap.id='lightbox-img-wrap';
+    wrap.style.cssText='position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%';
+    var img=document.createElement('img');
+    img.id='lightbox-img';
+    wrap.appendChild(img);
+    overlay.appendChild(wrap);
+    var prevBtn=document.createElement('button');
+    prevBtn.className='lb-nav lb-prev';
+    prevBtn.innerHTML='&#10094;';
+    prevBtn.onclick=function(e){e.stopPropagation();lightboxPrev();};
+    overlay.appendChild(prevBtn);
+    var nextBtn=document.createElement('button');
+    nextBtn.className='lb-nav lb-next';
+    nextBtn.innerHTML='&#10095;';
+    nextBtn.onclick=function(e){e.stopPropagation();lightboxNext();};
+    overlay.appendChild(nextBtn);
+    overlay.addEventListener('touchstart',function(e){
+        if(e.touches.length===1){
+            lbTouchStartX=e.touches[0].clientX;
+            lbTouchStartY=e.touches[0].clientY;
+        }
+    },{passive:true});
+    overlay.addEventListener('touchend',function(e){
+        var dx=e.changedTouches[0].clientX-lbTouchStartX;
+        var dy=e.changedTouches[0].clientY-lbTouchStartY;
+        if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){
+            e.preventDefault();
+            if(dx>0)lightboxPrev();else lightboxNext();
+        }
+    });
+    overlay.addEventListener('mousedown',function(e){
+        if(e.target===overlay||e.target===wrap||e.target===img){
+            lbMouseDown=true;lbMouseStartX=e.clientX;
+        }
+    });
+    overlay.addEventListener('mousemove',function(e){
+        if(!lbMouseDown)return;
+        var dx=e.clientX-lbMouseStartX;
+        img.style.transform='translateX('+dx+'px)';
+        img.style.transition='none';
+    });
+    overlay.addEventListener('mouseup',function(e){
+        if(!lbMouseDown){lbMouseDown=false;return;}
+        lbMouseDown=false;
+        img.style.transform='';img.style.transition='';
+        var dx=e.clientX-lbMouseStartX;
+        if(Math.abs(dx)>60){
+            if(dx>0)lightboxPrev();else lightboxNext();
+        }
+    });
+    document.addEventListener('keydown',function(e){
+        var ov=document.getElementById('lightbox-overlay');
+        if(!ov||!ov.classList.contains('active'))return;
+        if(e.key==='ArrowLeft'){e.preventDefault();lightboxPrev();}
+        else if(e.key==='ArrowRight'){e.preventDefault();lightboxNext();}
+        else if(e.key==='Escape'){ov.classList.remove('active');}
+    });
+    document.body.appendChild(overlay);
+}
+
+function updateLightboxImage(){
+    document.getElementById('lightbox-img').src=lbImages[lbIndex];
+}
+
+function updateNavButtons(){
+    var prev=document.querySelector('.lb-prev');
+    var next=document.querySelector('.lb-next');
+    if(prev)prev.style.display=lbIndex>0?'flex':'none';
+    if(next)next.style.display=lbIndex<lbImages.length-1?'flex':'none';
+}
+
+function lightboxNext(){
+    if(lbIndex<lbImages.length-1){lbIndex++;updateLightboxImage();updateNavButtons();}
+}
+
+function lightboxPrev(){
+    if(lbIndex>0){lbIndex--;updateLightboxImage();updateNavButtons();}
 }
 
 function scrollToSection(pageId,idx){var el=document.getElementById(pageId+'-s'+idx);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){updateIdxHighlight(pageId);},500);}
