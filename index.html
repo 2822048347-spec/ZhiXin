@@ -194,10 +194,10 @@ body::after{
 .stitle::before{content:"";width:5px;height:22px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:12px;flex-shrink:0;box-shadow:0 0 14px rgba(155,133,149,.2)}
 .sec p{font-size:13px;line-height:1.9;color:var(--t2);margin-bottom:12px}
 .sec ul{list-style:none;padding:0;margin:10px 0}
-.sec li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 28px;position:relative}
-.sec li::before{content:"";position:absolute;left:8px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 10px rgba(155,133,149,.2)}
-.sec ol{padding-left:24px;margin:10px 0}
-.sec ol li{font-size:13px;line-height:1.8;color:var(--t2);padding:7px 0}
+.sec li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 34px;position:relative}
+.sec ul li::before{content:"";position:absolute;left:10px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 10px rgba(155,133,149,.2)}
+.sec ol{padding-left:40px;margin:10px 0}
+.sec ol li{font-size:13px;line-height:1.8;color:var(--t2);padding:7px 0 7px 4px}
 .sec ol li::marker{color:var(--ps);font-weight:700}
 
 /* ===== Tags ===== */
@@ -248,8 +248,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .cs-h::before{content:"";width:5px;height:20px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:14px;box-shadow:0 0 12px rgba(155,133,149,.2)}
 .cs-b{padding:22px}.cs-b p{font-size:13px;line-height:1.9;color:var(--t2);margin-bottom:12px}
 .cs-b ul{list-style:none;padding:0;margin:10px 0}
-.cs-b li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 28px;position:relative}
-.cs-b li::before{content:"";position:absolute;left:8px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 8px rgba(155,133,149,.15)}
+.cs-b li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 34px;position:relative}
+.cs-b ul li::before{content:"";position:absolute;left:10px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),var(--ps));border-radius:50%;box-shadow:0 0 8px rgba(155,133,149,.15)}
 
 /* ===== Back Button ===== */
 .bb{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#fffdfc;border:1px solid rgba(0,0,0,.05);border-radius:24px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:18px;transition:all var(--duration) var(--ease);box-shadow:0 2px 8px rgba(0,0,0,.02)}
@@ -299,7 +299,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .hot-tag:hover{background:rgba(155,133,149,.06);border-color:rgba(155,133,149,.15);transform:translateY(-2px);box-shadow:0 4px 12px rgba(155,133,149,.06);color:var(--pd)}
 
 /* ===== Image Gallery ===== */
-.img-gallery-flex{display:flex;flex-wrap:nowrap;gap:18px;margin-top:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(155,133,149,.2) transparent;padding-bottom:8px}
+.sec:has(.img-gallery-flex),.cs:has(.img-gallery-flex){overflow:visible}
+.img-gallery-flex{display:flex;flex-wrap:nowrap;gap:18px;margin-top:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(155,133,149,.2) transparent;padding-bottom:8px}
 .img-card{flex:0 0 auto;width:175px;text-align:center;cursor:pointer;transition:all var(--duration) var(--ease);scroll-snap-align:start}
 .img-card:hover{transform:scale(1.06) translateY(-4px)}
 .img-card img{width:100%;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.05);object-fit:cover;aspect-ratio:3/4;border:1px solid rgba(0,0,0,.03)}
@@ -899,7 +900,15 @@ function ensureLightbox(){
             lbTouchStartY=e.touches[0].clientY;
         }
     },{passive:true});
+    overlay.addEventListener('touchmove',function(e){
+        if(e.touches.length===1&&lbTouchStartX!==undefined){
+            var dx=e.touches[0].clientX-lbTouchStartX;
+            img.style.transform='translateX('+dx+'px)';
+            img.style.transition='none';
+        }
+    },{passive:true});
     overlay.addEventListener('touchend',function(e){
+        img.style.transform='';img.style.transition='';
         var dx=e.changedTouches[0].clientX-lbTouchStartX;
         var dy=e.changedTouches[0].clientY-lbTouchStartY;
         if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){
