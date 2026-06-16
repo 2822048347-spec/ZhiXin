@@ -365,8 +365,26 @@ tr:hover td{background:rgba(155,133,149,.03)}
 @media(max-width:768px){
   .float-home-btn{bottom:20px;right:20px;width:50px;height:50px;font-size:18px}
   .cd:nth-child(odd),.cd:nth-child(even){margin-top:0}
+  /* 移动端减少 backdrop-filter 开销 */
+  .nb{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .lightbox-overlay{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .install-banner{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .so{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  /* 移动端减少模糊值，提升渲染性能 */
+  .st{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .sb{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 }
 @media print{.nb,.sb,.so,.bb,.tb,.mb,.float-home-btn{display:none!important}.mn{margin-top:0}body{background:#fff;color:#0f172a}.sec,.cd,.ph,.cs,.idx-pnl,.qa-item{background:#fff!important;border:1px solid #e2e8f0!important;box-shadow:none!important}}
+
+/* ===== 性能优化 ===== */
+/* 非活跃页 content-visibility 延迟渲染 */
+.pg:not(.active){content-visibility:auto;contain-intrinsic-size:auto 500px}
+/* Carousel GPU 加速 */
+.img-carousel-track{will-change:transform;transform:translateZ(0)}
+.img-carousel-slide .img-card img{will-change:opacity}
+/* 字体加载优化 */
+@font-face{font-family:'PingFang SC';font-display:swap}
+@font-face{font-family:'Microsoft YaHei';font-display:swap}
 
 </style>
 </head>
@@ -556,9 +574,9 @@ tr:hover td{background:rgba(155,133,149,.03)}
 <div class="cs"><div class="cs-h">压力评估报告示例</div><div class="cs-b">
 <p>以下为常先生压力评估报告示例，展示HRV检测结果与压力评估报告模板：</p>
 <div class="img-gallery-flex">
-<div class="img-card"><img src="images/training_page20.png" alt="六维报告演示" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">压力评估报告-01</div></div>
-<div class="img-card"><img src="images/training_page21.png" alt="疲劳指数-压力指数-抗压能力解读" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">压力评估报告-02</div></div>
-<div class="img-card"><img src="images/training_page22.png" alt="适用临床科室与行业" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">压力评估报告-03</div></div>
+<div class="img-card"><img src="images/training_page20.png" alt="六维报告演示" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">压力评估报告-01</div></div>
+<div class="img-card"><img src="images/training_page21.png" alt="疲劳指数-压力指数-抗压能力解读" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">压力评估报告-02</div></div>
+<div class="img-card"><img src="images/training_page22.png" alt="适用临床科室与行业" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">压力评估报告-03</div></div>
 </div>
 </div></div>
 <div class="spacer"></div></div>
@@ -609,17 +627,17 @@ tr:hover td{background:rgba(155,133,149,.03)}
 <button class="bb" onclick="showBizFlowBack()">&larr; 返回设备操作流程</button>
 <div class="ph"><h2>&#128196; 团检版本</h2><p>心率变异性系统使用说明 - 团检版本（共11页）</p></div>
 <div class="sec"><div class="img-gallery-flex">
-<div class="img-card"><img src="images/tuanjian_page01.png" alt="团检版本-第1页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-01</div></div>
-<div class="img-card"><img src="images/tuanjian_page02.png" alt="团检版本-第2页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-02</div></div>
-<div class="img-card"><img src="images/tuanjian_page03.png" alt="团检版本-第3页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-03</div></div>
-<div class="img-card"><img src="images/tuanjian_page04.png" alt="团检版本-第4页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-04</div></div>
-<div class="img-card"><img src="images/tuanjian_page05.png" alt="团检版本-第5页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-05</div></div>
-<div class="img-card"><img src="images/tuanjian_page06.png" alt="团检版本-第6页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-06</div></div>
-<div class="img-card"><img src="images/tuanjian_page07.png" alt="团检版本-第7页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-07</div></div>
-<div class="img-card"><img src="images/tuanjian_page08.png" alt="团检版本-第8页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-08</div></div>
-<div class="img-card"><img src="images/tuanjian_page09.png" alt="团检版本-第9页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-09</div></div>
-<div class="img-card"><img src="images/tuanjian_page10.png" alt="团检版本-第10页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-10</div></div>
-<div class="img-card"><img src="images/tuanjian_page11.png" alt="团检版本-第11页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">团检-11</div></div>
+<div class="img-card"><img src="images/tuanjian_page01.png" alt="团检版本-第1页" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">团检-01</div></div>
+<div class="img-card"><img src="images/tuanjian_page02.png" alt="团检版本-第2页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-02</div></div>
+<div class="img-card"><img src="images/tuanjian_page03.png" alt="团检版本-第3页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-03</div></div>
+<div class="img-card"><img src="images/tuanjian_page04.png" alt="团检版本-第4页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-04</div></div>
+<div class="img-card"><img src="images/tuanjian_page05.png" alt="团检版本-第5页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-05</div></div>
+<div class="img-card"><img src="images/tuanjian_page06.png" alt="团检版本-第6页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-06</div></div>
+<div class="img-card"><img src="images/tuanjian_page07.png" alt="团检版本-第7页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-07</div></div>
+<div class="img-card"><img src="images/tuanjian_page08.png" alt="团检版本-第8页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-08</div></div>
+<div class="img-card"><img src="images/tuanjian_page09.png" alt="团检版本-第9页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-09</div></div>
+<div class="img-card"><img src="images/tuanjian_page10.png" alt="团检版本-第10页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-10</div></div>
+<div class="img-card"><img src="images/tuanjian_page11.png" alt="团检版本-第11页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-11</div></div>
 </div></div>
 </div>
 
@@ -627,14 +645,14 @@ tr:hover td{background:rgba(155,133,149,.03)}
 <button class="bb" onclick="showBizFlowBack()">&larr; 返回设备操作流程</button>
 <div class="ph"><h2>&#128196; 个检版本</h2><p>心率变异性系统使用说明 - 个检版本（共8页）</p></div>
 <div class="sec"><div class="img-gallery-flex">
-<div class="img-card"><img src="images/gejian_page01.png" alt="个检版本-第1页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-01</div></div>
-<div class="img-card"><img src="images/gejian_page02.png" alt="个检版本-第2页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-02</div></div>
-<div class="img-card"><img src="images/gejian_page03.png" alt="个检版本-第3页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-03</div></div>
-<div class="img-card"><img src="images/gejian_page04.png" alt="个检版本-第4页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-04</div></div>
-<div class="img-card"><img src="images/gejian_page05.png" alt="个检版本-第5页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-05</div></div>
-<div class="img-card"><img src="images/gejian_page06.png" alt="个检版本-第6页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-06</div></div>
-<div class="img-card"><img src="images/gejian_page07.png" alt="个检版本-第7页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-07</div></div>
-<div class="img-card"><img src="images/gejian_page08.png" alt="个检版本-第8页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">个检-08</div></div>
+<div class="img-card"><img src="images/gejian_page01.png" alt="个检版本-第1页" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">个检-01</div></div>
+<div class="img-card"><img src="images/gejian_page02.png" alt="个检版本-第2页" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">个检-02</div></div>
+<div class="img-card"><img src="images/gejian_page03.png" alt="个检版本-第3页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-03</div></div>
+<div class="img-card"><img src="images/gejian_page04.png" alt="个检版本-第4页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-04</div></div>
+<div class="img-card"><img src="images/gejian_page05.png" alt="个检版本-第5页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-05</div></div>
+<div class="img-card"><img src="images/gejian_page06.png" alt="个检版本-第6页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-06</div></div>
+<div class="img-card"><img src="images/gejian_page07.png" alt="个检版本-第7页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-07</div></div>
+<div class="img-card"><img src="images/gejian_page08.png" alt="个检版本-第8页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-08</div></div>
 </div></div>
 </div>
 
@@ -654,8 +672,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 <div class="ph"><h2>&#9888;&#65039; 注意事项</h2><p>设备使用注意事项与安全规范</p></div>
 <div class="sec"><div class="stitle">产品快速操作流程卡</div>
 <div class="img-gallery-flex">
-<div class="img-card"><img src="images/biz_notice_page1.png" alt="产品快速操作流程卡-第1页：快速操作流程" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">快速操作流程（6步）</div></div>
-<div class="img-card"><img src="images/biz_notice_page2.png" alt="产品快速操作流程卡-第2页：常见问题与禁忌症" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">常见问题与禁忌症</div></div>
+<div class="img-card"><img src="images/biz_notice_page1.png" alt="产品快速操作流程卡-第1页：快速操作流程" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">快速操作流程（6步）</div></div>
+<div class="img-card"><img src="images/biz_notice_page2.png" alt="产品快速操作流程卡-第2页：常见问题与禁忌症" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">常见问题与禁忌症</div></div>
 </div></div>
 </div>
 
@@ -675,39 +693,39 @@ tr:hover td{background:rgba(155,133,149,.03)}
 </div>
 
 <div class="sec"><div class="stitle" id="report-s0">报告概览</div>
-<img src="images/report/report-page-01.png" alt="报告概览" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-01.png" alt="报告概览" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s1">疲劳指数（身体压力）</div>
-<img src="images/report/report-page-02.png" alt="疲劳指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-02.png" alt="疲劳指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s2">压力指数（心理压力）</div>
-<img src="images/report/report-page-03.png" alt="压力指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-03.png" alt="压力指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s3">抗压能力</div>
-<img src="images/report/report-page-04.png" alt="抗压能力" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-04.png" alt="抗压能力" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s4">平均心率</div>
-<img src="images/report/report-page-05.png" alt="平均心率" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-05.png" alt="平均心率" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s5">心脏稳定性</div>
-<img src="images/report/report-page-06.png" alt="心脏稳定性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-06.png" alt="心脏稳定性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s6">自主神经活性</div>
-<img src="images/report/report-page-08.png" alt="自主神经活性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-08.png" alt="自主神经活性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s7">自主神经平衡</div>
-<img src="images/report/report-page-07.png" alt="自主神经平衡" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-07.png" alt="自主神经平衡" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="sec"><div class="stitle" id="report-s8">综合压力指数解读</div>
-<img src="images/report/report-page-10.png" alt="综合压力指数解读" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)">
+<img src="images/report/report-page-10.png" alt="综合压力指数解读" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
 </div>
 
 <div class="spacer"></div></div>
@@ -738,8 +756,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 </div></div>
 <div class="cs"><div class="cs-h">公司介绍资料（来源：培训PDF）</div><div class="cs-b">
 <div class="img-gallery-flex">
-<div class="img-card"><img src="images/company_intro_cert.png" alt="公司介绍与双高新认证" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">公司介绍与双高新认证</div></div>
-<div class="img-card"><img src="images/page4_dev_achievements.png" alt="发展成果与医疗器械注册证 - 培训PDF第4页" loading="lazy" onclick="openLightbox(this.src)"><div class="img-label">发展成果与注册证</div></div>
+<div class="img-card"><img src="images/company_intro_cert.png" alt="公司介绍与双高新认证" loading="lazy" onclick="openLightbox(this.src)" width="1920" height="1080" decoding="async"><div class="img-label">公司介绍与双高新认证</div></div>
+<div class="img-card"><img src="images/page4_dev_achievements.png" alt="发展成果与医疗器械注册证 - 培训PDF第4页" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">发展成果与注册证</div></div>
 </div>
 </div></div>
 <div class="spacer"></div></div>
@@ -757,9 +775,9 @@ var activeNav=document.querySelector('[data-p="'+id+'"]');if(activeNav)activeNav
 document.querySelector('.sb').classList.remove('active');document.querySelector('.so').classList.remove('active');
 if(id==='business'){document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});var ov=document.getElementById('biz-overview');if(ov)ov.style.display='block';}
 window.scrollTo({top:0,behavior:'smooth'});}
-function showBizPage(id){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){initCarousels();},200);}
+function showBizPage(id){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
 function showBizOverview(){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});}
-function showBizFlowSub(id){pageHistory.push(_capState());document.getElementById('biz-flow').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){initCarousels();},200);}
+function showBizFlowSub(id){pageHistory.push(_capState());document.getElementById('biz-flow').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
 function showBizFlowBack(){pageHistory.push(_capState());document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById('biz-flow').style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
 function togglePanel(h){h.parentElement.classList.toggle('open');}
 function searchQA(){var q=document.getElementById('qaInput').value.trim().toLowerCase();if(!q)return;
@@ -896,11 +914,12 @@ Carousel.prototype.goTo=function(idx){
 
 var carouselRegistry=[];
 function initCarousels(){
+    carouselRegistry=[];
     var gals=document.querySelectorAll('.img-gallery-flex:not(.img-carousel)');
     for(var i=0;i<gals.length;i++){if(gals[i].offsetParent===null)continue;carouselRegistry.push(new Carousel(gals[i]));}
 }
-// init on load
-setTimeout(function(){initCarousels();},100);
+// init on load via rAF — 消除 100ms setTimeout 延迟
+requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});
 
 var lbImages=[],lbIndex=-1,lbTouchStartX=0,lbTouchStartY=0,lbMouseDown=false,lbMouseStartX=0;
 
@@ -1093,7 +1112,6 @@ function updateIdxHighlight(pageId){var items=document.querySelectorAll('#p-'+pa
             p=p.parentElement;
         }
     }
-    setTimeout(function(){initCarousels();},200);
 })();
 
 </script>
