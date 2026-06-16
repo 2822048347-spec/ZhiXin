@@ -850,21 +850,22 @@ var lbImages=[],lbIndex=-1,lbTouchStartX=0,lbTouchStartY=0,lbMouseDown=false,lbM
 
 function openLightbox(src){
     lbImages=[];lbIndex=-1;
-    var galleries=document.querySelectorAll('.img-gallery-flex');
-    galleries.forEach(function(g){
-        if(g.offsetParent===null)return;
-        var imgs=g.querySelectorAll('.img-card img');
-        imgs.forEach(function(img){
-            if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
-            lbImages.push(img.src);
-        });
-    });
+    // 以当前可见页面为范围，收集所有可放大图片（包括独立图和画廊图）
+    var activePg=document.querySelector('.pg.active')||document.body;
+    var allImgs=activePg.querySelectorAll('img[onclick*="openLightbox"]');
+    for(var i=0;i<allImgs.length;i++){
+        var img=allImgs[i];
+        if(img.offsetParent===null)continue; // 跳过隐藏子页面内的图
+        if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
+        lbImages.push(img.src);
+    }
     if(!lbImages.length){lbImages=[src];lbIndex=0;}
     if(lbIndex===-1){lbImages=[src];lbIndex=0;}
     ensureLightbox();
     updateLightboxImage();
     document.getElementById('lightbox-overlay').classList.add('active');
     updateNavButtons();
+    updateCounter();
 }
 
 function ensureLightbox(){
@@ -894,6 +895,10 @@ function ensureLightbox(){
     nextBtn.innerHTML='&#10095;';
     nextBtn.onclick=function(e){e.stopPropagation();lightboxNext();};
     overlay.appendChild(nextBtn);
+    var counter=document.createElement('div');
+    counter.id='lb-counter';
+    counter.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:13px;font-weight:500;z-index:10001;background:rgba(0,0,0,.25);padding:6px 16px;border-radius:20px;letter-spacing:1px';
+    overlay.appendChild(counter);
     overlay.addEventListener('touchstart',function(e){
         if(e.touches.length===1){
             lbTouchStartX=e.touches[0].clientX;
@@ -947,7 +952,15 @@ function ensureLightbox(){
 }
 
 function updateLightboxImage(){
-    document.getElementById('lightbox-img').src=lbImages[lbIndex];
+    var img=document.getElementById('lightbox-img');
+    img.style.transition='opacity .15s ease';
+    img.style.opacity='0';
+    setTimeout(function(){
+        img.src=lbImages[lbIndex];
+        img.onload=function(){img.style.opacity='1';};
+        // fallback if onload doesn't fire
+        setTimeout(function(){img.style.opacity='1';},100);
+    },80);
 }
 
 function updateNavButtons(){
@@ -955,6 +968,12 @@ function updateNavButtons(){
     var next=document.querySelector('.lb-next');
     if(prev)prev.style.display=lbIndex>0?'flex':'none';
     if(next)next.style.display=lbIndex<lbImages.length-1?'flex':'none';
+    updateCounter();
+}
+
+function updateCounter(){
+    var c=document.getElementById('lb-counter');
+    if(c)c.textContent=(lbIndex+1)+'/'+lbImages.length;
 }
 
 function lightboxNext(){
