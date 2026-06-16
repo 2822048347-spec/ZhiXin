@@ -237,9 +237,10 @@ tr:hover td{background:rgba(155,133,149,.03)}
 
 /* ===== Panel ===== */
 .pnl{background:#fff;border-radius:var(--rm);margin-bottom:16px;overflow:hidden;box-shadow:var(--sh-card);border:1px solid var(--b)}
+.pnl.open{overflow:visible}
 .pnh{padding:16px 20px;background:rgba(155,133,149,.02);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;color:var(--t);transition:all var(--duration) var(--ease)}
 .pnh:hover{background:rgba(155,133,149,.05);color:var(--ps)}.pnh::after{content:"\25BC";font-size:10px;color:var(--t3);transition:transform .3s}
-.pnl.open .pnh::after{transform:rotate(180deg)}.pnb{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}.pnl.open .pnb{max-height:4000px;overflow:visible}
+.pnl.open .pnh::after{transform:rotate(180deg)}.pnb{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}.pnl.open .pnb{max-height:none;overflow:visible}
 .pnbd{padding:20px}.pnbd p{font-size:13px;line-height:1.8;color:var(--t2)}
 
 /* ===== Card Section ===== */
