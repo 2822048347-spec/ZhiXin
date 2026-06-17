@@ -781,8 +781,8 @@ tr:hover td{background:rgba(86,149,84,.03);transition:background .25s var(--ease
 </div></div>
 <div class="cs"><div class="cs-h">公司介绍资料（来源：培训PDF）</div><div class="cs-b">
 <div class="img-gallery-flex">
-<div class="img-card"><img src="images/company_intro_cert.webp" alt="公司介绍与双高新认证" loading="lazy" onclick="openLightbox(this.src)" width="1920" height="1080" decoding="async"><div class="img-label">公司介绍与双高新认证</div></div>
-<div class="img-card"><img src="images/page4_dev_achievements.webp" alt="发展成果与医疗器械注册证 - 培训PDF第4页" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">发展成果与注册证</div></div>
+<div class="img-card"><img src="images/company_intro_cert.webp" alt="公司介绍与双高新认证" onclick="openLightbox(this.src)" width="1920" height="1080" decoding="async"><div class="img-label">公司介绍与双高新认证</div></div>
+<div class="img-card"><img src="images/page4_dev_achievements.webp" alt="发展成果与医疗器械注册证 - 培训PDF第4页" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">发展成果与注册证</div></div>
 </div>
 </div></div>
 <div class="spacer"></div></div>
@@ -808,7 +808,8 @@ document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active'
 var activeNav=document.querySelector('[data-p="'+id+'"]');if(activeNav)activeNav.classList.add('active');
 document.querySelector('.sb').classList.remove('active');document.querySelector('.so').classList.remove('active');
 if(id==='business'){document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});var ov=document.getElementById('biz-overview');if(ov)ov.style.display='block';}
-window.scrollTo({top:0,behavior:'smooth'});}
+window.scrollTo({top:0,behavior:'smooth'});
+requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
 function showBizPage(id){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
 function showBizOverview(){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});}
 function showBizFlowSub(id){pageHistory.push(_capState());document.getElementById('biz-flow').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
