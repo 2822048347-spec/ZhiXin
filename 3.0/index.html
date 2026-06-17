@@ -134,14 +134,14 @@ body::after{
 /* ===== Grid Cards ===== */
 .gd{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px}
 .cd{
-  background:#eef4ec;border-radius:var(--rm);padding:22px 16px;
+  background:#eef4ec;border-radius:var(--rm);padding:18px 14px 16px;
   box-shadow:0 4px 20px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.02);cursor:pointer;
   transition:all var(--duration) var(--ease);
   border:1px solid rgba(196,166,106,.18);position:relative;overflow:hidden;
 }
-.cd:nth-child(odd){margin-top:6px}
-.cd:nth-child(even){margin-top:-6px}
-.cd::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;opacity:.35;transition:opacity var(--duration);border-radius:3px 3px 0 0}
+.cd:nth-child(odd){margin-top:0}
+.cd:nth-child(even){margin-top:0}
+.cd::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;opacity:.45;transition:all var(--duration);border-radius:4px 4px 0 0}
 .cd::after{content:"";position:absolute;inset:-1px;border-radius:var(--rm);opacity:0;transition:opacity .6s;pointer-events:none;z-index:-1}
 .cd:nth-child(1)::before{background:linear-gradient(90deg,#C4A66A,#D4BF8E)}
 .cd:nth-child(2)::before{background:linear-gradient(90deg,#B89E5C,#D4C08E)}
@@ -163,7 +163,7 @@ body::after{
 .cd:nth-child(6):hover::after{box-shadow:0 0 48px rgba(184,138,74,.1),inset 0 0 48px rgba(184,138,74,.02)}
 .cd:nth-child(7):hover::after{box-shadow:0 0 48px rgba(196,166,106,.1),inset 0 0 48px rgba(196,166,106,.02)}
 .cd:nth-child(8):hover::after{box-shadow:0 0 48px rgba(212,196,136,.1),inset 0 0 48px rgba(212,196,136,.02)}
-.ci{width:48px;height:48px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;box-shadow:0 3px 14px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.03)}
+.ci{width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid rgba(255,255,255,.4)}
 .cib{background:linear-gradient(135deg,rgba(86,149,84,.14),rgba(158,192,156,.06));color:#3D6B3A}
 .cir{background:linear-gradient(135deg,rgba(184,145,138,.12),rgba(212,181,174,.06));color:#8a6a62}
 .cig{background:linear-gradient(135deg,rgba(143,171,138,.12),rgba(181,207,179,.06));color:#5a7a54}
@@ -171,8 +171,8 @@ body::after{
 .cip{background:linear-gradient(135deg,rgba(155,143,163,.12),rgba(194,185,201,.06));color:#6a5f75}
 .cigold{background:linear-gradient(135deg,rgba(184,168,122,.12),rgba(212,201,158,.06));color:#8a7a4a}
 .cic{background:linear-gradient(135deg,rgba(122,150,150,.12),rgba(163,188,188,.06));color:#4a7272}
-.ct{font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:0px;color:var(--t)}
-.cdesc{font-size:11px;color:var(--t3);line-height:1.6;letter-spacing:.3px}
+.ct{font-size:14px;font-weight:700;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(0,0,0,.05);letter-spacing:.5px;color:#3d3a42}
+.cdesc{font-size:11px;color:#6b656e;line-height:1.65;letter-spacing:.2px;margin-top:2px}
 
 /* ===== Page Header ===== */
 .ph{
