@@ -310,10 +310,11 @@ tr:hover td{background:rgba(155,133,149,.03)}
 
 /* ===== Image Carousel ===== */
 .img-carousel{position:relative;overflow:hidden;border-radius:12px;margin:14px 0;background:transparent;-webkit-user-select:none;user-select:none}
-.img-carousel-track-wrap{position:relative;overflow:hidden}
-.img-carousel-track{display:flex;transition:transform .45s cubic-bezier(.23,1,.32,1);will-change:transform;cursor:grab;touch-action:pan-y pinch-zoom;-webkit-touch-callout:none}
+.img-carousel-track-wrap{position:relative;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.img-carousel-track-wrap::-webkit-scrollbar{display:none}
+.img-carousel-track{display:flex;will-change:scroll-position;touch-action:pan-x pinch-zoom}
 .img-carousel-track:active{cursor:grabbing}
-.img-carousel-slide{flex:0 0 86%;padding:0 8px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;opacity:.5;transition:opacity .4s}
+.img-carousel-slide{flex:0 0 86%;padding:0 8px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;scroll-snap-stop:always}
 .img-carousel-slide.active-slide{opacity:1}
 .img-carousel-slide .img-card{width:100%!important;text-align:center;cursor:pointer;flex:auto!important}
 .img-carousel-slide .img-card:hover{transform:none}
@@ -325,11 +326,8 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .img-carousel-page-nav{text-align:center;font-size:14px;font-weight:600;color:var(--p);padding:8px 0 4px;letter-spacing:1px;user-select:none;-webkit-user-select:none}
 .img-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--p);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:all .2s;outline:none;-webkit-tap-highlight-color:transparent;pointer-events:auto;touch-action:manipulation}
 .img-carousel-arrow:active{background:var(--p);color:#fff;transform:translateY(-50%) scale(.92)}
-.img-carousel-prev{left:4px}
-.img-carousel-next{right:4px}
-.img-carousel-ext-hitarea{position:absolute;top:0;bottom:0;width:50%;z-index:999;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.img-carousel-ext-left{left:0}
-.img-carousel-ext-right{right:0}
+.img-carousel-prev{left:4px;z-index:6}
+.img-carousel-next{right:4px;z-index:6}
 
 /* ===== Lightbox ===== */
 .lightbox-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,28,32,.96);z-index:10000;justify-content:center;align-items:center;cursor:pointer;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
@@ -901,100 +899,78 @@ function Carousel(container){
     this.total=cards.length;this.current=0;this.slideW=86;
     this.track=document.createElement('div');this.track.className='img-carousel-track';
     this.slides=[];this.dots=[];
-    this.dragStartX=null;this.wasDrag=false;this.startX=0;
+    this.wasDrag=false;
     var dotsDiv=document.createElement('div');dotsDiv.className='img-carousel-dots';
     for(var i=0;i<cards.length;i++){
         var slide=document.createElement('div');slide.className='img-carousel-slide';
-        this.track.appendChild(slide);slide.appendChild(cards[i]);this.slides.push(slide);
+        this.track.appendChild(slide);
+        var card=cards[i];
+        slide.appendChild(card);this.slides.push(slide);
         var dot=document.createElement('span');dot.className='img-carousel-dot';dot.setAttribute('data-index',i);
         (function(idx){dot.addEventListener('click',function(e){e.stopPropagation();self.goTo(idx);});})(i);
         dotsDiv.appendChild(dot);this.dots.push(dot);
     }
-    // 双击放大：carousel 内图片改为双击/double-tap 触发 lightbox，单击不触发
+    // 点击图片：单点翻页右侧，双击放大
     for(var j=0;j<this.slides.length;j++){
-        (function(slide){
-            var card=slide.querySelector('.img-card');
-            if(!card)return;
-            var img=card.querySelector('img');
+        (function(slide,idx){
+            var img=slide.querySelector('img');
             if(!img)return;
             img.removeAttribute('onclick');
-            var hint=document.createElement('div');
-            hint.className='img-zoom-hint';
-            hint.textContent='双击放大';
-            card.appendChild(hint);
-            var tapCount=0,tapTimer=null,lbOpened=false;
+            var tapTimer=null,tapCount=0,lbOpened=false;
             img.addEventListener('click',function(e){
                 if(self.wasDrag){self.wasDrag=false;return;}
                 tapCount++;
                 if(tapCount===1){
-                    tapTimer=setTimeout(function(){tapCount=0;lbOpened=false;},400);
+                    tapTimer=setTimeout(function(){
+                        tapCount=0;
+                        lbOpened=false;
+                        // 单点：翻到下一页
+                        if(idx<self.total-1)self.goTo(idx+1);
+                    },300);
                 }else if(tapCount>=2&&!lbOpened){
                     clearTimeout(tapTimer);
                     tapCount=0;lbOpened=true;
                     openLightbox(this.src);
                 }
             });
-            img.addEventListener('dblclick',function(e){
-                if(self.wasDrag){self.wasDrag=false;return;}
-                if(!lbOpened){
-                    clearTimeout(tapTimer);
-                    tapCount=0;lbOpened=true;
-                    openLightbox(this.src);
-                }
-            });
-        })(this.slides[j]);
+        })(this.slides[j],j);
     }
     var pageNav=document.createElement('div');pageNav.className='img-carousel-page-nav';pageNav.textContent='第1页 / 共'+this.total+'页';this.pageNav=pageNav;
     container.appendChild(pageNav);
     // 左右翻页箭头
     var prevBtn=document.createElement('button');prevBtn.className='img-carousel-arrow img-carousel-prev';prevBtn.innerHTML='&#10094;';prevBtn.setAttribute('aria-label','上一页');
     var nextBtn=document.createElement('button');nextBtn.className='img-carousel-arrow img-carousel-next';nextBtn.innerHTML='&#10095;';nextBtn.setAttribute('aria-label','下一页');
-    var goPrev=function(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();self.goTo(Math.max(0,self.current-1));return false;};
-    var goNext=function(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();self.goTo(Math.min(self.total-1,self.current+1));return false;};
-    [prevBtn,nextBtn].forEach(function(btn,idx){
-        var fn=idx===0?goPrev:goNext;
-        btn.onclick=fn;
-        btn.addEventListener('pointerdown',fn,true);
-        btn.addEventListener('mousedown',fn,true);
-        btn.addEventListener('touchstart',fn,{passive:false,capture:true});
-    });
     var trackWrap=document.createElement('div');trackWrap.className='img-carousel-track-wrap';
     trackWrap.appendChild(prevBtn);trackWrap.appendChild(nextBtn);trackWrap.appendChild(this.track);
     container.appendChild(trackWrap);container.appendChild(dotsDiv);
-    // 外挂翻页：双重保险
-    (function(C){
-        var extPrev2=document.createElement('div');extPrev2.className='img-carousel-ext-hitarea img-carousel-ext-left';
-        var extNext2=document.createElement('div');extNext2.className='img-carousel-ext-hitarea img-carousel-ext-right';
-        extPrev2.onclick=function(e){e.preventDefault();e.stopPropagation();C.goTo(Math.max(0,C.current-1));return false;};
-        extNext2.onclick=function(e){e.preventDefault();e.stopPropagation();C.goTo(Math.min(C.total-1,C.current+1));return false;};
-        extPrev2.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();C.goTo(Math.max(0,C.current-1));},{passive:false,capture:true});
-        extNext2.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();C.goTo(Math.min(C.total-1,C.current+1));},{passive:false,capture:true});
-        container.appendChild(extPrev2);container.appendChild(extNext2);
-    })(self);
-    // Touch — 使用 passive:false + preventDefault 确保滑动响应
-    this.track.addEventListener('touchstart',function(e){self.startX=e.touches[0].clientX;self.wasDrag=false;self.track.style.transition='none';},{passive:true});
-    this.track.addEventListener('touchmove',function(e){var dx=e.touches[0].clientX-self.startX;var dy=e.touches[0].clientY-self.startY;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>5){e.preventDefault();self.wasDrag=true;var cw=self.container.offsetWidth;var slideW=cw*self.slideW/100;self._pos(-self.current*slideW+(cw-slideW)/2+dx);}},{passive:false});
-    this.track.addEventListener('touchend',function(e){self.track.style.transition='transform .45s cubic-bezier(.23,1,.32,1)';var dx=e.changedTouches[0].clientX-self.startX;if(Math.abs(dx)>40){self.current+=dx>0?-1:1;}self.current=Math.max(0,Math.min(self.total-1,self.current));self.goTo(self.current);});
-    // Mouse
-    this.track.addEventListener('mousedown',function(e){e.preventDefault();self.dragStartX=e.clientX;self.startX=e.clientX;self.wasDrag=false;self.track.style.transition='none';});
-    this.track.addEventListener('mousemove',function(e){if(self.dragStartX===null)return;var dx=e.clientX-self.startX;if(Math.abs(dx)>5)self.wasDrag=true;var cw=self.container.offsetWidth;var slideW=cw*self.slideW/100;self._pos(-self.current*slideW+(cw-slideW)/2+dx);});
-    this.track.addEventListener('mouseup',function(e){if(self.dragStartX===null)return;self.track.style.transition='transform .45s cubic-bezier(.23,1,.32,1)';var dx=e.clientX-self.startX;if(Math.abs(dx)>40){self.current+=dx>0?-1:1;}self.current=Math.max(0,Math.min(self.total-1,self.current));self.goTo(self.current);self.dragStartX=null;});
-    this.track.addEventListener('mouseleave',function(){if(self.dragStartX!==null){self.track.style.transition='transform .45s cubic-bezier(.23,1,.32,1)';self.goTo(self.current);self.dragStartX=null;}});
-    // Wheel
-    this.container.addEventListener('wheel',function(e){if(Math.abs(e.deltaX)>Math.abs(e.deltaY)&&Math.abs(e.deltaX)>20){e.preventDefault();self.current+=e.deltaX>0?1:-1;self.current=Math.max(0,Math.min(self.total-1,self.current));self.goTo(self.current);}},{passive:false});
-    // Prevent image click on drag
-    this.track.addEventListener('click',function(e){if(self.wasDrag){self.wasDrag=false;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return false;}},true);
-    this.goTo(0);
+    this.trackWrap=trackWrap;
+    // 监听滚动，更新页码和 dots
+    trackWrap.addEventListener('scroll',function(){
+        var sw=self.container.offsetWidth*self.slideW/100;
+        var idx=Math.round(trackWrap.scrollLeft/sw);
+        idx=Math.max(0,Math.min(self.total-1,idx));
+        if(idx===self.current)return;
+        self.current=idx;
+        pageNav.textContent='第'+(idx+1)+'页 / 共'+self.total+'页';
+        for(var i=0;i<self.dots.length;i++){self.dots[i].className='img-carousel-dot'+(i===idx?' active':'');self.slides[i].className='img-carousel-slide'+(i===idx?' active-slide':'');}
+    },{passive:true});
+    // 箭头点击：使用 scrollBy
+    prevBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();trackWrap.scrollBy({left:-self.container.offsetWidth,behavior:'smooth'});});
+    nextBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();trackWrap.scrollBy({left:self.container.offsetWidth,behavior:'smooth'});});
+    // Touch 拖动检测
+    var touchStartX=0,touchStartY=0;
+    trackWrap.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;self.wasDrag=false;},{passive:true});
+    trackWrap.addEventListener('touchmove',function(e){if(Math.abs(e.touches[0].clientX-touchStartX)>5&&Math.abs(e.touches[0].clientX-touchStartX)>Math.abs(e.touches[0].clientY-touchStartY)){self.wasDrag=true;}},{passive:true});
+    // 初始化第一页
+    this.dots[0].className='img-carousel-dot active';
+    this.slides[0].className='img-carousel-slide active-slide';
 }
-Carousel.prototype._pos=function(px){var t='translate3d('+px+'px,0,0)';this.track.style.transform=t;this.track.style.webkitTransform=t;};
 Carousel.prototype.goTo=function(idx){
     this.current=idx;
-    var cw=this.container.offsetWidth;
-    var slideW=cw*this.slideW/100;
-    var off=-idx*slideW+(cw-slideW)/2;
-    this._pos(off);
-    for(var i=0;i<this.dots.length;i++){this.dots[i].className='img-carousel-dot'+(i===idx?' active':'');this.slides[i].className='img-carousel-slide'+(i===idx?' active-slide':'');}
+    var sw=this.container.offsetWidth*this.slideW/100;
+    this.trackWrap.scrollTo({left:idx*sw,behavior:'smooth'});
     this.pageNav.textContent='第'+(idx+1)+'页 / 共'+this.total+'页';
+    for(var i=0;i<this.dots.length;i++){this.dots[i].className='img-carousel-dot'+(i===idx?' active':'');this.slides[i].className='img-carousel-slide'+(i===idx?' active-slide':'');}
 };
 
 var carouselRegistry=[];
