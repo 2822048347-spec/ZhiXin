@@ -320,6 +320,7 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .img-carousel-dots{display:flex;justify-content:center;align-items:center;gap:8px;padding:10px 0 4px}
 .img-carousel-dot{width:7px;height:7px;border-radius:50%;background:rgba(155,133,149,.18);transition:all .3s;cursor:pointer}
 .img-carousel-dot.active{background:var(--p);width:22px;border-radius:4px}
+.img-zoom-hint{font-size:11px;color:var(--t4);text-align:center;padding:2px 0 0;opacity:.55;letter-spacing:.5px;user-select:none;-webkit-user-select:none}
 
 /* ===== Lightbox ===== */
 .lightbox-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,28,32,.96);z-index:10000;justify-content:center;align-items:center;cursor:pointer;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
@@ -900,6 +901,40 @@ function Carousel(container){
         (function(idx){dot.addEventListener('click',function(e){e.stopPropagation();self.goTo(idx);});})(i);
         dotsDiv.appendChild(dot);this.dots.push(dot);
     }
+    // 双击放大：carousel 内图片改为双击/double-tap 触发 lightbox，单击不触发
+    for(var j=0;j<this.slides.length;j++){
+        (function(slide){
+            var card=slide.querySelector('.img-card');
+            if(!card)return;
+            var img=card.querySelector('img');
+            if(!img)return;
+            img.removeAttribute('onclick');
+            var hint=document.createElement('div');
+            hint.className='img-zoom-hint';
+            hint.textContent='双击放大';
+            card.appendChild(hint);
+            var tapCount=0,tapTimer=null,lbOpened=false;
+            img.addEventListener('click',function(e){
+                if(self.wasDrag){self.wasDrag=false;return;}
+                tapCount++;
+                if(tapCount===1){
+                    tapTimer=setTimeout(function(){tapCount=0;lbOpened=false;},400);
+                }else if(tapCount>=2&&!lbOpened){
+                    clearTimeout(tapTimer);
+                    tapCount=0;lbOpened=true;
+                    openLightbox(this.src);
+                }
+            });
+            img.addEventListener('dblclick',function(e){
+                if(self.wasDrag){self.wasDrag=false;return;}
+                if(!lbOpened){
+                    clearTimeout(tapTimer);
+                    tapCount=0;lbOpened=true;
+                    openLightbox(this.src);
+                }
+            });
+        })(this.slides[j]);
+    }
     container.appendChild(this.track);container.appendChild(dotsDiv);
     // Touch
     this.track.addEventListener('touchstart',function(e){self.startX=e.touches[0].clientX;self.wasDrag=false;self.track.style.transition='none';},{passive:true});
@@ -943,6 +978,16 @@ function openLightbox(src){
         if(img.offsetParent===null)continue; // 跳过隐藏子页面内的图
         if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
         lbImages.push(img.src);
+    }
+    // 同时收集 carousel 内图片（onclick 已被移除，改用双击触发）
+    var carouselImgs=activePg.querySelectorAll('.img-carousel-slide .img-card img');
+    for(var i=0;i<carouselImgs.length;i++){
+        var img=carouselImgs[i];
+        if(img.offsetParent===null)continue;
+        if(lbImages.indexOf(img.src)===-1){
+            if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
+            lbImages.push(img.src);
+        }
     }
     if(!lbImages.length){lbImages=[src];lbIndex=0;}
     if(lbIndex===-1){lbImages=[src];lbIndex=0;}
