@@ -1,0 +1,1334 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>智心同检知识库 3.0</title><!-- v2026.06.17-green-gold -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3A5A3A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="智心同检">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --p:#569554;--pd:#407540;--ps:#73A372;--pl:#9EC09C;
+  --ac1:#7b8fa1;--ac2:#8fab8a;--ac3:#b8918a;--ac4:#b8947a;--ac5:#C4A66A;
+  --bg:#eae4da;--bg2:#e0d9ce;--bg3:#d5cec3;
+  --cs:rgba(0,0,0,.015);--c2:rgba(0,0,0,.03);
+  --glass:rgba(255,255,255,.68);--glass2:rgba(255,255,255,.78);
+  --t:#3d3a42;--t2:#6b656e;--t3:#9b949c;--t4:#a8a2aa;
+  --b:rgba(0,0,0,.04);--b2:rgba(0,0,0,.06);
+  --glow1:rgba(86,149,84,.1);--glow2:rgba(115,163,114,.06);
+  --r:32px;--rm:30px;--rs:28px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.03),0 0 0 1px rgba(0,0,0,.015);
+  --sh-md:0 6px 24px rgba(0,0,0,.04),0 0 0 1px rgba(0,0,0,.02);
+  --sh-lg:0 16px 48px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.025);
+  --sh-glow:0 0 60px rgba(86,149,84,.06),0 0 120px rgba(86,149,84,.03);
+  --sh-card:0 0 0 1px rgba(0,0,0,.02),0 4px 18px rgba(0,0,0,.04),0 8px 36px rgba(0,0,0,.025);
+  --sh-card-hover:0 0 0 1px rgba(86,149,84,.12),0 12px 44px rgba(86,149,84,.07),0 0 70px rgba(196,166,106,.04);
+  --duration:0.5s;
+  --ease:cubic-bezier(.25,1,.3,1);
+  --ease-bounce:cubic-bezier(.3,1.4,.5,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.7;color:var(--t);background:var(--bg);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(86,149,84,.04) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 70%,rgba(123,143,161,.035) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 40%,rgba(143,171,138,.03) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 50% at 90% 20%,rgba(184,145,138,.025) 0%,transparent 65%),
+    radial-gradient(ellipse 30% 40% at 10% 80%,rgba(196,166,106,.02) 0%,transparent 70%);
+  opacity:1;
+}
+body::after{
+  content:"";position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  opacity:.6;
+}
+
+
+/* ===== Top Nav ===== */
+.nb{
+  position:fixed;top:0;left:0;right:0;height:56px;
+  background:rgba(255,255,255,.82);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  color:var(--t);display:flex;align-items:center;padding:0 18px;
+  z-index:1000;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 2px 16px rgba(0,0,0,.06);
+  border-bottom:1px solid rgba(0,0,0,.04);
+}
+.nb::after{
+  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(86,149,84,.18),rgba(125,166,123,.08),transparent);
+}
+.mb,.tb{width:40px;height:40px;border:none;background:rgba(0,0,0,.03);color:#6b656e;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:20px;transition:all var(--duration) var(--ease);border:1px solid rgba(0,0,0,.03);position:relative;overflow:hidden}
+.mb::after,.tb::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);opacity:0;transition:opacity var(--duration)}
+.mb:hover,.tb:hover{background:rgba(86,149,84,.06);transform:scale(1.05);border-color:rgba(86,149,84,.12);box-shadow:0 0 24px rgba(86,149,84,.08)}
+.mb:hover::after,.tb:hover::after{opacity:1}
+.nt{flex:1;text-align:center;font-size:16px;font-weight:700;letter-spacing:4px;background:linear-gradient(135deg,#3A5A3A 0%,#569554 50%,#7DA67B 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ===== Sidebar ===== */
+.so{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(30,28,32,.25);z-index:1999;opacity:0;visibility:hidden;transition:all .5s var(--ease);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.so.active{opacity:1;visibility:visible}
+.sb{position:fixed;top:0;left:-285px;width:285px;height:100%;background:rgba(234,228,218,.95);z-index:2000;transition:left .5s var(--ease);overflow-y:auto;box-shadow:12px 0 48px rgba(0,0,0,.08);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-right:1px solid rgba(0,0,0,.03)}.sb.active{left:0}
+.sh{background:linear-gradient(160deg,#3A5A3A 0%,#569554 35%,#7DA67B 65%,#C4A66A 100%);color:#fff;padding:60px 20px 26px;text-align:center;position:relative;overflow:hidden}
+.sh::before{content:"";position:absolute;top:-60px;left:-40px;width:160px;height:160px;background:rgba(255,255,255,.03);border-radius:50%;animation:shOrb1 8s ease-in-out infinite}
+.sh::after{content:"";position:absolute;bottom:-40px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%;animation:shOrb2 10s ease-in-out infinite}
+@keyframes shOrb1{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-10px)}}
+@keyframes shOrb2{0%,100%{transform:translate(0,0)}50%{transform:translate(-15px,15px)}}
+.sh h3{font-size:17px;font-weight:800;margin-bottom:6px;letter-spacing:3px;position:relative;z-index:1}.sh p{font-size:11px;opacity:.65;position:relative;z-index:1;letter-spacing:.8px}
+.ni{display:flex;align-items:center;padding:14px 24px;color:var(--t3);cursor:pointer;font-size:14px;border-left:3px solid transparent;transition:all var(--duration) var(--ease);font-weight:500;border-radius:0 16px 16px 0;margin:3px 10px 3px 0;position:relative}
+.ni::before{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(90deg,rgba(86,149,84,.06),transparent);opacity:0;transition:opacity var(--duration);border-radius:0 16px 16px 0}
+.ni:hover{color:var(--ps);background:rgba(86,149,84,.04)}
+.ni:hover::before{opacity:1}
+.ni.active{background:linear-gradient(90deg,rgba(86,149,84,.1),transparent);border-left-color:var(--p);color:#3A5C38;font-weight:600}
+.ni-icon{width:38px;height:38px;background:linear-gradient(135deg,rgba(86,149,84,.12),rgba(86,149,84,.06));border-radius:14px;display:flex;align-items:center;justify-content:center;margin-right:14px;font-size:15px;color:#569554;flex-shrink:0;border:1px solid rgba(86,149,84,.08);box-shadow:0 2px 10px rgba(86,149,84,.06)}
+
+/* ===== Main Content ===== */
+.mn{margin-top:56px;padding:16px 16px 48px}
+.pg{display:none}.pg.active{display:block;animation:pageIn .6s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+
+/* ===== Hero ===== */
+.hero{
+  background:linear-gradient(160deg,#375A37 0%,#569554 22%,#6E9E6C 50%,#C4A66A 100%);
+  border-radius:var(--r);padding:36px 28px;color:#fff;margin-bottom:24px;
+  box-shadow:0 12px 40px rgba(61,90,60,.12),0 0 80px rgba(86,149,84,.04),0 0 160px rgba(196,166,106,.04),inset 0 1px 0 rgba(255,255,255,.08);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;top:-100px;left:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;animation:heroOrb1 12s ease-in-out infinite;
+}
+.hero::after{
+  content:"";position:absolute;bottom:-80px;right:-70px;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(255,255,255,.03) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;animation:heroOrb2 14s ease-in-out infinite;
+}
+@keyframes heroOrb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(15px,-10px) scale(1.06)}}
+@keyframes heroOrb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10px,15px) scale(1.04)}}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:12px;letter-spacing:4px;position:relative;z-index:1;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+.hero p{font-size:13px;line-height:1.9;opacity:.8;position:relative;z-index:1;font-weight:400;letter-spacing:.5px}
+.sts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;position:relative;z-index:1}
+.st{
+  background:rgba(255,255,255,.1);border-radius:22px;padding:18px 8px;text-align:center;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08);transition:all var(--duration) var(--ease);
+  position:relative;overflow:hidden;
+}
+.st::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);opacity:0;transition:opacity var(--duration)}
+.st:hover{transform:translateY(-4px);background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.2);box-shadow:0 8px 28px rgba(0,0,0,.08),0 0 0 1px rgba(255,255,255,.08)}
+.st:hover::after{opacity:1}
+.st:active{transform:translateY(0) scale(.96);transition:all .08s var(--ease)}
+.st-n{font-size:30px;font-weight:800;display:block;letter-spacing:-1px;text-shadow:0 0 24px rgba(255,255,255,.15)}.st-l{font-size:10px;opacity:.65;margin-top:6px;letter-spacing:.8px}
+
+/* ===== Grid Cards ===== */
+.gd{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px}
+.cd{
+  background:#eef4ec;border-radius:var(--rm);padding:18px 14px 16px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.02);cursor:pointer;
+  transition:all var(--duration) var(--ease);
+  border:1px solid rgba(196,166,106,.18);position:relative;overflow:hidden;
+}
+.cd:nth-child(odd){margin-top:0}
+.cd:nth-child(even){margin-top:0}
+.cd::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;opacity:.45;transition:all var(--duration);border-radius:4px 4px 0 0}
+.cd::after{content:"";position:absolute;inset:-1px;border-radius:var(--rm);opacity:0;transition:opacity .6s;pointer-events:none;z-index:-1}
+.cd:nth-child(1)::before{background:linear-gradient(90deg,#C4A66A,#D4BF8E)}
+.cd:nth-child(2)::before{background:linear-gradient(90deg,#B89E5C,#D4C08E)}
+.cd:nth-child(3)::before{background:linear-gradient(90deg,#C4A66A,#DAC898)}
+.cd:nth-child(4)::before{background:linear-gradient(90deg,#D4B870,#E0CF98)}
+.cd:nth-child(5)::before{background:linear-gradient(90deg,#CC9E50,#DCC088)}
+.cd:nth-child(6)::before{background:linear-gradient(90deg,#B88A4A,#D0B878)}
+.cd:nth-child(7)::before{background:linear-gradient(90deg,#C4A66A,#E0D0A8)}
+.cd:nth-child(8)::before{background:linear-gradient(90deg,#D4C488,#E8DCA8)}
+.cd:hover{transform:translateY(-6px);box-shadow:var(--sh-card-hover);border-color:rgba(196,166,106,.35);background:#eef4ec}
+.cd:hover::before{opacity:1;height:4px}
+.cd:hover::after{opacity:1}
+.cd:active{transform:translateY(0) scale(.97);box-shadow:0 2px 6px rgba(0,0,0,.02);transition:all .08s var(--ease)}
+.cd:nth-child(1):hover::after{box-shadow:0 0 48px rgba(86,149,84,.1),inset 0 0 48px rgba(86,149,84,.02)}
+.cd:nth-child(2):hover::after{box-shadow:0 0 48px rgba(184,158,92,.1),inset 0 0 48px rgba(184,158,92,.02)}
+.cd:nth-child(3):hover::after{box-shadow:0 0 48px rgba(196,166,106,.1),inset 0 0 48px rgba(196,166,106,.02)}
+.cd:nth-child(4):hover::after{box-shadow:0 0 48px rgba(212,184,112,.1),inset 0 0 48px rgba(212,184,112,.02)}
+.cd:nth-child(5):hover::after{box-shadow:0 0 48px rgba(204,158,80,.1),inset 0 0 48px rgba(204,158,80,.02)}
+.cd:nth-child(6):hover::after{box-shadow:0 0 48px rgba(184,138,74,.1),inset 0 0 48px rgba(184,138,74,.02)}
+.cd:nth-child(7):hover::after{box-shadow:0 0 48px rgba(196,166,106,.1),inset 0 0 48px rgba(196,166,106,.02)}
+.cd:nth-child(8):hover::after{box-shadow:0 0 48px rgba(212,196,136,.1),inset 0 0 48px rgba(212,196,136,.02)}
+.ci{width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid rgba(255,255,255,.4)}
+.cib{background:linear-gradient(135deg,rgba(86,149,84,.14),rgba(158,192,156,.06));color:#3D6B3A}
+.cir{background:linear-gradient(135deg,rgba(184,145,138,.12),rgba(212,181,174,.06));color:#8a6a62}
+.cig{background:linear-gradient(135deg,rgba(143,171,138,.12),rgba(181,207,179,.06));color:#5a7a54}
+.cio{background:linear-gradient(135deg,rgba(184,148,122,.12),rgba(212,182,158,.06));color:#8a6a4a}
+.cip{background:linear-gradient(135deg,rgba(155,143,163,.12),rgba(194,185,201,.06));color:#6a5f75}
+.cigold{background:linear-gradient(135deg,rgba(184,168,122,.12),rgba(212,201,158,.06));color:#8a7a4a}
+.cic{background:linear-gradient(135deg,rgba(122,150,150,.12),rgba(163,188,188,.06));color:#4a7272}
+.ct{font-size:14px;font-weight:700;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(0,0,0,.05);letter-spacing:.5px;color:#5C8A5A}
+.cdesc{font-size:11px;color:#6b656e;line-height:1.65;letter-spacing:.2px;margin-top:2px}
+
+/* ===== Page Header ===== */
+.ph{
+  background:#ffffff;border-radius:var(--rm);padding:22px 24px;margin-bottom:20px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.02);position:relative;overflow:hidden;
+  border:1px solid rgba(86,149,84,.1);transition:all var(--duration) var(--ease);
+}
+.ph:hover{box-shadow:var(--sh-card-hover),0 0 40px rgba(196,166,106,.04);transform:translateY(-1px)}
+.ph::after{content:"";position:absolute;left:0;top:20%;bottom:20%;width:4px;background:linear-gradient(180deg,var(--p),var(--ps),transparent);border-radius:0 4px 4px 0;opacity:.7}
+.ph h2{font-size:20px;font-weight:800;margin-bottom:8px;letter-spacing:1px;background:linear-gradient(135deg,#3A5A3A,#5C8A5A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ph p{font-size:12px;color:var(--t3);line-height:1.7;letter-spacing:.4px}
+
+/* ===== Section Card ===== */
+.sec{
+  background:#ffffff;border-radius:var(--rm);padding:22px;margin-bottom:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.02);border:1px solid rgba(86,149,84,.1);transition:all var(--duration) var(--ease);
+  position:relative;
+}
+.sec::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(86,149,84,.008) 0%,transparent 60%);pointer-events:none;transition:opacity .4s var(--ease)}
+.sec:hover::after{background:linear-gradient(180deg,rgba(86,149,84,.02) 0%,transparent 50%)}
+.sec:hover{box-shadow:var(--sh-card-hover),0 0 60px rgba(196,166,106,.06);transform:translateY(-3px);border-color:rgba(86,149,84,.15)}
+.stitle{font-size:16px;font-weight:700;color:#5C8A5A;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(86,149,84,.08);display:flex;align-items:center;letter-spacing:0px;position:relative}
+.stitle::before{content:"";width:5px;height:22px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:12px;flex-shrink:0;box-shadow:0 0 14px rgba(86,149,84,.2)}
+.sec p{font-size:13px;line-height:1.9;color:var(--t2);margin-bottom:12px}
+.sec ul{list-style:none;padding:0;margin:10px 0}
+.sec li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 34px;position:relative}
+.sec ul li::before{content:"";position:absolute;left:10px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),#4A7348);border-radius:50%;box-shadow:0 0 10px rgba(86,149,84,.2)}
+.sec ol{padding-left:40px;margin:10px 0}
+.sec ol li{font-size:13px;line-height:1.8;color:var(--t2);padding:7px 0 7px 4px}
+.sec ol li::marker{color:var(--ps);font-weight:700}
+
+/* ===== Tags ===== */
+.tag{display:inline-block;padding:4px 12px;border-radius:22px;font-size:11px;font-weight:600;margin:2px 6px 2px 0;letter-spacing:.3px}
+.tr{background:rgba(184,145,138,.08);color:#8a5a52;border:1px solid rgba(184,145,138,.12)}
+.to{background:rgba(184,148,122,.08);color:#8a6a4a;border:1px solid rgba(184,148,122,.12)}
+.tb{background:rgba(123,143,161,.08);color:#5a6a7a;border:1px solid rgba(123,143,161,.12)}
+.tg{background:rgba(143,171,138,.08);color:#5a7a54;border:1px solid rgba(143,171,138,.12)}
+.tp{background:rgba(86,149,84,.08);color:#4A6B48;border:1px solid rgba(86,149,84,.12)}
+
+/* ===== Table ===== */
+.tw{overflow-x:auto;margin:16px 0;border-radius:var(--rs);box-shadow:var(--sh-md);border:1px solid var(--b);transition:all var(--duration) var(--ease)}
+.tw:hover{box-shadow:var(--sh-card-hover);transform:translateY(-1px)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{
+  background:linear-gradient(135deg,rgba(86,149,84,.06),rgba(74,115,72,.03));color:var(--t);font-weight:700;
+  padding:14px 16px;text-align:left;white-space:nowrap;font-size:12px;letter-spacing:.5px;
+  border-bottom:1px solid rgba(86,149,84,.08)
+}
+th:first-child{border-radius:8px 0 0 0}th:last-child{border-radius:0 8px 0 0}
+td{padding:12px 16px;border-bottom:1px solid rgba(0,0,0,.04);color:var(--t2);font-size:12px}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even){background:rgba(0,0,0,.01)}
+tr:hover td{background:rgba(86,149,84,.03);transition:background .25s var(--ease)}
+
+/* ===== Info Box ===== */
+.ib{border-radius:0 16px 16px 0;padding:18px 20px;margin:16px 0;font-size:12px;line-height:1.9;color:var(--t2);border-left:4px solid;position:relative;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.ib::before{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:0 16px 16px 0;pointer-events:none}
+.iw{border-color:#b8a87a}
+.iw::before{background:rgba(184,168,122,.04);content:"";position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:0 28px 28px 0;pointer-events:none}
+.id{border-color:#b8918a}
+.id::before{background:rgba(184,145,138,.04);content:"";position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:0 28px 28px 0;pointer-events:none}
+.ii{border-color:#5C8A5A}
+.ii::before{background:rgba(86,149,84,.04);content:"";position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:0 28px 28px 0;pointer-events:none}
+.is{border-color:#8fab8a}
+.is::before{background:rgba(143,171,138,.04);content:"";position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:0 28px 28px 0;pointer-events:none}
+.ib strong{color:var(--t);font-weight:700}
+
+/* ===== Panel ===== */
+.pnl{background:#fff;border-radius:var(--rm);margin-bottom:16px;overflow:hidden;box-shadow:var(--sh-card);border:1px solid var(--b)}
+.pnl.open{overflow:visible}
+.pnh{padding:16px 20px;background:rgba(86,149,84,.02);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;color:#5C8A5A;transition:all var(--duration) var(--ease)}
+.pnh:hover{background:rgba(86,149,84,.05);color:var(--ps)}.pnh::after{content:"\25BC";font-size:10px;color:var(--t3);transition:transform .3s}
+.pnl.open .pnh::after{transform:rotate(180deg)}.pnb{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}.pnl.open .pnb{max-height:none;overflow:visible}
+.pnbd{padding:20px}.pnbd p{font-size:13px;line-height:1.8;color:var(--t2)}
+
+/* ===== Card Section ===== */
+.cs{background:#ffffff;border-radius:var(--rm);margin-bottom:18px;box-shadow:0 4px 20px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.02);border:1px solid rgba(86,149,84,.1);transition:all var(--duration) var(--ease)}
+.cs:hover{box-shadow:var(--sh-card-hover),0 0 50px rgba(196,166,106,.04);transform:translateY(-2px);border-color:rgba(86,149,84,.1)}
+.cs-h{background:rgba(86,149,84,.03);padding:16px 22px;font-weight:700;font-size:14px;color:#5C8A5A;border-bottom:1px solid var(--b);display:flex;align-items:center;letter-spacing:0px}
+.cs-h::before{content:"";width:5px;height:20px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:14px;box-shadow:0 0 12px rgba(86,149,84,.2)}
+.cs-b{padding:22px}.cs-b p{font-size:13px;line-height:1.9;color:var(--t2);margin-bottom:12px}
+.cs-b ul{list-style:none;padding:0;margin:10px 0}
+.cs-b li{font-size:13px;line-height:1.8;color:var(--t2);padding:8px 0 8px 34px;position:relative}
+.cs-b ul li::before{content:"";position:absolute;left:10px;top:12px;width:6px;height:6px;background:linear-gradient(135deg,var(--p),#4A7348);border-radius:50%;box-shadow:0 0 8px rgba(86,149,84,.15)}
+
+/* ===== Back Button ===== */
+.bb{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#fffdfc;border:1px solid rgba(0,0,0,.05);border-radius:24px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:18px;transition:all var(--duration) var(--ease);box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.bb:hover{background:rgba(86,149,84,.04);border-color:rgba(86,149,84,.2);color:#5C8A5A;box-shadow:0 6px 20px rgba(86,149,84,.06);transform:translateX(-4px)}
+.bb:active{transform:scale(.95)!important;transition:all .08s var(--ease);box-shadow:0 1px 4px rgba(0,0,0,.02)!important}
+
+/* ===== Highlight ===== */
+.hl{display:inline-block;background:linear-gradient(135deg,var(--p),#4A7348);color:#fff;padding:3px 10px;border-radius:8px;font-weight:700;font-size:13px;margin:0 3px;box-shadow:0 3px 14px rgba(86,149,84,.2);letter-spacing:.4px}
+.spacer{height:48px}
+
+/* ===== Search ===== */
+.qa-bar{position:relative;margin-bottom:20px}
+.qa-input{
+  width:100%;padding:18px 56px 18px 22px;border:1px solid rgba(0,0,0,.06);border-radius:18px;
+  font-size:15px;color:var(--t);background:#fff;outline:none;
+  transition:all var(--duration) var(--ease);box-shadow:var(--sh-sm);
+}
+.qa-input::placeholder{color:var(--t4)}
+.qa-input:focus{border-color:rgba(86,149,84,.3);box-shadow:0 0 0 4px rgba(86,149,84,.04),0 4px 16px rgba(86,149,84,.04)}
+.qa-btn{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);width:44px;height:44px;
+  border:none;background:linear-gradient(135deg,var(--p),#4A7348);color:#fff;
+  border-radius:14px;font-size:18px;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;box-shadow:0 4px 16px rgba(86,149,84,.25);
+  transition:all var(--duration) var(--ease-bounce);
+}
+.qa-btn:hover{transform:translateY(-50%) scale(1.08);box-shadow:0 6px 24px rgba(86,149,84,.2)}
+.qa-btn:active{transform:translateY(-50%) scale(.95)}
+.qa-results{display:none}.qa-results.show{display:block}
+.qa-item{
+  background:#fff;border-radius:var(--rm);padding:22px;margin-bottom:16px;
+  box-shadow:var(--sh-card);border-left:4px solid var(--p);
+  animation:fadeIn .5s var(--ease);border:1px solid var(--b);transition:all .3s var(--ease);
+}
+.qa-item:hover{box-shadow:var(--sh-card-hover);transform:translateY(-2px)}
+.qa-tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.qa-tags span{background:rgba(86,149,84,.04);color:#5C8A5A;font-size:11px;padding:5px 14px;border-radius:20px;font-weight:600;border:1px solid rgba(86,149,84,.1)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.qa-q{font-size:15px;font-weight:700;color:var(--p);margin-bottom:12px}.qa-a{font-size:13px;line-height:1.9;color:var(--t2)}
+.qa-noresult{text-align:center;padding:36px;color:var(--t3);font-size:14px}
+
+/* ===== Hot Tags ===== */
+.hot-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.hot-tag{
+  background:rgba(86,149,84,.05);border:1px solid rgba(86,149,84,.1);border-radius:20px;
+  padding:8px 16px;font-size:12px;color:#569554;cursor:pointer;
+  transition:all var(--duration) var(--ease);font-weight:500;letter-spacing:.2px;
+}
+.hot-tag:hover{background:rgba(86,149,84,.06);border-color:rgba(86,149,84,.15);transform:translateY(-2px);box-shadow:0 4px 12px rgba(86,149,84,.06);color:var(--pd)}
+.hot-tag:active{transform:scale(.93);transition:all .08s var(--ease)}
+
+/* ===== Image Gallery ===== */
+.img-label{font-size:11px;color:var(--t3);margin-top:10px;font-weight:500;letter-spacing:.2px;text-align:center}
+.img-card{width:100%;max-width:100%;overflow:hidden;position:relative;background:rgba(86,149,84,.04);border-radius:12px}
+.img-card img{width:100%;height:auto;max-height:55vh;object-fit:contain;display:block;border-radius:12px;opacity:1;transition:opacity .35s ease}
+.img-card img[src$=".webp"]{animation:imgReveal .5s ease}
+@keyframes imgReveal{from{opacity:.15;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+/* ===== Standalone Image Fix (report images, etc.) ===== */
+.sec>img,.cs-b>img{max-width:100%;height:auto!important;object-fit:contain;display:block}
+
+/* ===== Image Carousel ===== */
+.img-carousel{position:relative;overflow:hidden;border-radius:12px;margin:14px 0;background:transparent;-webkit-user-select:none;user-select:none}
+.img-carousel-track-wrap{position:relative;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.img-carousel-track-wrap::-webkit-scrollbar{display:none}
+.img-carousel-track{display:flex;will-change:scroll-position;touch-action:pan-x pinch-zoom}
+.img-carousel-track:active{cursor:grabbing}
+.img-carousel-slide{flex:0 0 86%;padding:0 8px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;scroll-snap-stop:always}
+.img-carousel-slide.active-slide{opacity:1}
+.img-carousel-slide .img-card{width:100%!important;text-align:center;cursor:pointer;flex:auto!important}
+.img-carousel-slide .img-card:hover{transform:none}
+.img-carousel-slide .img-card img{width:100%;max-width:100%;height:auto;max-height:55vh;border-radius:20px;box-shadow:0 8px 28px rgba(0,0,0,.1);object-fit:contain;border:1px solid rgba(0,0,0,.03);display:block;-webkit-touch-callout:none;-webkit-user-drag:none}
+.img-carousel-dots{display:flex;justify-content:center;align-items:center;gap:8px;padding:10px 0 4px}
+.img-carousel-dot{width:7px;height:7px;border-radius:50%;background:rgba(86,149,84,.18);transition:all .3s;cursor:pointer}
+.img-carousel-dot.active{background:var(--p);width:22px;border-radius:4px}
+.img-zoom-hint{font-size:11px;color:var(--t4);text-align:center;padding:2px 0 0;opacity:.55;letter-spacing:.5px;user-select:none;-webkit-user-select:none}
+.img-carousel-page-nav{text-align:center;font-size:14px;font-weight:600;color:var(--p);padding:8px 0 4px;letter-spacing:1px;user-select:none;-webkit-user-select:none}
+.img-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--p);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:all .2s;outline:none;-webkit-tap-highlight-color:transparent;pointer-events:auto;touch-action:manipulation}
+.img-carousel-arrow:active{background:var(--p);color:#fff;transform:translateY(-50%) scale(.92)}
+.img-carousel-prev{left:4px;z-index:6}
+.img-carousel-next{right:4px;z-index:6}
+
+/* ===== Lightbox ===== */
+.lightbox-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,28,32,.96);z-index:10000;justify-content:center;align-items:center;cursor:pointer;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.lightbox-overlay.active{display:flex;animation:fadeIn .4s var(--ease)}
+.lightbox-overlay img{max-width:92%;max-height:92%;border-radius:24px;box-shadow:0 20px 64px rgba(0,0,0,.2);border:1px solid rgba(0,0,0,.03);user-select:none;-webkit-user-select:none;transform-origin:center center;transition:transform .3s ease,opacity .15s ease}
+.lb-nav{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.12);border:none;border-radius:50%;color:#fff;font-size:22px;cursor:pointer;z-index:10001;display:flex;align-items:center;justify-content:center;transition:all .3s;outline:none}
+.lb-nav:hover{background:rgba(255,255,255,.22);transform:translateY(-50%) scale(1.1)}
+.lb-nav:active{transform:translateY(-50%) scale(.9)}
+.lb-prev{left:16px}
+.lb-next{right:16px}
+@media(min-width:768px){.lb-prev{left:32px}.lb-next{right:32px}}
+
+/* ===== Floating Button ===== */
+.float-home-btn{
+  position:fixed;bottom:28px;right:28px;width:56px;height:56px;
+  border-radius:50%;background:linear-gradient(135deg,var(--p),#4A7348);
+  color:#fff;border:none;font-size:22px;cursor:pointer;
+  box-shadow:0 8px 24px rgba(86,149,84,.2),0 0 0 1px rgba(255,255,255,.15);
+  z-index:9999;display:flex;align-items:center;justify-content:center;
+  transition:all .4s var(--ease-bounce);
+}
+.float-home-btn::before{content:"";position:absolute;inset:-3px;border-radius:50%;background:linear-gradient(135deg,rgba(86,149,84,.2),transparent);opacity:0;transition:opacity .4s}
+.float-home-btn:hover{transform:scale(1.12);box-shadow:0 12px 32px rgba(86,149,84,.28),0 0 0 1px rgba(255,255,255,.1)}
+.float-home-btn:hover::before{opacity:1}
+.float-home-btn:active{transform:scale(.85)}
+
+/* ===== Install Banner ===== */
+.install-banner{position:fixed;bottom:0;left:0;right:0;background:rgba(234,228,218,.94);color:#3d3a42;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;z-index:3000;box-shadow:0 -6px 28px rgba(0,0,0,.06);transform:translateY(100%);transition:transform .5s var(--ease);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-top:1px solid rgba(0,0,0,.03)}
+.install-banner.show{transform:translateY(0)}
+.install-banner .ibx{font-size:13px;line-height:1.5;flex:1}
+.install-banner .ibb{background:linear-gradient(135deg,var(--p),#4A7348);color:#fff;border:none;padding:10px 20px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;margin-left:16px;white-space:nowrap;box-shadow:0 6px 20px rgba(86,149,84,.2);transition:all var(--duration) var(--ease)}
+.install-banner .ibb:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(86,149,84,.3)}
+.install-banner .ibc{background:transparent;border:none;color:rgba(0,0,0,.25);font-size:22px;cursor:pointer;padding:0 0 0 8px;transition:color .3s}
+.install-banner .ibc:hover{color:#3d3a42}
+
+/* ===== Index Panel ===== */
+.idx-pnl{background:#fffdfc;border-radius:var(--rm);margin-bottom:18px;overflow:hidden;box-shadow:var(--sh-card);border:1px solid var(--b)}
+.idx-hd{padding:14px 20px;font-size:14px;font-weight:700;background:linear-gradient(135deg,rgba(86,149,84,.04),rgba(74,115,72,.02));color:var(--t);border-bottom:1px solid var(--b);letter-spacing:.3px}
+.idx-bd{display:flex;flex-wrap:wrap;gap:10px;padding:16px 18px}
+.idx-item{display:inline-block;padding:8px 16px;font-size:12px;border-radius:22px;background:rgba(0,0,0,.015);color:var(--t2);text-decoration:none;transition:all var(--duration) var(--ease);border:1px solid rgba(0,0,0,.035);cursor:pointer;font-weight:500;letter-spacing:.3px}
+.idx-item:hover{background:rgba(86,149,84,.06);color:#5C8A5A;border-color:rgba(86,149,84,.15);text-decoration:none;box-shadow:0 3px 12px rgba(86,149,84,.04);transform:translateY(-1px)}
+.idx-item:active{transform:scale(.94);transition:all .08s var(--ease)}
+.idx-item.hl-idx{background:linear-gradient(135deg,rgba(86,149,84,.1),rgba(74,115,72,.04));color:#5C8A5A;box-shadow:0 3px 12px rgba(86,149,84,.06);border-color:rgba(86,149,84,.15)}
+
+/* ===== Responsive ===== */
+@media(max-width:380px){.gd{grid-template-columns:1fr}.hero h1{font-size:22px}.hero{padding:28px 20px}.cd:nth-child(odd),.cd:nth-child(even){margin-top:0}}
+@media(min-width:768px){.mn{max-width:740px;margin-left:auto;margin-right:auto;padding:28px 24px 56px}.gd{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){
+  .float-home-btn{bottom:20px;right:20px;width:50px;height:50px;font-size:18px}
+  .cd:nth-child(odd),.cd:nth-child(even){margin-top:0}
+  /* 移动端减少 backdrop-filter 开销 */
+  .nb{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .lightbox-overlay{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .install-banner{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .so{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  /* 移动端减少模糊值，提升渲染性能 */
+  .st{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .sb{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+}
+@media print{.nb,.sb,.so,.bb,.tb,.mb,.float-home-btn{display:none!important}.mn{margin-top:0}body{background:#fff;color:#0f172a}.sec,.cd,.ph,.cs,.idx-pnl,.qa-item{background:#fff!important;border:1px solid #e2e8f0!important;box-shadow:none!important}}
+/* 知识库表格统一样式 */
+.kb-table{width:100%;border-collapse:collapse;font-size:12px}
+
+
+/* ===== 性能优化 ===== */
+/* 非活跃页 content-visibility 延迟渲染 */
+.pg:not(.active){content-visibility:auto;contain-intrinsic-size:auto 500px}
+/* Carousel GPU 加速 */
+.img-carousel-track{will-change:transform;transform:translateZ(0)}
+.img-carousel-slide .img-card img{will-change:opacity}
+/* 字体加载优化 */
+@font-face{font-family:'PingFang SC';font-display:swap}
+@font-face{font-family:'Microsoft YaHei';font-display:swap}
+
+</style>
+</head>
+<body>
+
+<div class="nb">
+    <button class="mb" onclick="toggleSidebar()">&#9776;</button>
+    <div class="nt">智心同检知识库</div>
+    <button class="tb" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+</div>
+<div class="so" onclick="toggleSidebar()"></div>
+<div class="sb">
+    <div class="sh"><h3>&#128218; 知识导航</h3><p>北京择天众康科技有限公司</p></div>
+    <div class="ni active" data-p="home" onclick="showPage('home')"><div class="ni-icon">&#127968;</div><span>首页概览</span></div>
+    <div class="ni" data-p="mechanism" onclick="showPage('mechanism')"><div class="ni-icon">&#128300;</div><span>压力医学机制</span></div>
+    <div class="ni" data-p="intervention" onclick="showPage('intervention')"><div class="ni-icon">&#128739;</div><span>缓压与干预</span></div>
+    <div class="ni" data-p="hrv" onclick="showPage('hrv')"><div class="ni-icon">&#10084;&#65039;</div><span>HRV技术原理</span></div>
+    <div class="ni" data-p="product" onclick="showPage('product')"><div class="ni-icon">&#9881;&#65039;</div><span>产品方案配置</span></div>
+    <div class="ni" data-p="clinical" onclick="showPage('clinical')"><div class="ni-icon">&#127973;</div><span>临床应用解读</span></div>
+    <div class="ni" data-p="policy" onclick="showPage('policy')"><div class="ni-icon">&#128202;</div><span>政策与市场数据</span></div>
+    <div class="ni" data-p="business" onclick="showPage('business')"><div class="ni-icon">&#9881;</div><span>设备操作指南</span></div>
+</div>
+<div class="mn">
+<div id="p-home" class="pg active">
+<div class="hero">
+    <h1>智心同检知识库</h1>
+    <p>集成式精神压力管理系统「智心同检 ZTZK-C」完整培训资料，涵盖压力医学机制、HRV技术原理、产品方案、临床应用、政策市场等全维度核心知识。支持智能问答搜索。</p>
+</div>
+<h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128270; 智能问答搜索</h3>
+<div class="qa-bar">
+    <input type="text" class="qa-input" id="qaInput" placeholder="试试问：项目意义 / 为什么需要 / 能赚钱吗 / 竞品优势 / 报告怎么看..." onkeypress="if(event.key==='Enter')searchQA()">
+    <button class="qa-btn" onclick="searchQA()">&#128269;</button>
+</div>
+<div class="hot-tags">
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='CRH是什么';searchQA()">HPA轴是什么</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='皮质醇的作用';searchQA()">皮质醇的作用</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='SDNN指标详解';searchQA()">SDNN正常值</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='收费编码与价格';searchQA()">收费标准</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='七大系统影响';searchQA()">压力对身体的影响</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='7步使用流程详解';searchQA()">智心同检怎么用</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='投资回报分析';searchQA()">能赚钱吗</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='智心同检vs手环手表HRV';searchQA()">和手环有什么区别</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='智心同检检测需要多长时间';searchQA()">检测要做多久</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='智心同检适合哪些人群';searchQA()">适合哪些人</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='智心同检检测结果准确吗';searchQA()">结果准不准</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='孕妇能用智心同检吗';searchQA()">孕妇能用吗</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='提高HRV的方法';searchQA()">如何提高HRV</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='肾上腺疲劳';searchQA()">肾上腺疲劳</span>
+<span class="hot-tag" onclick="document.getElementById('qaInput').value='抑郁症流行病学数据';searchQA()">抑郁症数据</span>
+</div>
+
+<div class="qa-results" id="qaResults"></div>
+<h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128214; 知识模块</h3>
+<div class="gd">
+    <div class="cd" onclick="showPage('mechanism')"><div class="ci cib">&#128300;</div><div class="ct">压力医学机制</div><div class="cdesc">HPA轴、皮质醇、肾上腺疲劳三阶段、七大系统影响</div></div>
+    <div class="cd" onclick="showPage('intervention')"><div class="ci cig">&#128739;</div><div class="ct">缓压与干预</div><div class="cdesc">适应原、营养补充、DHEA、荷尔蒙评估</div></div>
+    <div class="cd" onclick="showPage('hrv')"><div class="ci cir">&#10084;&#65039;</div><div class="ct">HRV技术原理</div><div class="cdesc">时域/频域/非线性指标、自主神经评估</div></div>
+    <div class="cd" onclick="showPage('product')"><div class="ci cig">&#9881;&#65039;</div><div class="ct">产品方案配置</div><div class="cdesc">ZT10+/ZT20+配置、使用流程、六维报告</div></div>
+    <div class="cd" onclick="showPage('clinical')"><div class="ci cio">&#127973;</div><div class="ct">临床应用解读</div><div class="cdesc">三大方向、指标解读、心理韧性</div></div>
+    <div class="cd" onclick="showPage('policy')"><div class="ci cip">&#128202;</div><div class="ct">政策与市场数据</div><div class="cdesc">110万+样本、慢病关联、政策体系</div></div>
+    <div class="cd" onclick="showPage('business')"><div class="ci cigold">&#9881;</div><div class="ct">设备操作指南</div><div class="cdesc">短程心率压力检测设备使用说明与操作规范</div></div>
+    <div class="cd" onclick="showPage('company')"><div class="ci cigold">&#127970;</div><div class="ct">公司简介与资质</div><div class="cdesc">公司介绍、核心资质认证与研发背景</div></div>
+</div>
+<div class="ib is"><strong>&#128161; 提示：</strong>点击卡片进入详情页。使用搜索框输入问题进行智能问答。</div>
+<div class="spacer"></div>
+</div>
+<div id="p-mechanism" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128300; 压力医学机制</h2><p>HPA轴、皮质醇、肾上腺疲劳三阶段、七大系统影响</p></div>
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 27 节</div>
+<div class="idx-bd"><a class="idx-item" href="#mechanism-s0" onclick="scrollToSection('mechanism',0)">CRH是什么</a><a class="idx-item" href="#mechanism-s1" onclick="scrollToSection('mechanism',1)">ACTH是什么</a><a class="idx-item" href="#mechanism-s2" onclick="scrollToSection('mechanism',2)">皮质醇的作用详解</a><a class="idx-item" href="#mechanism-s3" onclick="scrollToSection('mechanism',3)">皮质醇剽窃机制</a><a class="idx-item" href="#mechanism-s4" onclick="scrollToSection('mechanism',4)">DHEA是什么</a><a class="idx-item" href="#mechanism-s5" onclick="scrollToSection('mechanism',5)">肾上腺疲劳三阶段</a><a class="idx-item" href="#mechanism-s6" onclick="scrollToSection('mechanism',6)">七大系统影响</a><a class="idx-item" href="#mechanism-s7" onclick="scrollToSection('mechanism',7)">压力型肥胖机制</a><a class="idx-item" href="#mechanism-s8" onclick="scrollToSection('mechanism',8)">压力与骨质疏松</a><a class="idx-item" href="#mechanism-s9" onclick="scrollToSection('mechanism',9)">压力与肿瘤关系</a><a class="idx-item" href="#mechanism-s10" onclick="scrollToSection('mechanism',10)">压力与糖尿病双向循环</a><a class="idx-item" href="#mechanism-s11" onclick="scrollToSection('mechanism',11)">亚健康分类识别</a><a class="idx-item" href="#mechanism-s12" onclick="scrollToSection('mechanism',12)">肠脑轴与压力</a><a class="idx-item" href="#mechanism-s13" onclick="scrollToSection('mechanism',13)">皮质醇昼夜节律</a><a class="idx-item" href="#mechanism-s14" onclick="scrollToSection('mechanism',14)">慢性高皮质醇自测</a><a class="idx-item" href="#mechanism-s15" onclick="scrollToSection('mechanism',15)">荷尔蒙评估清单</a><a class="idx-item" href="#mechanism-s16" onclick="scrollToSection('mechanism',16)">DHEA补充注意事项</a><a class="idx-item" href="#mechanism-s17" onclick="scrollToSection('mechanism',17)">皮质醇补充注意事项</a><a class="idx-item" href="#mechanism-s18" onclick="scrollToSection('mechanism',18)">ECG和PPG采集技术对比</a><a class="idx-item" href="#mechanism-s19" onclick="scrollToSection('mechanism',19)">精神压力对心血管的具体危害</a><a class="idx-item" href="#mechanism-s20" onclick="scrollToSection('mechanism',20)">压力与免疫系统详解</a><a class="idx-item" href="#mechanism-s21" onclick="scrollToSection('mechanism',21)">压力与线粒体损伤</a><a class="idx-item" href="#mechanism-s22" onclick="scrollToSection('mechanism',22)">压力与肝脏解毒</a><a class="idx-item" href="#mechanism-s23" onclick="scrollToSection('mechanism',23)">智心同检在体检中心的应用</a><a class="idx-item" href="#mechanism-s24" onclick="scrollToSection('mechanism',24)">智心同检在精神科的应用</a><a class="idx-item" href="#mechanism-s25" onclick="scrollToSection('mechanism',25)">智心同检在肿瘤科的应用</a><a class="idx-item" href="#mechanism-s26" onclick="scrollToSection('mechanism',26)">如何解读智心同检报告</a></div>
+</div>
+<div class="sec"><div class="stitle" id="mechanism-s0">CRH是什么</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">CRH</div><p>HPA轴第一信使。下丘脑室旁核分泌刺激垂体前叶释放ACTH启动应激级联。</p><p>临床：CRH神经元过度活跃与焦虑症/抑郁症/PTSD核心症状直接相关。</p></div>
+<div class="sec"><div class="stitle" id="mechanism-s1">ACTH是什么</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">ACTH</div><p>HPA轴第二级信号。垂体前叶到肾上腺皮质促进皮质醇/醛固酮合成。</p><p>临床：ACTH兴奋试验评估肾上腺储备功能。</p></div>
+<div class="sec"><div class="stitle" id="mechanism-s2">皮质醇的作用详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">皮质醇压力荷尔蒙</div><table class="kb-table"><tr><th>作用</th><th>效应</th></tr><tr><td>糖代谢</td><td>糖异生升血糖(战斗供能)</td></tr><tr><td>抗炎</td><td>抑制IL-1/TNF-a</td></tr><tr><td>免疫</td><td>抑制活性降低抵抗力</td></tr><tr><td>心血管</td><td>增强儿茶酚胺敏感性调血压</td></tr><tr><td>蛋白</td><td>促分解长期肌肉流失</td></tr></table><p>昼夜节律：早6-8点峰值 午夜0-2点谷值。紊乱导致夜间不降睡眠差恶性循环。</p><div class="ib iw">自测3项以上可能慢性高皮质醇：腹部脂肪堆积/频繁感染/情绪波动/食欲异常(甜食)/睡眠差/难减重/腹胀排气多/异常口渴</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s3">皮质醇剽窃机制</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">皮质醇剽窃机制</div><p>内分泌等级次序：(1)生存级-肾上腺/胰腺 (2)生长级-甲状腺 (3)<span class="hl">生殖级-卵巢/睾丸最先放弃</span></p><ul><li>DHEA青春激素下降 抗压能力下降</li><li>性激素下降 性欲下降 月经紊乱 不孕</li><li>孕酮被挪用 PMS加重</li><li>芳香化酶激活 雌激素优势上升</li><li>最终PMS/子宫肌瘤/内膜异位</li></ul><div class="ib id">女性最先出现月经问题因为生殖系统在内分泌等级中排最后。</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s4">DHEA是什么</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">DHEA 青春激素</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>来源</td><td>肾上腺网状带95%+卵巢睾丸5%</td></tr><tr><td>峰值</td><td>25岁左右</td></tr><tr><td>年降</td><td>约2-3%</td></tr></table><p>功能：增强免疫/抗氧化/改善认知/增加骨密度/抗抑郁/提升肌力/改善皮肤。</p><div class="ib iw">补充剂量需医生指导。过量副作用：女痤疮多毛 男易怒攻击性行为。</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s5">肾上腺疲劳三阶段</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">三阶段模型</div><div class="sec"><div class="stitle" id="mechanism-s6">七大系统影响</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">七大系统逐一影响</div><table class="kb-table"><tr><th>系统</th><th>改变</th><th>后果</th></tr><tr><td>消化</td><td>肠脑轴紊乱菌群失衡肠漏内毒素入血</td><td>IBS 营养吸收障碍</td></tr><tr><td>免疫</td><td>易感上升疫苗下降潜伏病毒激活</td><td>频繁感染 伤口延迟愈合</td></tr><tr><td>能量</td><td>氧化应激线粒体DNA损伤ATP下降</td><td>疲劳 认知下降 肌无力</td></tr><tr><td>肝脏</td><td>235+种解毒基因改变</td><td>解毒负荷剧增</td></tr><tr><td>内分泌</td><td>TSH抑制甲状腺下降胰岛素抵抗上升</td><td>PCOS 月经紊乱 不孕</td></tr><tr><td>心血管</td><td>儿茶酚胺上升血压上升频繁发怒</td><td>心衰+19% 房颤+16% 死亡+28%</td></tr><tr><td>骨骼</td><td>皮质醇促骨吸收抑骨形成</td><td>骨质疏松 尤其绝经后</td></tr></table><div class="ib id">哈佛Lancet2017: 慢性压力死亡风险1.65 大于 吸烟1.52 大于 酗酒1.31</div></div></div>
+<div class="sec"><div class="stitle" id="mechanism-s7">压力型肥胖机制</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力型肥胖</div><ol><li>皮质醇定向堆积腹部向心性肥胖</li><li>胰岛素抵抗血糖波动渴望甜食高热量</li><li>情绪化进食暴饮暴食倾向</li><li>睡眠差瘦素下降饥饿素上升食欲失控</li><li>TSH抑制甲状腺下降基础代谢降低</li></ol><div class="ib iw">典型特征：四肢不胖只胖肚子；常规节食效果差；下午特别想吃甜食；同样吃却更易胖。</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s8">压力与骨质疏松</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力与骨质疏松</div><table class="kb-table"><tr><th>通路</th><th>机制</th><th>效果</th></tr><tr><td>皮质醇</td><td>促破骨抑成骨</td><td>骨吸收形成</td></tr><tr><td>性激素下降</td><td>DHEA/雌激素/睾酮下降</td><td>失去保护</td></tr><tr><td>炎症因子</td><td>IL-6 IL-1b TNF-a上升</td><td>加速吸收</td></tr><tr><td>代谢因素</td><td>胰岛素抵抗钙吸收下降</td><td>矿物质缺乏</td></tr><tr><td>微量元素</td><td>肾脏排镁上升血镁下降</td><td>矿化不足</td></tr></table><div class="ib id">高危组合：绝后女性+慢性压力+久坐少动=骨质疏松极高危</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s9">压力与肿瘤关系</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力与肿瘤</div><ol><li>免疫监视失效：NK细胞活性下降无法清除早期癌变</li><li>血管生成加速：VEGF上升为肿瘤提供丰富血供</li><li>DNA修复受损：氧化应激致突变累积</li><li>炎症微环境：有利于癌细胞存活增殖</li></ol><div class="ib iw">有家族史的高危人群应将精神压力管理纳入综合防癌策略。</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s10">压力与糖尿病双向循环</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力与糖尿病双向恶性循环</div><p>路径一：压力到高皮质醇到胰岛素抵抗到糖尿病</p><p>路径二：糖尿病并发症到心理负担到恶化血糖控制</p><p>HRV价值：HF成分最早且最明显降低可作为自主神经病变敏感早期筛查工具往往早于临床症状数年。</p><div class="ib id">结论：慢病管理不同步关注心理健康治疗效果大打折扣！</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s11">亚健康分类识别</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">亚健康三大类</div><table class="kb-table"><tr><th>类型</th><th>特征</th></tr><tr><td>躯体型</td><td>不明原因疲劳/睡眠紊乱/慢性疼痛/消化不良/反复感冒</td></tr><tr><td>心理型</td><td>抑郁/焦虑/注意力下降/情绪不稳/兴趣减退/快感缺失</td></tr><tr><td>社交型</td><td>人际交往减退/效率下降/回避社交/孤独感</td></tr></table><p>中国数据：10.3%健康 / 73.6%亚健康 / 16.1%心理问题</p></div>
+<div class="sec"><div class="stitle" id="mechanism-s12">肠脑轴与压力</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">肠脑轴Gut-Brain Axis</div><p>肠道拥有约5亿个神经元比脊髓还多称第二大脑。</p><ol><li>压力导致交感激活胃肠血流减少</li><li>蠕动减慢有害菌增殖</li><li>紧密连接破坏导致肠漏Leaky Gut</li><li>LPS内毒素入血全身炎症</li><li>最终：IBS/自免疫/关节痛/脑fog/疲劳</li></ol><p>90%血清素5-HT在肠道合成肠道健康直接影响情绪。</p></div>
+<div class="sec"><div class="stitle" id="mechanism-s13">皮质醇昼夜节律</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">昼夜节律Circadian Rhythm</div><p>健康：早晨6-8AM峰值 渐降 到午夜0-2AM谷值</p><p>紊乱三大原因：倒班/跨时区、蓝光暴露(手机)、慢性压力持续激活HPA轴。</p><div class="ib id">夜间皮质醇不降导致无法进入深度睡眠导致生长激素HGH分泌减少主要在深睡时分泌导致身体修复不足导致次日更疲劳再次依赖咖啡因进一步扰乱节律导致恶性循环</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s14">慢性高皮质醇自测</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">慢性高皮质醇自测清单</div><p>以下表现如果出现3项及以上提示你可能存在慢性高皮质醇血症：</p><table class="kb-table"><tr><th>#</th><th>表现</th><th>机制关联</th></tr><tr><td>1</td><td>腹部脂肪堆积(向心性肥胖)</td><td>皮质醇受体腹部密度最高</td></tr><tr><td>2</td><td>频繁感冒或感染</td><td>免疫抑制</td></tr><tr><td>3</td><td>情绪波动大/易怒/焦虑</td><td>神经递质失衡</td></tr><tr><td>4</td><td>食欲异常/渴望甜食</td><td>胰岛素抵抗/血糖波动</td></tr><tr><td>5</td><td>睡眠差/难入睡/早醒</td><td>节律紊乱</td></tr><tr><td>6</td><td>难以减重</td><td>代谢减慢</td></tr><tr><td>7</td><td>腹胀/排气增多</td><td>肠道菌群失衡</td></tr><tr><td>8</td><td>异常口渴</td><td>电解质失衡</td></tr><tr><td>9</td><td>下午精力明显下降</td><td>肾上腺功能不足</td></tr><tr><td>10</td><td>女性：月经紊乱</td><td>生殖激素被剽窃</td></tr></table></div>
+<div class="sec"><div class="stitle" id="mechanism-s15">荷尔蒙评估清单</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">荷尔蒙全面评估清单</div><table class="kb-table"><tr><th>类别</th><th>检测项目</th><th>临床意义</th></tr><tr><td>肾上腺</td><td>皮质醇(4点节律)+DHEA-S</td><td>判断所处疲劳阶段</td></tr><tr><td>甲状腺</td><td>TSH+T3+T4+反T3</td><td>排除甲减/甲亢/转换障碍</td></tr><tr><td>性激素</td><td>雌二醇/孕酮/睾酮/FSH/LH/SHBG</td><td>生殖轴功能状态</td></tr><tr><td>糖代谢</td><td>空腹血糖+空腹胰岛素+HOMA-IR</td><td>胰岛素抵抗程度</td></tr><tr><td>应激标记</td><td>sIgA+铁蛋白+CRP</td><td>慢性炎症和免疫状态</td></tr></table><div class="ib iw">只有全面评估才能制定精准的个性化干预方案。单一指标容易误判。</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s16">DHEA补充注意事项</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">DHEA补充安全指南</div><table class="kb-table"><tr><th>项目</th><th>详情</th></tr><tr><td>女性剂量</td><td>5-25mg 每日两次</td></tr><tr><td>男性剂量</td><td>10-50mg 每日两次</td></tr><tr><td>过量副作用(女)</td><td>痤疮、多毛、声音变粗</td></tr><tr><td>过量副作用(男)</td><td>易怒、攻击性行为增加</td></tr><tr><td>禁忌人群</td><td>激素敏感肿瘤史、孕妇、哺乳期、青春期前</td></tr><tr><td>监测频率</td><td>每6-8周复查激素水平</td></tr></table><div class="ib id">必须医生指导下使用！不可自行长期服用！</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s17">皮质醇补充注意事项</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">皮质醇补充安全规范</div><ol><li>必须先做4点皮质醇节律检测确认确实存在缺乏</li><li>从极低剂量2.5-5mg起始</li><li>严格遵循昼夜节律给药(早晨较高剂量晚间较低)</li><li>每6-8周复查调整方案</li><li>疗程不超过3个月</li><li>不可突然停药必须逐渐减量</li></ol><div class="ib id">滥用风险：医源性库欣综合征/肾上腺萎缩/骨质疏松/感染风险显著上升。<strong>绝对不可自行服用！</strong></div></div>
+<div class="sec"><div class="stitle" id="mechanism-s18">ECG和PPG采集技术对比</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">ECG vs PPG 采集技术对比</div><table class="kb-table"><tr><th>维度</th><th>ECG心电图</th><th>PPG光电容积脉搏波</th></tr><tr><td>原理</td><td>电极记录心脏电活动</td><td>光电传感器检测血流变化</td></tr><tr><td>精度</td><td>金标准最高</td><td>较高(略低于ECG)</td></tr><tr><td>便捷性</td><td>需专业设备操作较复杂</td><td>便携易用可穿戴</td></tr><tr><td>成本</td><td>较高</td><td>较低</td></tr><tr><td>适用场景</td><td>临床诊断/科研</td><td>日常监测/筛查</td></tr><tr><td>干扰因素</td><td>电极接触不良/肌电干扰</td><td>运动伪差/温度变化</td></tr></table></div>
+<div class="sec"><div class="stitle" id="mechanism-s19">精神压力对心血管的具体危害</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">精神压力对心血管的危害</div><table class="kb-table"><tr><th>因素</th><th>危害</th><th>来源</th></tr><tr><td>频繁发怒</td><td>心衰+19% 房颤+16% 死亡+28%</td><td>哈佛队列</td></tr><tr><td>慢性压力</td><td>颈动脉内膜增厚(粥样硬化标志)</td><td>超声研究</td></tr><tr><td>急性应激</td><td>斑块破裂导致心梗脑梗</td><td>病理机制</td></tr><tr><td>交感兴奋</td><td>血压升高 左室肥厚</td><td>血流动力学</td></tr><tr><td>炎症因子</td><td>CRP/IL-6升高 内皮损伤</td><td>生化指标</td></tr></table><div class="ib id">哈佛Lancet 2017：压力对心梗脑梗的重要性等于吸烟等于饮酒等于高血压</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s20">压力与免疫系统详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力与免疫系统</div><table class="kb-table"><tr><th>途径</th><th>机制</th><th>表现</th></tr><tr><td>易感性增加</td><td>NK/T/B细胞被抑制</td><td>频繁感冒感染</td></tr><tr><td>疫苗反应降低</td><td>抗体滴度降低</td><td>疫苗保护效果差</td></tr><tr><td>潜伏病毒激活</td><td>HSV/EBV/VZV复活</td><td>疱疹复发 口腔溃疡</td></tr><tr><td>伤口愈合延迟</td><td>炎症期延长</td><td>伤口愈合慢</td></tr></table><div class="ib iw">压力大的人：更容易感冒 / 伤口愈合慢 / 疱疹反复发作</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s21">压力与线粒体损伤</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力与线粒体损伤</div><ol><li>氧化应激 - 压力导致自由基暴增超过抗氧化能力 导致mtDNA损伤 ATP减少</li><li>不可逆性 - mtDNA缺组蛋白保护更易受损 修复能力有限</li><li>后果链路 - ATP减少到疲劳到认知障碍到肌肉无力到运动耐力下降到活动量减少到恶性循环</li></ol><div class="ib id">这解释了为什么慢性疲劳难以通过多休息完全恢复——因为线粒体损伤不可逆需要主动修复而非被动休息。</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s22">压力与肝脏解毒</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力与肝脏解毒</div><table class="kb-table"><tr><th>层面</th><th>改变</th><th>后果</th></tr><tr><td>基因表达</td><td>235+种解毒基因改变</td><td>整体解毒能力变化</td></tr><tr><td>I相酶(P450)</td><td>活性改变</td><td>药物毒素代谢异常</td></tr><tr><td>II相结合</td><td>葡萄糖醛酸化等受阻</td><td>中间产物堆积</td></tr><tr><td>III相转运</td><td>毒素排出受阻</td><td>肠肝循环再吸收</td></tr></table><div class="ib iw">表现：喝酒更容易醉 / 同样药物反应不同 / 环境毒素蓄积 / 雌激素代谢异常</div></div>
+<div class="sec"><div class="stitle" id="mechanism-s23">智心同检在体检中心的应用</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">体检中心应用模式</div><ol><li>套餐加项 - 基础套餐加精神压力评估</li><li>高端必备 - 中高端客户关注心理健康</li><li>团检增值 - 企业员工压力分析报告</li><li>异常随访 - 高风险个体建议专科就诊</li><li>年度对比 - 历年数据趋势观察</li></ol><p>收费50-180元/人次 | 体检中心是最大潜在市场之一</p></div>
+<div class="sec"><div class="stitle" id="mechanism-s24">智心同检在精神科的应用</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">精神心理科核心应用</div><table class="kb-table"><tr><th>场景</th><th>说明</th></tr><tr><td>初诊辅助</td><td>配合量表 提供客观数据维度</td></tr><tr><td>鉴别诊断</td><td>抑郁vs焦虑的HRV特征差异</td></tr><tr><td>疗效量化</td><td>前后HRV变化等于客观疗效证据</td></tr><tr><td>用药评估</td><td>监测精神药物对HRV的影响</td></tr><tr><td>复诊随访</td><td>定期监测追踪康复进程</td></tr><tr><td>科研数据</td><td>积累临床数据用于发表</td></tr></table><p>精神科是最核心的应用科室</p></div>
+<div class="sec"><div class="stitle" id="mechanism-s25">智心同检在肿瘤科的应用</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">肿瘤科应用</div><p>背景：肿瘤患者心理共病率67.1% | 焦虑54.3% | 抑郁71.1%</p><table class="kb-table"><tr><th>场景</th><th>说明</th></tr><tr><td>初诊基线</td><td>确诊时建立HRV基线</td></tr><tr><td>治疗监测</td><td>化疗放疗期间应激变化</td></tr><tr><td>癌因性疲乏</td><td>区分躯体vs心理疲劳</td></tr><tr><td>康复随访</td><td>治疗后长期追踪</td></tr><tr><td>安宁疗护</td><td>终末期心理评估</td></tr></table></div>
+<div class="sec"><div class="stitle" id="mechanism-s26">如何解读智心同检报告</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">报告解读五步法</div><ol><li>看整体 - 六个指标的总体分布是否在正常范围</li><li>关注异常 - 超出正常范围的指标重点分析</li><li>结合症状 - 客观数据与主观症状对照</li><li>看趋势 - 有历史数据则对比前后变化</li><li>综合判断 - 不凭单一指标下结论 需医生结合临床</li></ol><p>报告上每项都有参考范围和简单解读 建议由培训过的医务人员详细解读</p></div>
+<div class="spacer"></div></div>
+<div id="p-intervention" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128739; 缓压与干预</h2><p>适应原、营养补充、DHEA、荷尔蒙评估</p></div>
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 3 节</div>
+<div class="idx-bd"><a class="idx-item" href="#intervention-s0" onclick="scrollToSection('intervention',0)">缓压技巧有哪些</a><a class="idx-item" href="#intervention-s1" onclick="scrollToSection('intervention',1)">医学干预营养补充</a><a class="idx-item" href="#intervention-s2" onclick="scrollToSection('intervention',2)">适应原Adaptogens详解</a></div>
+</div>
+<div class="sec"><div class="stitle" id="intervention-s0">缓压技巧有哪些</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">科学缓压技巧</div><table class="kb-table"><tr><th>方法</th><th>具体做法</th><th>效果</th></tr><tr><td>社会关系</td><td>保持良好人际连接定期社交</td><td>最强压力缓冲因素</td></tr><tr><td>自律生活</td><td>规律作息均衡饮食少熬夜</td><td>稳定生物钟降低基线压力</td></tr><tr><td>环境优化</td><td>减少噪音和视觉混乱</td><td>降低感官过载</td></tr><tr><td>有氧运动</td><td>每周3-5次每次30分钟以上</td><td>消耗多余皮质醇提升内啡肽</td></tr><tr><td>冥想/正念</td><td>每天10-20分钟专注呼吸</td><td>激活副交感神经降低HRV改善</td></tr><tr><td>优质睡眠</td><td>7-9小时固定时间入睡</td><td>HGH分泌修复身体</td></tr><tr><td>抗炎饮食</td><td>全食物Omega-3蔬菜水果</td><td>减少全身炎症负荷</td></tr><tr><td>时间管理</td><td>设定边界学会拒绝</td><td>减少可控性压力源</td></tr></table></div>
+<div class="sec"><div class="stitle" id="intervention-s1">医学干预营养补充</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">医学干预基础营养</div><table class="kb-table"><tr><th>营养素</th><th>推荐剂量</th><th>作用机制</th></tr><tr><td>B族复合</td><td>B5/B6/生物素/叶酸</td><td>支持肾上腺激素合成代谢</td></tr><tr><td>维生素C</td><td>1-2g/日</td><td>肾上腺皮质醇合成必需大量VC</td></tr><tr><td>镁</td><td>400-600mg/日</td><td>放松肌肉和神经系统改善睡眠</td></tr><tr><td>Omega-3</td><td>1-3g/日</td><td>全身抗炎保护心血管和大脑</td></tr><tr><td>锌</td><td>20-50mg/日</td><td>免疫功能和激素合成辅助</td></tr></table><div class="ib iw">注意：以上为参考剂量需根据个人情况调整建议在医生或营养师指导下使用。</div></div>
+<div class="sec"><div class="stitle" id="intervention-s2">适应原Adaptogens详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">适应原按阶段选择</div><div class="spacer"></div></div></div>
+<div id="p-hrv" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#10084;&#65039; HRV技术原理</h2><p>时域/频域/非线性指标、自主神经评估</p></div>
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 35 节</div>
+<div class="idx-bd"><a class="idx-item" href="#hrv-s0" onclick="scrollToSection('hrv',0)">HRV心率变异性定义</a><a class="idx-item" href="#hrv-s1" onclick="scrollToSection('hrv',1)">SDNN指标详解</a><a class="idx-item" href="#hrv-s2" onclick="scrollToSection('hrv',2)">RMSSD指标详解</a><a class="idx-item" href="#hrv-s3" onclick="scrollToSection('hrv',3)">pNN50指标详解</a><a class="idx-item" href="#hrv-s4" onclick="scrollToSection('hrv',4)">TP总功率频域指标</a><a class="idx-item" href="#hrv-s5" onclick="scrollToSection('hrv',5)">VLF极低频指标</a><a class="idx-item" href="#hrv-s6" onclick="scrollToSection('hrv',6)">LF低频指标详解</a><a class="idx-item" href="#hrv-s7" onclick="scrollToSection('hrv',7)">HF高频指标详解</a><a class="idx-item" href="#hrv-s8" onclick="scrollToSection('hrv',8)">LF/HF比值详解</a><a class="idx-item" href="#hrv-s9" onclick="scrollToSection('hrv',9)">非线性HRV指标</a><a class="idx-item" href="#hrv-s11" onclick="scrollToSection('hrv',11)">HRV与高血压</a><a class="idx-item" href="#hrv-s12" onclick="scrollToSection('hrv',12)">HRV与冠心病心梗</a><a class="idx-item" href="#hrv-s13" onclick="scrollToSection('hrv',13)">HRV与心力衰竭</a><a class="idx-item" href="#hrv-s14" onclick="scrollToSection('hrv',14)">HRV与糖尿病</a><a class="idx-item" href="#hrv-s15" onclick="scrollToSection('hrv',15)">HRV与抑郁症焦虑症</a><a class="idx-item" href="#hrv-s16" onclick="scrollToSection('hrv',16)">HRV正常值范围汇总</a><a class="idx-item" href="#hrv-s17" onclick="scrollToSection('hrv',17)">ESC/NASPE共识指南</a><a class="idx-item" href="#hrv-s18" onclick="scrollToSection('hrv',18)">智心同检研发背景</a><a class="idx-item" href="#hrv-s19" onclick="scrollToSection('hrv',19)">HRV与其他疾病关联</a><a class="idx-item" href="#hrv-s20" onclick="scrollToSection('hrv',20)">疲劳指数解读</a><a class="idx-item" href="#hrv-s21" onclick="scrollToSection('hrv',21)">心理韧性定义与意义</a><a class="idx-item" href="#hrv-s22" onclick="scrollToSection('hrv',22)">失眠与HRV改善证据</a><a class="idx-item" href="#hrv-s23" onclick="scrollToSection('hrv',23)">HRV检测前准备事项</a><a class="idx-item" href="#hrv-s24" onclick="scrollToSection('hrv',24)">HRV日常监测意义</a><a class="idx-item" href="#hrv-s25" onclick="scrollToSection('hrv',25)">提高HRV的方法</a><a class="idx-item" href="#hrv-s26" onclick="scrollToSection('hrv',26)">智心同检vs手环手表HRV</a><a class="idx-item" href="#hrv-s27" onclick="scrollToSection('hrv',27)">孕妇能用智心同检吗</a><a class="idx-item" href="#hrv-s28" onclick="scrollToSection('hrv',28)">老年人HRV特点</a><a class="idx-item" href="#hrv-s29" onclick="scrollToSection('hrv',29)">儿童青少年HRV</a><a class="idx-item" href="#hrv-s30" onclick="scrollToSection('hrv',30)">HRV与运动表现</a><a class="idx-item" href="#hrv-s31" onclick="scrollToSection('hrv',31)">HRV生物反馈训练</a><a class="idx-item" href="#hrv-s32" onclick="scrollToSection('hrv',32)">taVNS经皮耳迷走神经刺激</a><a class="idx-item" href="#hrv-s33" onclick="scrollToSection('hrv',33)">CBT-I认知行为失眠治疗</a><a class="idx-item" href="#hrv-s34" onclick="scrollToSection('hrv',34)">智心同检在心内科的应用</a></div>
+</div>
+<div class="sec"><div class="stitle" id="hrv-s0">HRV心率变异性定义</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV 心率变异性</div><p>HRV = 逐次心跳间隔(R-R间期)的微小差异</p><ul><li>正常范围：几十毫秒级别的自然波动</li><li>产生机制：自主神经系统对窦房结的调制</li><li>核心意义：HRV越高=自主神经调节能力越强=身体适应力越好</li><li>临床价值：HRV降低是多种疾病的早期预警信号</li></ul><p><strong>权威依据：</strong>1996年ESC/NASPE共识指南 + 1998年中华医学会建议</p></div>
+<div class="sec"><div class="stitle" id="hrv-s1">SDNN指标详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">SDNN - 自主神经总活性</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>全称</td><td>Standard Deviation of NN intervals</td></tr><tr><td>含义</td><td>全部NN间期的标准差</td></tr><tr><td>反映</td><td>自主神经总调节能力(交感+副交感综合)</td></tr><tr><td>正常值(5min)</td><td>约50-100ms</td></tr><tr><td>临床意义</td><td>SDNN下降=自主神经功能受损</td></tr></table><div class="ib id">关键研究：SDNN每下降10ms 全因死亡风险增加20%。是预测心血管事件的核心指标。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s2">RMSSD指标详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">RMSSD - 迷走神经活性</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>全称</td><td>Root Mean Square of Successive Differences</td></tr><tr><td>含义</td><td>相邻RR间期差值的均方根</td></tr><tr><td>反映</td><td>副交感神经(迷走神经)活性</td></tr><tr><td>优势</td><td>不受呼吸频率影响 比SDNN更稳定</td></tr><tr><td>正常值(5min)</td><td>约20-50ms</td></tr><tr><td>关联</td><td>RMSSD下降=迷走神经功能减退=焦虑/抑郁/疲劳</td></tr></table><p>RMSSD是评估恢复状态和训练负荷的首选指标。</p></div>
+<div class="sec"><div class="stitle" id="hrv-s3">pNN50指标详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">pNN50 - 迷走神经瞬时调节</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>全称</td><td>percent of NN50</td></tr><tr><td>定义</td><td>相邻RR差值超过50ms的心搏占比(%)</td></tr><tr><td>反映</td><td>迷走神经瞬时调节能力</td></tr><tr><td>正常值(5min)</td><td>约1-20%</td></tr><tr><td>特点</td><td>对快速变化敏感 与RMSSD高度相关</td></tr></table></div>
+<div class="sec"><div class="stitle" id="hrv-s4">TP总功率频域指标</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">TP 总功率</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>全称</td><td>Total Power</td></tr><tr><td>频率范围</td><td>0-0.4 Hz</td></tr><tr><td>含义</td><td>所有频率成分功率之和</td></tr><tr><td>反映</td><td>自主神经总体调节能力</td></tr><tr><td>趋势</td><td>随年龄增长而下降</td></tr></table><p>TP是基础指标 LF/HF/VLF都是其组成部分。</p></div>
+<div class="sec"><div class="stitle" id="hrv-s5">VLF极低频指标</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">VLF 极低频</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>频段</td><td>0.0033 - 0.04 Hz</td></tr><tr><td>可能机制</td><td>体温调节/血管舒缩/肾素-血管紧张素/内皮功能</td></tr><tr><td>临床关联</td><td>心衰/炎症/脓毒症等</td></tr><tr><td>重要性</td><td>24小时分析中占比大 有重要临床价值</td></tr></table></div>
+<div class="sec"><div class="stitle" id="hrv-s6">LF低频指标详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">LF 低频</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>频段</td><td>0.04 - 0.15 Hz</td></tr><tr><td>传统解读</td><td>交感神经活性</td></tr><tr><td>现代理解</td><td>交感+副交感双重调制(副交感成分可能更大)</td></tr><tr><td>生理基础</td><td>压力感受器反射(baroreflex)</td></tr><tr><td>衍生指标</td><td>LFnu = LF/(TP-VLF)*100 归一化处理</td></tr></table></div>
+<div class="sec"><div class="stitle" id="hrv-s7">HF高频指标详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HF 高频 - 副交感金标准</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>频段</td><td>0.15 - 0.4 Hz</td></tr><tr><td>调控</td><td>主要由副交感神经(迷走神经)</td></tr><tr><td>同步</td><td>与呼吸频率同步(RSA呼吸性窦性心律不齐)</td></tr><tr><td>地位</td><td>副交感神经活性的最可靠频域指标</td></tr><tr><td>HF下降</td><td>= 迷走神经功能减退 = 焦虑/抑郁/糖尿病/心衰</td></tr></table><div class="ib ii">HF是糖尿病患者自主神经病变最早且最明显的异常指标往往早于临床症状数年。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s8">LF/HF比值详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">LF/HF 交感-副交感平衡</div><table class="kb-table"><tr><th>比值</th><th>传统解读</th><th>可能状态</th></tr><tr><td>LF/HF偏高(&gt;3)</td><td>交感优势</td><td>紧张/应激/焦虑/高血压前期</td></tr><tr><td>LF/HF正常(1-3)</td><td>相对平衡</td><td>健康静息状态</td></tr><tr><td>LF/HF偏低(&lt;1)</td><td>副交感优势</td><td>深度放松/过度抑制/某些药物影响</td></tr></table><div class="ib id">现代观点：LF受双神经调制 LF/HF不能简单等同于交感/副交感比例 应结合临床综合判断。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s9">非线性HRV指标</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">非线性HRV指标</div><table class="kb-table"><tr><th>指标</th><th>原理</th><th>价值</th></tr><tr><td>庞加莱图</td><td>散点图可视化RR间期关系</td><td>直观展示变异性模式</td></tr><tr><td>SD1/SD2</td><td>散点图长短轴参数</td><td>SD1=短期变异 SD2=长期变异</td></tr><tr><td>近似熵ApEn</td><td>信号规则性度量</td><td>越低=越规律=适应性下降</td></tr><tr><td>样本熵SampEn</td><td>改进版ApEn更稳定</td><td>早期疾病检测敏感</td></tr><tr><td>DFA</td><td>去趋势波动分析</td><td>长程相关性评估</td></tr></table><div class="ib iw">非线性指标能捕捉线性方法无法发现的细微变化对早期疾病检测更有价值。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s11">HRV与高血压</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与高血压</div><table class="kb-table"><tr><th>HRV改变</th><th>机制</th><th>临床意义</th></tr><tr><td>SDNN下降</td><td>自主神经总活性降低</td><td>整体调节能力减弱</td></tr><tr><td>HF显著下降</td><td>迷走神经功能受损</td><td>失去心血管保护</td></tr><tr><td>LF/HF升高</td><td>交感神经优势</td><td>外周阻力增加血压升高</td></tr><tr><td>非线性指标降</td><td>信号复杂性降低</td><td>适应能力下降</td></tr></table><div class="ib ii">HRV可用于高血压早期识别(在血压升高前就能发现自主神经异常)和降压治疗效果评估。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s12">HRV与冠心病心梗</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与冠心病/心梗</div><p>冠心病和心梗患者HRV明显降低 且是<strong>预后的独立预测因子</strong></p><ul><li>心梗后SDNN低于70ms → 死亡风险显著增加</li><li>机制：心脏自主神经重构 → 交感过度兴奋+迷走神经张力↓ → 室性心律失常风险↑</li><li>HRV已纳入多项指南作为心梗后风险评估工具</li></ul><div class="ib id">临床价值：心梗后定期HRV监测可早期发现高危患者及时干预。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s13">HRV与心力衰竭</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与心力衰竭</div><table class="kb-table"><tr><th>HRV改变</th><th>与NYHA分级关系</th></tr><tr><td>所有时域指标下降</td><td>分级越重数值越低</td></tr><tr><td>频谱向VLF偏移</td><td>LF和HF均降低</td></tr><tr><td>非线性复杂性降低</td><td>信号趋于规律化</td></tr></table><p>机制：心衰→结构功能改变→自主神经调控异常+神经激素过度激活→HRV恶化→形成恶性循环</p></div>
+<div class="sec"><div class="stitle" id="hrv-s14">HRV与糖尿病</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与糖尿病自主神经病变</div><ol><li><strong>HF成分最早且最明显降低</strong>——迷走神经先受损(这是标志性改变)</li><li>随后SDNN/RMSSD也开始下降</li><li>静息心率逐渐加快(迷走神经脱逸现象)</li><li>LF/HF比值变化不确定</li></ol><div class="ib id">关键价值：HRV异常往往早于临床症状数年出现！<br>建议：糖尿病患者每年至少一次HRV筛查作为自主神经病变的早期预警。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s15">HRV与抑郁症焦虑症</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与精神心理障碍</div><table class="kb-table"><tr><th>障碍类型</th><th>HRV特征</th><th>机制</th></tr><tr><td>抑郁症</td><td>SDNN/RMSSD/HF均降低<br>LF/HF变化不一(异质性大)</td><td>迷走神经功能减退<br>自主神经灵活性下降</td></tr><tr><td>焦虑症</td><td>HF显著降低<br>LF/HF通常升高</td><td>交感神经持续兴奋<br>副交感被抑制</td></tr><tr><td>PTSD</td><td>HRV全面降低<br>夜间恢复期受损严重</td><td>自主神经僵化<br>无法从应激中恢复</td></tr></table><div class="ib ii">HRV是治疗疗效的客观评价工具：CBT/药物治疗后HRV改善程度与症状改善呈正相关。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s16">HRV正常值范围汇总</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV正常值参考(5分钟静息)</div><table class="kb-table"><tr><th>指标</th><th>正常范围</th><th>备注</th></tr><tr><td>SDNN</td><td>50-100 ms</td><td>随年龄下降</td></tr><tr><td>RMSSD</td><td>20-50 ms</td><td>女性略高于男性</td></tr><tr><td>pNN50</td><td>1-20 %</td><td>与RMSSD相关</td></tr><tr><td>LF/HF</td><td>1-3</td><td>个体差异大</td></tr></table><p>重要：个体自身基线比绝对值更重要！追踪个人变化趋势比单次测量更有价值。</p></div>
+<div class="sec"><div class="stitle" id="hrv-s17">ESC/NASPE共识指南</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">ESC/NASPE 1996 共识指南</div><p>HRV领域的<strong>奠基性文件</strong></p><ul><li>发布：1996年 ESC + NASPE联合发布</li><li>地位：国际公认的HRV标准化规范</li><li>内容：统一测量方法/定义指标体系/建立正常值/明确临床场景</li><li>中文版：1998年中华医学会发布建议</li></ul><div class="ib ii">智心同检的算法完全基于这些国际公认指南和共识。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s18">智心同检研发背景</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">研发背景与循证基础</div><table class="kb-table"><tr><th>项目</th><th>详情</th></tr><tr><td>合作机构1</td><td>北京大学第六医院(国家精神医学中心)</td></tr><tr><td>合作机构2</td><td>北京回龙观医院(精神专科三甲)</td></tr><tr><td>数据规模</td><td>近十年 十几万临床数据</td></tr><tr><td>SCI论文</td><td>AFFECTIVE DISORDERS IF=4.9</td></tr><tr><td>注册证</td><td>北京市药监局医疗器械注册证</td></tr><tr><td>企业资质</td><td>国家级+中关村双高新认证 30+知识产权</td></tr></table><div class="ib id">这是医疗级产品 不是消费级手环/手表可比的。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s19">HRV与其他疾病关联</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与其他疾病关联</div><table class="kb-table"><tr><th>疾病</th><th>HRV改变</th><th>机制</th></tr><tr><td>睡眠呼吸暂停(OSA)</td><td>HRV紊乱 夜间变异增大</td><td>间歇性缺氧反复唤醒</td></tr><tr><td>新冠重症(COVID-19)</td><td>HRV显著降低</td><td>全身炎症+自主神经损伤</td></tr><tr><td>慢阻肺(COPD)</td><td>HRV降低</td><td>通气功能障碍</td></tr><tr><td>慢性肾病(CKD)</td><td>HRV进行性降低</td><td>尿毒症毒素累积</td></tr><tr><td>帕金森(PD)</td><td>HRV降低</td><td>自主神经功能障碍</td></tr><tr><td>阿尔茨海默(AD)</td><td>HRV降低</td><td>中枢自主神经调控障碍</td></tr></table><div class="ib iw">HRV几乎可以说是全身健康的通用晴雨表。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s20">疲劳指数解读</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">疲劳指数解读</div><table class="kb-table"><tr><th>分数段</th><th>等级</th><th>解读</th><th>建议</th></tr><tr><td>0-25</td><td>轻度</td><td>基本能应对</td><td>保持良好习惯</td></tr><tr><td>25-50</td><td>中度</td><td>明显压力反应</td><td>注意休息调节</td></tr><tr><td>50-65</td><td>中重度</td><td>较大损害</td><td>积极干预</td></tr><tr><td>65+</td><td>重度</td><td>高度应激</td><td>立即关注</td></tr></table><p>基于HRV时域+频域多项参数综合计算。</p></div>
+<div class="sec"><div class="stitle" id="hrv-s21">心理韧性定义与意义</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">心理韧性 Resilience</div><table class="kb-table"><tr><th>属性</th><th>说明</th></tr><tr><td>定义</td><td>面对逆境积极适应并维持心理健康的能力</td></tr><tr><td>核心</td><td>不是不受影响 而是受击后能恢复</td></tr><tr><td>与HRV关系</td><td>正相关 HRV越高=韧性越强</td></tr><tr><td>智心同检关联</td><td>抗压能力指标间接反映韧性水平</td></tr></table><h5>提升方法</h5><ul><li>建立强大的社会支持系统</li><li>培养成长型思维(从失败中学习)</li><li>规律有氧运动</li><li>正念冥想练习</li><li>保持充足睡眠</li></ul></div>
+<div class="sec"><div class="stitle" id="hrv-s22">失眠与HRV改善证据</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">失眠的非药物治疗与HRV改善</div><table class="kb-table"><tr><th>方法</th><th>机制</th><th>HRV改善</th></tr><tr><td>CBT-I认知行为疗法</td><td>纠正不良睡眠认知和行为</td><td>SDNN↑ RMSSD↑ HF↑</td></tr><tr><td>taVNS耳迷走神经刺激</td><td>调节自主神经平衡</td><td>HF↑ LF↓ LF/HF↓</td></tr><tr><td>HRV-BF生物反馈</td><td>直接训练自主神经调控</td><td>全面HRV指标↑</td></tr><tr><td>香薰治疗</td><td>激活副交感神经放松</td><td>夜间HRV↑</td></tr></table><div class="ib ii">这些非药物方法不仅改善睡眠质量 还从根源上修复了自主神经功能。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s23">HRV检测前准备事项</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV检测前准备清单</div><table class="kb-table"><tr><th>时间</th><th>注意事项</th></tr><tr><td>前一晚</td><td>充足睡眠7-9小时</td></tr><tr><td>前24h</td><td>避免剧烈运动/饮酒/过量咖啡因</td></tr><tr><td>前2h</td><td>不要饱餐 空腹或少量进食</td></tr><tr><td>检测前</td><td>排空膀胱 宽松衣物</td></tr><tr><td>特殊</td><td>女性避开月经期 记录正在服用的药物</td></tr></table></div>
+<div class="sec"><div class="stitle" id="hrv-s24">HRV日常监测意义</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV日常监测的五大价值</div><ol><li>早期预警 - 症状出现前数月发现异常</li><li>健康追踪 - 建立个人基线 了解趋势</li><li>训练优化 - 运动员调整训练负荷</li><li>压力管理 - 量化压力 评估干预效果</li><li>疾病管理 - 追踪病情进展和疗效</li></ol><p>建议：每周至少1-2次 建立个人趋势数据</p></div>
+<div class="sec"><div class="stitle" id="hrv-s25">提高HRV的方法</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">科学提高HRV的八大方法</div><table class="kb-table"><tr><th>方法</th><th>做法</th><th>效果</th></tr><tr><td>有氧运动</td><td>150min/周中等强度</td><td>SDNN上升 HF上升</td></tr><tr><td>规律睡眠</td><td>固定时间7-9小时</td><td>夜间HRV上升</td></tr><tr><td>冥想正念</td><td>10-20min/天</td><td>副交感上升</td></tr><tr><td>深呼吸</td><td>4-7-8法或箱式呼吸</td><td>即时HF上升</td></tr><tr><td>冷暴露</td><td>冷水浴30-60秒</td><td>短期激活副交感</td></tr><tr><td>社交连接</td><td>保持良好人际</td><td>长期HRV上升</td></tr><tr><td>抗炎饮食</td><td>Omega-3蔬果全谷物</td><td>降低炎症负荷</td></tr><tr><td>减重</td><td>BMI至正常范围</td><td>肥胖者显著改善</td></tr></table><div class="ib iw">坚持4-8周可见明显效果</div></div>
+<div class="sec"><div class="stitle" id="hrv-s26">智心同检vs手环手表HRV</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">智心同检 vs 手环手表对比</div><table class="kb-table"><tr><th>维度</th><th>智心同检</th><th>手环手表</th></tr><tr><td>精度</td><td>医疗级 符合器械标准</td><td>消费级 参考性质</td></tr><tr><td>算法</td><td>国际指南+临床大数据</td><td>通用算法 未经验证</td></tr><tr><td>报告</td><td>六维综合评估</td><td>单一HRV数值</td></tr><tr><td>循证</td><td>SCI论文发表</td><td>无临床研究</td></tr><tr><td>用途</td><td>医疗诊断辅助</td><td>娱乐趋势参考</td></tr><tr><td>合规</td><td>医疗器械注册证</td><td>非医疗器械</td></tr></table><div class="ib id">手环适合日常趋势监测 但不具备临床诊断价值。</div></div>
+<div class="sec"><div class="stitle" id="hrv-s27">孕妇能用智心同检吗</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">孕产妇人群应用</div><table class="kb-table"><tr><th>场景</th><th>说明</th></tr><tr><td>孕期心理筛查</td><td>孕激素剧变 HRV客观评估情绪</td></tr><tr><td>产后抑郁预防</td><td>产后42天复查同步HRV</td></tr><tr><td>高危妊娠管理</td><td>妊高症/妊娠糖尿病 自主神经监测</td></tr><tr><td>产科常规</td><td>妇产科为推荐科室之一</td></tr></table><p>检测完全无创安全 但需结合孕周生理性变化解读</p></div>
+<div class="sec"><div class="stitle" id="hrv-s28">老年人HRV特点</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">老年人HRV特点</div><table class="kb-table"><th>特征</th><th>详情</th></tr><tr><td>总体趋势</td><td>随年龄增长HRV逐渐下降(正常衰老)</td></tr><tr><td>SDNN年降</td><td>约1-2%每年</td></tr><tr><td>副交感下降</td><td>比交感更明显 HF下降显著</td></tr><tr><td>夜间恢复</td><td>恢复能力减弱</td></tr><tr><td>应激适应</td><td>对压力适应能力下降</td></tr></table><p>注意：下降过快可能存在病理状态 需结合年龄校正正常值解读</p></div>
+<div class="sec"><div class="stitle" id="hrv-s29">儿童青少年HRV</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">儿童青少年HRV</div><ul><li>儿童期：HRV相对较高(良好自主神经弹性)</li><li>青春期：向成人模式转变 可能暂时性波动</li><li>高压学生群体：HRV普遍低于同龄人</li><li>焦虑抑郁倾向：HF成分明显降低</li></ul><p>学校应用：批量筛查 + 一生一策档案 + 趋势跟踪</p></div>
+<div class="sec"><div class="stitle" id="hrv-s30">HRV与运动表现</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV与运动表现</div><table class="kb-table"><tr><th>应用</th><th>说明</th></tr><tr><td>过度训练监测</td><td>晨起HRV突降等于恢复不足 需减量</td></tr><tr><td>最佳状态识别</td><td>HRV高位区间等于比赛表现好</td></tr><tr><td>训练负荷调整</td><td>根据每日HRV动态调整强度</td></tr><tr><td>恢复策略评估</td><td>比较不同恢复方式的效果</td></tr><tr><td>运动员选材</td><td>先天HRV高等于更好心肺潜力</td></tr></table><p>职业体育团队已广泛采用HRV作为训练管理工具</p></div>
+<div class="sec"><div class="stitle" id="hrv-s31">HRV生物反馈训练</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">HRV生物反馈训练</div><table class="kb-table"><tr><th>要素</th><th>说明</th></tr><tr><td>原理</td><td>实时显示HRV 学习自主调节</td></tr><tr><td>核心方法</td><td>节律性呼吸(6次/分) RSA最大化</td></tr><tr><td>辅助方法</td><td>渐进式放松 / 正念整合</td></tr><tr><td>疗程</td><td>8-12周 2-3次/周 20-30min/次</td></tr><tr><td>适应症</td><td>焦虑/抑郁/失眠/疼痛/高血压</td></tr></table></div>
+<div class="sec"><div class="stitle" id="hrv-s32">taVNS经皮耳迷走神经刺激</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">taVNS 经皮耳迷走神经刺激</div><table class="kb-table"><tr><th>属性</th><th>详情</th></tr><tr><td>刺激部位</td><td>耳甲(耳蜗区域)</td></tr><tr><td>作用通路</td><td>耳部到迷走神经到脑干孤束核到自主神经中枢</td></tr><tr><td>效果</td><td>副交感上升 交感下降 LF/HF下降</td></tr><tr><td>优势</td><td>非侵入性 操作简便 副作用少</td></tr><tr><td>适应症</td><td>焦虑/抑郁/失眠/癫痫/疼痛</td></tr></table></div>
+<div class="sec"><div class="stitle" id="hrv-s33">CBT-I认知行为失眠治疗</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">CBT-I 失眠认知行为疗法</div><table class="kb-table"><tr><th>模块</th><th>内容</th></tr><tr><td>睡眠限制</td><td>缩短卧床时间 提高睡眠效率</td></tr><tr><td>刺激控制</td><td>床只用于睡觉 不睡不上床</td></tr><tr><td>认知重构</td><td>纠正关于睡眠的错误信念</td></tr><tr><td>放松训练</td><td>渐进式肌肉放松或呼吸练习</td></tr></table><p>疗程4-8周 | HRV改善：SDNN/RMSSD/HF均升高 | 长期优于安眠药无依赖</p></div>
+<div class="sec"><div class="stitle" id="hrv-s34">智心同检在心内科的应用</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">心内科应用价值</div><table class="kb-table"><tr><th>应用</th><th>说明</th></tr><tr><td>风险分层</td><td>HRV低等于事件风险高 加强管理</td></tr><tr><td>高血压评估</td><td>是否合并自主神经紊乱</td></tr><tr><td>心梗后风险</td><td>SDNN低于70ms重点关注</td></tr><tr><td>神经官能症</td><td>排除器质性病变</td></tr><tr><td>心律失常风险</td><td>自主神经失衡等于诱因</td></tr><tr><td>双心医学</td><td>心脏病加心理问题同步评估</td></tr></table></div>
+<div class="spacer"></div></div>
+<div id="p-product" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#9881;&#65039; 产品方案配置</h2><p>ZT10+/ZT20+配置、使用流程、六维报告</p></div>
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 15 节</div>
+<div class="idx-bd"><a class="idx-item" href="#product-s0" onclick="scrollToSection('product',0)">ZT10+配置清单</a><a class="idx-item" href="#product-s1" onclick="scrollToSection('product',1)">ZT20+配置清单</a><a class="idx-item" href="#product-s2" onclick="scrollToSection('product',2)">7步使用流程详解</a><a class="idx-item" href="#product-s3" onclick="scrollToSection('product',3)">六维报告体系详解</a><a class="idx-item" href="#product-s4" onclick="scrollToSection('product',4)">压力指数解读</a><a class="idx-item" href="#product-s5" onclick="scrollToSection('product',5)">抗压能力解读</a><a class="idx-item" href="#product-s6" onclick="scrollToSection('product',6)">自主神经活性和平衡解读</a><a class="idx-item" href="#product-s7" onclick="scrollToSection('product',7)">六大核心优势</a><a class="idx-item" href="#product-s8" onclick="scrollToSection('product',8)">母子机设计特色</a><a class="idx-item" href="#product-s9" onclick="scrollToSection('product',9)">产品七大特色汇总</a><a class="idx-item" href="#product-s10" onclick="scrollToSection('product',10)">检测注意事项</a><a class="idx-item" href="#product-s11" onclick="scrollToSection('product',11)">智心同检设备维护保养</a><a class="idx-item" href="#product-s12" onclick="scrollToSection('product',12)">智心同检检测需要多长时间</a><a class="idx-item" href="#product-s13" onclick="scrollToSection('product',13)">智心同检适合哪些人群</a><a class="idx-item" href="#product-s14" onclick="scrollToSection('product',14)">智心同检检测结果准确吗</a></div>
+</div>
+<div class="sec"><div class="stitle" id="product-s0">ZT10+配置清单</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">ZT10+ 标准配置</div><table class="kb-table"><tr><th>序号</th><th>配置项</th><th>数量</th></tr><tr><td>1</td><td>系统软件</td><td>1套</td></tr><tr><td>2</td><td>电脑</td><td>1台</td></tr><tr><td>3</td><td>身份证阅读器</td><td>1台</td></tr><tr><td>4</td><td>扫码器</td><td>1个</td></tr><tr><td>5</td><td>打印机</td><td>1台</td></tr><tr><td>6</td><td>移动台车</td><td>1辆</td></tr><tr><td>7</td><td>10通道设备充电仓</td><td>1套</td></tr></table><p>可同时检测最多10人。适合中小型机构。</p></div>
+<div class="sec"><div class="stitle" id="product-s1">ZT20+配置清单</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">ZT20+ 扩容配置</div><p>基于ZT10+全部配置 + 扩容：</p><table class="kb-table"><tr><th>额外配置</th><th>数量</th></tr><tr><td>20通道设备充电仓</td><td>2套(共20通道)</td></tr></table><p>总检测能力：<strong>同时20人</strong></p><p>适用场景：大型体检中心、企业团检、学校批量筛查等高通量场景。</p></div>
+<div class="sec"><div class="stitle" id="product-s2">7步使用流程详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">七步标准操作流程</div><ol><li><strong>患者建档</strong> - 身份证读取或手动录入基本信息</li><li><strong>设备佩戴</strong> - 将检测设备佩戴于受检者(支持多人同时)</li><li><strong>等待采集</strong> - 静坐休息约10分钟 数据自动采集</li><li><strong>设备归还</strong> - 取下设备 消毒后可循环使用</li><li><strong>数据导入</strong> - WiFi无线传输至系统软件</li><li><strong>数据分析</strong> - 软件自动分析生成报告</li><li><strong>报告打印</strong> - 打印六维评估报告</li></ol><div class="ib iw">特点：全程无创、快速(每人约10分钟)、多通道并行(最高20人同时)、数据WiFi传输。</div></div>
+<div class="sec"><div class="stitle" id="product-s3">六维报告体系详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">六维报告体系</div><div class="pnl open"><div class="pnh" onclick="togglePanel(this)">&#128202; 六维报告体系详解</div><div class="pnb"><div class="pnbd">
+<div class="sec"><div class="stitle" id="product-s4">压力指数解读</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">压力指数解读</div><table class="kb-table"><tr><th>分数段</th><th>等级</th><th>表现</th></tr><tr><td>0-33</td><td>轻度</td><td>心理压力小 情绪稳定</td></tr><tr><td>33-66</td><td>中度</td><td>一定压力 可能焦虑烦躁</td></tr><tr><td>66-100</td><td>中重度</td><td>压力大 需关注心理健康</td></tr></table><p>侧重心理层面评估 与疲劳指数(身体层面)互补。</p></div>
+<div class="sec"><div class="stitle" id="product-s5">抗压能力解读</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">抗压能力解读</div><table class="kb-table"><tr><th>分数段</th><th>等级</th><th>含义</th></tr><tr><td>80-100</td><td>稳定</td><td>强 能较好应对各种压力</td></tr><tr><td>60-80</td><td>轻微下降</td><td>有所减弱 需注意</td></tr><tr><td>40-60</td><td>偏低</td><td>明显下降 易受影响</td></tr><tr><td>30-40</td><td>极低</td><td>很弱 需重点支持</td></tr></table><p>抗压能力强 = 即使压力大也能较快恢复。是健康管理的重要风向标。</p></div>
+<div class="sec"><div class="stitle" id="product-s6">自主神经活性和平衡解读</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">自主神经双指标解读</div><table class="kb-table"><tr><th>指标</th><th>范围</th><th>高=好/平衡</th><th>低=异常</th></tr><tr><td>自主神经活性</td><td>35-100</td><td>调节能力强</td><td>整体功能减弱</td></tr><tr><td>自主神经平衡</td><td>30-100</td><td>交感副交感均衡</td><td>失衡(偏高=交感优势<br>偏低=过度抑制)</td></tr></table><p>两指标结合全面评估自主神经功能。</p></div></div></div></div></div>
+<div class="sec"><div class="stitle" id="product-s7">六大核心优势</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">六大核心优势</div><ol><li><strong>客观量化</strong> - 融入临床路径 数据可量化 非主观判定</li><li><strong>评估规范</strong> - 基于ESC/NASPE国际指南 共识+循证</li><li><strong>技术成熟</strong> - 时域+频域+非线性 三大类全覆盖</li><li><strong>医疗合规</strong> - 符合国家规范 有医疗器械注册证</li><li><strong>评估精准</strong> - 基于精神专科 十几万临床大数据</li><li><strong>多通道</strong> - 全流程数据化 最高同时20人并行</li></ol></div>
+<div class="sec"><div class="stitle" id="product-s8">母子机设计特色</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">首创母子机设计</div><table class="kb-table"><tr><th>组件</th><th>功能</th><th>特点</th></tr><tr><td>母机(主机)</td><td>软件/电脑/打印/管理</td><td>固定在移动台车上</td></tr><tr><td>子机(检测设备)</td><td>佩戴式HRV采集</td><td>轻便舒适 可随身携带</td></tr><tr><td>连接方式</td><td>WiFi无线传输</td><td>数据自动同步</td></tr></table><p>设计理念：像航母(母机)和舰载机(子机)的关系。</p><p>优势：安装便捷 / 检测更舒适 / 团体效率高</p></div>
+<div class="sec"><div class="stitle" id="product-s9">产品七大特色汇总</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">七大产品特色</div><ol><li>首创母子机设计 - 安装便捷 检测舒适</li><li>国际指南算法 - 时域+频域+非线性</li><li>多通道信号采集 - 双通道同时采集</li><li>无线WiFi传输 - 减少干扰 提高效率</li><li>生理心理双数据 - 主客观结合</li><li>团体检测模式 - 一拖五并列式</li><li>数据加密管理 - 效率+安全兼顾</li></ol></div>
+<div class="sec"><div class="stitle" id="product-s10">检测注意事项</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">检测注意事项</div><table class="kb-table"><tr><th>时间点</th><th>注意事项</th></tr><tr><td>检测前24h</td><td>避免剧烈运动、饮酒、过量咖啡因</td></tr><tr><td>检测前2h</td><td>避免饱餐 建议空腹或餐后2小时</td></tr><tr><td>检测环境中</td><td>安静放松 避免交谈和噪音</td></tr><tr><td>设备佩戴</td><td>确保接触良好 按指导正确佩戴</td></tr><tr><td>检测过程中</td><td>保持静坐 不要大幅度动作</td></tr><tr><td>检测时长</td><td>约10分钟 请耐心等待</td></tr><tr><td>特殊人群</td><td>心脏起搏器等植入设备需提前告知</td></tr></table></div>
+<div class="sec"><div class="stitle" id="product-s11">智心同检设备维护保养</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">设备维护保养</div><table class="kb-table"><tr><th>部件</th><th>要点</th><th>频率</th></tr><tr><td>充电仓</td><td>清洁充电触点</td><td>每周</td></tr><tr><td>子机设备</td><td>酒精消毒后晾干</td><td>每次使用后</td></tr><tr><td>软件</td><td>检查版本更新</td><td>每月</td></tr><tr><td>电脑</td><td>清理磁盘空间</td><td>每月</td></tr><tr><td>打印机</td><td>检查墨盒纸张</td><td>按需</td></tr><tr><td>台车</td><td>轮子刹车检查</td><td>每月</td></tr><tr><td>WiFi</td><td>确保网络通畅</td><td>每日</td></tr><tr><td>校准</td><td>按厂家要求定期校准</td><td>按规定</td></tr></table></div>
+<div class="sec"><div class="stitle" id="product-s12">智心同检检测需要多长时间</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">检测时间</div><table class="kb-table"><tr><th>步骤</th><th>耗时</th></tr><tr><td>建档</td><td>约1分钟</td></tr><tr><td>佩戴设备</td><td>约1分钟</td></tr><tr><td>数据采集</td><td>约10分钟</td></tr><tr><td>归还消毒</td><td>约1分钟</td></tr><tr><td>分析生成</td><td>约1分钟(自动)</td></tr><tr><td>打印报告</td><td>约1分钟</td></tr></table><p>单人约15分钟 | 20人并行一批约25分钟</p></div>
+<div class="sec"><div class="stitle" id="product-s13">智心同检适合哪些人群</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">适用人群</div><table class="kb-table"><tr><th>人群</th><th>用途</th></tr><tr><td>健康人群</td><td>体检筛查 建立基线</td></tr><tr><td>亚健康人群</td><td>评估压力 指导干预</td></tr><tr><td>慢病患者</td><td>共病心理评估</td></tr><tr><td>精神心理科患者</td><td>诊断辅助 疗效追踪</td></tr><tr><td>孕产妇</td><td>孕期产后心理监测</td></tr><tr><td>学生</td><td>心理健康普查</td></tr><tr><td>企业员工</td><td>EAP健康管理</td></tr><tr><td>运动员/高压职业</td><td>状态监控</td></tr><tr><td>老年人</td><td>自主神经功能评估</td></tr><tr><td>康复期患者</td><td>康复进程追踪</td></tr></table></div>
+<div class="sec"><div class="stitle" id="product-s14">智心同检检测结果准确吗</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">准确性保障</div><table class="kb-table"><tr><th>维度</th><th>说明</th></tr><tr><td>采集技术</td><td>医疗级专业传感器</td></tr><tr><td>算法基础</td><td>ESC/NASPE 1996国际共识</td></tr><tr><td>数据验证</td><td>十几万临床大数据</td></tr><tr><td>学术发表</td><td>SCI期刊IF=4.9</td></tr><tr><td>监管审批</td><td>北京市药监局注册证</td></tr></table><div class="ib iw">注意：单次结果应结合临床综合判断 趋势比单次值更有意义</div></div>
+<div class="spacer"></div></div>
+<div id="p-clinical" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#127973; 临床应用解读</h2><p>三大方向、指标解读、心理韧性</p></div>
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 4 节</div>
+<div class="idx-bd"><a class="idx-item" href="#clinical-s0" onclick="scrollToSection('clinical',0)">三大应用方向详解</a><a class="idx-item" href="#clinical-s1" onclick="scrollToSection('clinical',1)">适用科室清单</a><a class="idx-item" href="#clinical-s2" onclick="scrollToSection('clinical',2)">适用行业清单</a><a class="idx-item" href="#clinical-s3" onclick="scrollToSection('clinical',3)">智心同检在慢病管理中的应用</a></div>
+</div>
+<div class="sec"><div class="stitle" id="clinical-s0">三大应用方向详解</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">三大临床应用方向</div><div class="sec"><div class="stitle" id="clinical-s1">适用科室清单</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">适用11个临床科室</div><table class="kb-table"><tr><th>科室</th><th>主要用途</th></tr><tr><td>体检中心</td><td>健康筛查 常规项目</td></tr><tr><td>妇产科</td><td>孕产妇/更年期女性心理评估</td></tr><tr><td>精神心理科</td><td>核心应用科室</td></tr><tr><td>功能检查科</td><td>专项检查</td></tr><tr><td>心内科</td><td>心血管风险分层</td></tr><tr><td>肿瘤科</td><td>肿瘤患者心理共病评估</td></tr><tr><td>消化内科</td><td>肠脑轴相关评估</td></tr><tr><td>慢病科</td><td>慢病共病心理评估</td></tr><tr><td>内分泌科</td><td>代谢相关评估</td></tr><tr><td>神内(外)科</td><td>神经系统评估</td></tr><tr><td>康复科</td><td>康复进程监测</td></tr></table></div></div>
+<div class="sec"><div class="stitle" id="clinical-s2">适用行业清单</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">适用10大行业</div><table class="kb-table"><tr><th>行业</th><th>典型场景</th></tr><tr><td>教育机构</td><td>学生心理健康测评 一生一策档案</td></tr><tr><td>特种行业</td><td>飞行员/司机/高压职业筛查</td></tr><tr><td>企事业单位</td><td>员工健康管理 EAP项目</td></tr><tr><td>运动机构</td><td>运动员状态监控 过度训练预警</td></tr><tr><td>医疗美容</td><td>术前术后心理评估</td></tr><tr><td>健身行业</td><td>会员健康基线评估</td></tr><tr><td>月子中心</td><td>产后妈妈心理状态跟踪</td></tr><tr><td>健康小屋</td><td>社区健康便民服务</td></tr><tr><td>党政机关</td><td>公务员队伍健康管理</td></tr><tr><td>保险机构</td><td>核保评估/健康管理服务</td></tr></table></div>
+<div class="sec"><div class="stitle" id="clinical-s3">智心同检在慢病管理中的应用</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">慢病管理中的应用</div><table class="kb-table"><tr><th>慢病类型</th><th>智心同检价值</th></tr><tr><td>糖尿病</td><td>自主神经病变早期筛查(提前数年)</td></tr><tr><td>高血压</td><td>交感兴奋评估 指导降压方案</td></tr><tr><td>冠心病</td><td>心梗后风险分层</td></tr><tr><td>甲状腺/乳腺/子宫肌瘤</td><td>58-65%心理共病 需同步关注</td></tr><tr><td>肥胖症</td><td>压力型肥胖鉴别</td></tr><tr><td>失眠</td><td>自主神经全面评估</td></tr></table><p>慢病管理中心是重要目标客户</p></div>
+
+<div class="cs"><div class="cs-h">压力评估报告示例</div><div class="cs-b">
+<p>以下为压力评估报告示例，展示HRV检测结果与压力评估报告模板：</p>
+<div class="img-gallery-flex">
+<div class="img-card"><img src="images/training_page20.webp" alt="六维报告演示" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">压力评估报告-01</div></div>
+<div class="img-card"><img src="images/training_page21.webp" alt="疲劳指数-压力指数-抗压能力解读" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">压力评估报告-02</div></div>
+<div class="img-card"><img src="images/training_page22.webp" alt="适用临床科室与行业" loading="lazy" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">压力评估报告-03</div></div>
+</div>
+</div></div>
+<div class="spacer"></div></div>
+<div id="p-policy" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128202; 政策与市场数据</h2><p>110万+样本、慢病关联、政策体系</p></div>
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 10 节</div>
+<div class="idx-bd"><a class="idx-item" href="#policy-s0" onclick="scrollToSection('policy',0)">110万+样本调查数据</a><a class="idx-item" href="#policy-s1" onclick="scrollToSection('policy',1)">抑郁症流行病学数据</a><a class="idx-item" href="#policy-s2" onclick="scrollToSection('policy',2)">全球精神障碍数据</a><a class="idx-item" href="#policy-s3" onclick="scrollToSection('policy',3)">新冠疫情心理冲击</a><a class="idx-item" href="#policy-s4" onclick="scrollToSection('policy',4)">社会心理服务体系政策时间线</a><a class="idx-item" href="#policy-s5" onclick="scrollToSection('policy',5)">慢病共病心理问题比例</a><a class="idx-item" href="#policy-s6" onclick="scrollToSection('policy',6)">学生群体心理健康数据</a><a class="idx-item" href="#policy-s7" onclick="scrollToSection('policy',7)">企业员工心理健康影响</a><a class="idx-item" href="#policy-s8" onclick="scrollToSection('policy',8)">职业健康相关政策</a><a class="idx-item" href="#policy-s9" onclick="scrollToSection('policy',9)">中国精神卫生服务缺口</a></div>
+</div>
+<div class="sec"><div class="stitle" id="policy-s0">110万+样本调查数据</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">110万+样本 调查核心数据</div><table class="kb-table"><tr><th>状态</th><th>占比</th><th>人数估算(以110万计)</th></tr><tr><td>心理健康</td><td>10.3%</td><td>约11万人</td></tr><tr><td>心理亚健康</td><td>73.6%</td><td>约81万人</td></tr><tr><td>心理问题</td><td>16.1%</td><td>约18万人</td></tr></table><div class="ib id">这是中国目前规模最大的心理健康流行病学调查之一。<br>核心启示：<strong>近90%的人需要某种形式的心理健康关注或干预。</strong></div></div>
+<div class="sec"><div class="stitle" id="policy-s1">抑郁症流行病学数据</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">抑郁症流行病学</div><table class="kb-table"><tr><th>指标</th><th>数据</th></tr><tr><td>终生患病率(全障碍)</td><td>6.8%(约1/15人)</td></tr><tr><td>抑郁症患病率</td><td>3.4%</td></tr><tr><td>患者总数</td><td>约<strong>9500万</strong></td></tr><tr><td>年自杀人数</td><td>约28万(40%患抑郁症)</td></tr><tr><td>就诊率</td><td>仅<strong>9.5%</strong></td></tr><tr><td>未治疗比例</td><td><strong>92%</strong>从未接受治疗</td></tr></table><h5>发病年龄分布(低龄化趋势)</h5><p>18岁以下:30.28% | 18-24岁:35.32% → 年轻人占比超65%!</p></div>
+<div class="sec"><div class="stitle" id="policy-s2">全球精神障碍数据</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">全球精神障碍数据</div><table class="kb-table"><tr><th>指标</th><th>数据</th></tr><tr><td>全球患者总数</td><td>近<strong>10亿</strong>(1/8人口)</td></tr><tr><td>1990-2019增长</td><td>+48.1%</td></tr><tr><td>新冠后抑郁症新增</td><td>+5300万(+27.6%)</td></tr><tr><td>新冠后焦虑症新增</td><td>+6200万(+20.8%)</td></tr></table><div class="ib id">WHO将精神健康列为全球十大疾病负担来源之一。</div></div>
+<div class="sec"><div class="stitle" id="policy-s3">新冠疫情心理冲击</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">新冠疫情心理冲击</div><table class="kb-table"><tr><th>指标</th><th>数据</th></tr><tr><td>焦虑症状阳性检出率</td><td>44.6%</td></tr><tr><td>抑郁症状阳性检出率</td><td>53.5%</td></tr><tr><td>全球新增抑郁症</td><td>5300万(+27.6%)</td></tr><tr><td>全球新增焦虑障碍</td><td>6200万(+20.8%)</td></tr></table><p>多重压力叠加：社会隔离 + 经济不确定性 + 健康恐惧 = 前所未有的心理危机</p><div class="ib iw">后疫情时代 心理健康需求更加迫切</div></div>
+<div class="sec"><div class="stitle" id="policy-s4">社会心理服务体系政策时间线</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">社会心理服务体系 政策时间线</div><table class="kb-table"><tr><th>时间</th><th>事件</th><th>意义</th></tr><tr><td>2015</td><td>十三五规划首次提出</td><td>国家层面首次纳入</td></tr><tr><td>2017</td><td>十九大报告+22部门指导意见</td><td>顶层设计明确</td></tr><tr><td>2018</td><td>十部委试点方案启动</td><td>落地执行开始</td></tr><tr><td>2021</td><td>全国试点全面铺开</td><td>咨询室80%+辅导室100%</td></tr><tr><td>2024</td><td>二十届三中全会再次强调</td><td>持续深化推进</td></tr></table><div class="ib ii">政策持续加码 = 市场空间巨大 = 行业黄金期</div></div>
+<div class="sec"><div class="stitle" id="policy-s5">慢病共病心理问题比例</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">慢病共病心理问题比例(110万+样本)</div><table class="kb-table"><tr><th>慢病类型</th><th>心理问题/亚健康</th><th>焦虑</th><th>抑郁</th></tr><tr><td>甲状腺结节</td><td>58.2%亚健康</td><td>43.1%</td><td>41.2%</td></tr><tr><td>乳腺良性病变</td><td>59.4%亚健康</td><td>57.8%</td><td>55.0%</td></tr><tr><td>子宫肌瘤</td><td>64.7%亚健康</td><td>40.3%</td><td>58.5%</td></tr><tr><td>肥胖</td><td>60.1%亚健康</td><td>32.8%</td><td>44.3%</td></tr><tr><td>失眠</td><td>54.7%亚健康</td><td>60.4%</td><td>71.9%</td></tr><tr><td>肿瘤</td><td>67.1%心理问题</td><td>54.3%</td><td>71.1%</td></tr><tr><td>脑梗</td><td>62.1%</td><td>39.1%</td><td>55.3%</td></tr><tr><td>心梗</td><td>59.7%</td><td>52.0%</td><td>52.9%</td></tr><tr><td>糖尿病</td><td>46.3%</td><td>38.9%</td><td>48.7%</td></tr><tr><td>高血压</td><td>54.3%亚健康</td><td>43.2%</td><td>47.8%</td></tr><tr><td>冠心病</td><td>52.3%亚健康</td><td>46.0%</td><td>54.6%</td></tr></table><div class="ib id">几乎所有慢病的心理共病率都超过40%！慢病管理必须同步关注心理健康！</div></div>
+<div class="sec"><div class="stitle" id="policy-s6">学生群体心理健康数据</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">学生群体心理健康数据</div><table class="kb-table"><tr><th>学段</th><th>抑郁/焦虑检出率</th></tr><tr><td>小学生</td><td>抑郁约10%</td></tr><tr><td>初中生</td><td>抑郁约30%</td></tr><tr><td>高中生</td><td>抑郁约40%</td></tr><tr><td>大学生</td><td>轻度焦虑38.26% 重度抑郁4.94%</td></tr><tr><td>研究生</td><td>焦虑/抑郁上升趋势 总体恶化</td></tr></table><p>政策要求：每学年至少一次测评 + 一生一策档案</p></div>
+<div class="sec"><div class="stitle" id="policy-s7">企业员工心理健康影响</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">员工心理健康9大影响链</div><ol><li>焦虑抑郁情绪</li><li>→ 降低动机和积极性</li><li>→ 影响身体健康</li><li>→ 降低工作质量</li><li>→ 降低工作效率</li><li>→ 导致员工流失</li><li>→ 影响团队协作</li><li>→ 抑制创造力</li><li>→ 造成不良事件/安全事故</li></ol><div class="ib id">关键数据：81%企业想做健康管理 | 白领亚健康76% | 每1000职工因亚健康损失141万/年</div></div>
+<div class="sec"><div class="stitle" id="policy-s8">职业健康相关政策</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">职业健康相关政策</div><table class="kb-table"><tr><th>政策文件</th><th>核心要求</th></tr><tr><td>安全生产法(2021修订)</td><td>关注从业人员身体和心理状况</td></tr><tr><td>国卫办2024-32号</td><td>推进职业健康保护行动</td></tr><tr><td>GB/T45003-2024</td><td>心理健康安全管理指南(国标)</td></tr><tr><td>T/WSJD13-2020</td><td>职业人群心理健康促进指南(行标)</td></tr></table><div class="ib ii">政策从建议变为要求 企业合规需求迫切</div></div>
+<div class="sec"><div class="stitle" id="policy-s9">中国精神卫生服务缺口</div><div style="font-size:16px;font-weight:700;color:var(--t);margin-bottom:10px">中国精神卫生服务缺口</div><table class="kb-table"><tr><th>指标</th><th>数据</th><th>对比</th></tr><tr><td>精神科医生</td><td>约4万名</td><td>WHO推荐10名/10万人(仅3名)</td></tr><tr><td>未治疗比例</td><td>92%</td><td>绝大多数从未就医</td></tr><tr><td>抑郁症就诊率</td><td>9.5%</td><td>90%以上未就诊</td></tr><tr><td>病耻感</td><td>56%+降低社交</td><td>歧视问题严重</td></tr><tr><td>职场歧视</td><td>30%+不公待遇</td><td>就业权益受损</td></tr></table><div class="ib ii">智心同检价值：提供客观初筛工具 帮助早期发现 降低就医门槛</div></div>
+<div class="spacer"></div></div>
+<div id="p-business" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#9881; 设备操作指南</h2><p>短程心率压力检测设备使用说明与操作规范</p></div>
+<div class="cs"><div class="cs-h">设备操作总览</div><div class="cs-b">
+
+<div id="biz-overview">
+<div class="gd">
+    <div class="cd" onclick="showBizPage('biz-flow')"><div class="ci cib">&#128196;</div><div class="ct">设备操作流程</div><div class="cdesc">团检版本(11页) + 个检版本(8页) 操作说明</div></div>
+    <div class="cd" onclick="showBizPage('biz-notice')"><div class="ci cir">&#9888;&#65039;</div><div class="ct">注意事项</div><div class="cdesc">设备使用注意事项与安全规范</div></div>
+    <div class="cd" onclick="showBizPage('biz-repair')"><div class="ci cio">&#128295;</div><div class="ct">设备修复流程</div><div class="cdesc">常见问题排查与修复指南</div></div>
+    <div class="cd" onclick="showBizPage('biz-report')"><div class="ci cib">&#128202;</div><div class="ct">报告解读</div><div class="cdesc">精神压力评估报告解读指南</div></div>
+</div>
+</div>
+</div></div>
+
+<div id="biz-flow" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#128196; 设备操作流程</h2><p>心率变异性系统使用说明 - 选择版本查看详情</p></div>
+<div class="gd">
+    <div class="cd" onclick="showBizFlowSub('biz-flow-tuanjian')"><div class="ci cib">&#128196;</div><div class="ct">团检版本</div><div class="cdesc">团检版本操作说明（共11页）</div></div>
+    <div class="cd" onclick="showBizFlowSub('biz-flow-gejian')"><div class="ci cir">&#128196;</div><div class="ct">个检版本</div><div class="cdesc">个检版本操作说明（共8页）</div></div>
+    <div class="cd" onclick="showBizFlowSub('biz-flow-video')"><div class="ci cio">&#127916;</div><div class="ct">设备操作视频教学</div><div class="cdesc">系统操作方法 + 采集器操作方法</div></div>
+</div>
+</div>
+
+<div id="biz-flow-tuanjian" class="biz-flow-sub" style="display:none;">
+<button class="bb" onclick="showBizFlowBack()">&larr; 返回设备操作流程</button>
+<div class="ph"><h2>&#128196; 团检版本</h2><p>心率变异性系统使用说明 - 团检版本（共11页）</p></div>
+<div class="sec"><div class="img-gallery-flex">
+<div class="img-card"><img src="images/tuanjian_page01.webp" alt="团检版本-第1页" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">团检-01</div></div>
+<div class="img-card"><img src="images/tuanjian_page02.webp" alt="团检版本-第2页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-02</div></div>
+<div class="img-card"><img src="images/tuanjian_page03.webp" alt="团检版本-第3页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-03</div></div>
+<div class="img-card"><img src="images/tuanjian_page04.webp" alt="团检版本-第4页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-04</div></div>
+<div class="img-card"><img src="images/tuanjian_page05.webp" alt="团检版本-第5页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-05</div></div>
+<div class="img-card"><img src="images/tuanjian_page06.webp" alt="团检版本-第6页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-06</div></div>
+<div class="img-card"><img src="images/tuanjian_page07.webp" alt="团检版本-第7页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-07</div></div>
+<div class="img-card"><img src="images/tuanjian_page08.webp" alt="团检版本-第8页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-08</div></div>
+<div class="img-card"><img src="images/tuanjian_page09.webp" alt="团检版本-第9页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-09</div></div>
+<div class="img-card"><img src="images/tuanjian_page10.webp" alt="团检版本-第10页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-10</div></div>
+<div class="img-card"><img src="images/tuanjian_page11.webp" alt="团检版本-第11页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">团检-11</div></div>
+</div></div>
+</div>
+
+<div id="biz-flow-gejian" class="biz-flow-sub" style="display:none;">
+<button class="bb" onclick="showBizFlowBack()">&larr; 返回设备操作流程</button>
+<div class="ph"><h2>&#128196; 个检版本</h2><p>心率变异性系统使用说明 - 个检版本（共8页）</p></div>
+<div class="sec"><div class="img-gallery-flex">
+<div class="img-card"><img src="images/gejian_page01.webp" alt="个检版本-第1页" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">个检-01</div></div>
+<div class="img-card"><img src="images/gejian_page02.webp" alt="个检版本-第2页" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">个检-02</div></div>
+<div class="img-card"><img src="images/gejian_page03.webp" alt="个检版本-第3页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-03</div></div>
+<div class="img-card"><img src="images/gejian_page04.webp" alt="个检版本-第4页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-04</div></div>
+<div class="img-card"><img src="images/gejian_page05.webp" alt="个检版本-第5页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-05</div></div>
+<div class="img-card"><img src="images/gejian_page06.webp" alt="个检版本-第6页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-06</div></div>
+<div class="img-card"><img src="images/gejian_page07.webp" alt="个检版本-第7页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-07</div></div>
+<div class="img-card"><img src="images/gejian_page08.webp" alt="个检版本-第8页" loading="lazy" onclick="openLightbox(this.src)" width="1646" height="2339" decoding="async"><div class="img-label">个检-08</div></div>
+</div></div>
+</div>
+
+<div id="biz-flow-video" class="biz-flow-sub" style="display:none;">
+<button class="bb" onclick="showBizFlowBack()">&larr; 返回设备操作流程</button>
+<div class="ph"><h2>&#127916; 设备操作视频教学</h2><p>系统操作方法 &amp; 采集器操作方法</p></div>
+<div class="sec"><div class="stitle">系统操作方法</div>
+<div style="margin-bottom:20px;"><video controls style="width:100%;max-width:720px;border-radius:8px;" preload="metadata"><source src="../系统操作方法.mp4" type="video/mp4">您的浏览器不支持视频播放</video></div>
+</div>
+<div class="sec"><div class="stitle">采集器操作方法</div>
+<div style="margin-bottom:20px;"><video controls style="width:100%;max-width:720px;border-radius:8px;" preload="metadata"><source src="../采集器操作方法.mp4" type="video/mp4">您的浏览器不支持视频播放</video></div>
+</div>
+</div>
+
+<div id="biz-notice" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#9888;&#65039; 注意事项</h2><p>设备使用注意事项与安全规范</p></div>
+<div class="sec"><div class="stitle">产品快速操作流程卡</div>
+<div class="img-gallery-flex">
+<div class="img-card"><img src="images/biz_notice_page1.webp" alt="产品快速操作流程卡-第1页：快速操作流程" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">快速操作流程（6步）</div></div>
+<div class="img-card"><img src="images/biz_notice_page2.webp" alt="产品快速操作流程卡-第2页：常见问题与禁忌症" loading="lazy" onclick="openLightbox(this.src)" width="1654" height="2339" decoding="async"><div class="img-label">常见问题与禁忌症</div></div>
+</div></div>
+</div>
+
+<div id="biz-repair" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#128295; 设备修复流程</h2><p>常见问题排查与修复指南</p></div>
+<div class="sec"><p style="color:#888;font-size:13px;"><em>设备修复流程内容待补充</em></p></div>
+</div>
+
+<div id="biz-report" class="biz-sub" style="display:none;">
+<button class="bb" onclick="showBizOverview()">&larr; 返回设备操作总览</button>
+<div class="ph"><h2>&#128202; 报告解读</h2><p>集成式精神压力管理系统 - 六维评估报告解读指南</p></div>
+
+<div class="idx-pnl">
+<div class="idx-hd">&#9776; 目录导航 · 共 9 节</div>
+<div class="idx-bd"><a class="idx-item" href="#report-s0">报告概览</a><a class="idx-item" href="#report-s1">疲劳指数（身体压力）</a><a class="idx-item" href="#report-s2">压力指数（心理压力）</a><a class="idx-item" href="#report-s3">抗压能力</a><a class="idx-item" href="#report-s4">平均心率</a><a class="idx-item" href="#report-s5">心脏稳定性</a><a class="idx-item" href="#report-s6">自主神经活性</a><a class="idx-item" href="#report-s7">自主神经平衡</a><a class="idx-item" href="#report-s8">综合压力指数解读</a></div>
+</div>
+
+<div class="sec"><div class="stitle" id="report-s0">报告概览</div>
+<img data-src="images/report/report-page-01.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="报告概览" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s1">疲劳指数（身体压力）</div>
+<img data-src="images/report/report-page-02.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="疲劳指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s2">压力指数（心理压力）</div>
+<img data-src="images/report/report-page-03.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="压力指数" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s3">抗压能力</div>
+<img data-src="images/report/report-page-04.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="抗压能力" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s4">平均心率</div>
+<img data-src="images/report/report-page-05.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="平均心率" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s5">心脏稳定性</div>
+<img data-src="images/report/report-page-06.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="心脏稳定性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s6">自主神经活性</div>
+<img data-src="images/report/report-page-08.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="自主神经活性" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s7">自主神经平衡</div>
+<img data-src="images/report/report-page-07.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="自主神经平衡" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="sec"><div class="stitle" id="report-s8">综合压力指数解读</div>
+<img data-src="images/report/report-page-10.webp" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E" alt="综合压力指数解读" style="width:100%;max-width:100%;border-radius:12px;margin-top:8px;cursor:pointer" loading="lazy" onclick="openLightbox(this.src)" width="2000" height="1125" decoding="async">
+</div>
+
+<div class="spacer"></div></div>
+</div><div id="p-company" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#127970; 公司简介与资质研发背景</h2><p>北京择天众康科技有限公司 | 智心同检 &amp; 智探心域产品线</p></div>
+<div class="cs"><div class="cs-h">公司介绍</div><div class="cs-b">
+<p><strong>北京择天众康科技有限公司</strong>是一家专注于医疗数据研发的高新医疗器械研发企业。致力于打造以数字化为主题的"协同医疗平台"。</p>
+<p>产品以互联网、物联网为核心，通过无线便捷的数据采集设备，利用智能算法将科室数据有效整合，从而形成更量化、安全、有效的监测模式。公司把为用户提供"数字化康复"作为主要战略目标，产品涉及心内科、呼吸科、康复科、老年科、精神科等科室。</p>
+</div></div>
+<div class="cs"><div class="cs-h">发展成果</div><div class="cs-b">
+<p>公司自成立以来，飞速发展，至今已取得<strong>双高新企业认证</strong>（国家级高新技术企业 + 中关村高新技术企业），加多款系统产品的医疗器械注册证（北京局颁发），取得<strong>知识产权数量超30+</strong>的傲人成绩。</p>
+<ul>
+<li>心率变异性产品获取医疗器械注册证（北京局首发）</li>
+<li>高新技术企业证书编号：GR202211006552（2022年12月30日，有效期三年）</li>
+<li>中关村高新技术企业（2021年11月08日）</li>
+</ul>
+</div></div>
+<div class="cs"><div class="cs-h">产品体系</div><div class="cs-b">
+<p>公司拥有完整的产品体系，分为三大系统：</p>
+<p><strong>心肺诊疗系统：</strong>六分钟步行监测评估系统（标准版/专业版）、肺功能分析系统、集成式生理参数管理系统（集成版）</p>
+<p><strong>运动康复系统：</strong>床旁运动监测评估系统（标准版/专业版）</p>
+<p><strong>精神·压力评估系统：</strong>集成式精神压力管理系统（智心同检）、集成式心率变异性评估系统、精神压力筛查模块、精神专科评估模块</p>
+</div></div>
+<div class="cs"><div class="cs-h">精神领域：智心同检 vs 智探心域</div><div class="cs-b">
+<p><strong>智心同检</strong>（初筛利器）：多模式智能化、多终端同步、快速准确、全程无创、多维评估、航母式多模态，可对确诊患者进行长期跟踪。</p>
+<p><strong>智探心域</strong>（深度复诊）：24小时昼夜节律、多维度用药评估、动态便携，可对初筛异常患者进行专业、深度复诊。</p>
+</div></div>
+<div class="cs"><div class="cs-h">公司介绍资料（来源：培训PDF）</div><div class="cs-b">
+<div class="img-gallery-flex">
+<div class="img-card"><img src="images/company_intro_cert.webp" alt="公司介绍与双高新认证" onclick="openLightbox(this.src)" width="1920" height="1080" decoding="async"><div class="img-label">公司介绍与双高新认证</div></div>
+<div class="img-card"><img src="images/page4_dev_achievements.webp" alt="发展成果与医疗器械注册证 - 培训PDF第4页" onclick="openLightbox(this.src)" width="2667" height="1500" decoding="async"><div class="img-label">发展成果与注册证</div></div>
+</div>
+</div></div>
+<div class="spacer"></div></div>
+<script>
+
+
+var knowledgeBase=null,knowledgeBaseLoaded=false,knowledgeBaseLoading=false;
+function loadKnowledgeBase(cb){
+    if(knowledgeBaseLoaded){cb();return;}
+    if(knowledgeBaseLoading){var t=setInterval(function(){if(knowledgeBaseLoaded){clearInterval(t);cb();}},50);return;}
+    knowledgeBaseLoading=true;
+    fetch('knowledgebase.json').then(function(r){return r.json();}).then(function(d){
+        knowledgeBase=d;knowledgeBaseLoaded=true;knowledgeBaseLoading=false;cb();
+    }).catch(function(){knowledgeBase=[];knowledgeBaseLoaded=true;knowledgeBaseLoading=false;cb();});
+}
+function toggleSidebar(){document.querySelector('.sb').classList.toggle('active');document.querySelector('.so').classList.toggle('active');}
+var pageHistory=[];
+function _capState(){var ap=document.querySelector('.pg.active');if(!ap)return{p:'home'};var pid=ap.id.replace('p-','');if(pid!=='business')return{p:pid};var fsub=document.querySelector('.biz-flow-sub[style*="display: block"]');if(fsub)return{p:'business',fs:fsub.id};var ov=document.getElementById('biz-overview');if(ov&&ov.style.display!=='none')return{p:'business',ov:1};var subs=document.querySelectorAll('.biz-sub');for(var i=0;i<subs.length;i++){if(subs[i].style.display==='block')return{p:'business',bs:subs[i].id};}return{p:'business',ov:1};}
+function goParent(){var ap=document.querySelector('.pg.active');if(!ap||ap.id==='p-home')return;var fsubs=document.querySelectorAll('.biz-flow-sub');for(var i=0;i<fsubs.length;i++){if(fsubs[i].style.display==='block'){document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById('biz-flow').style.display='block';window.scrollTo({top:0,behavior:'smooth'});return;}}var bsubs=document.querySelectorAll('.biz-sub');for(var j=0;j<bsubs.length;j++){if(bsubs[j].style.display==='block'){document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub,.biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});return;}}showPage('home');}
+function showPage(id){pageHistory.push(_capState());
+document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('active');});document.getElementById('p-'+id).classList.add('active');
+document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});
+var activeNav=document.querySelector('[data-p="'+id+'"]');if(activeNav)activeNav.classList.add('active');
+document.querySelector('.sb').classList.remove('active');document.querySelector('.so').classList.remove('active');
+if(id==='business'){document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});var ov=document.getElementById('biz-overview');if(ov)ov.style.display='block';}
+window.scrollTo({top:0,behavior:'smooth'});
+requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
+function showBizPage(id){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});var subs=document.querySelectorAll('.biz-sub');for(var s=0;s<subs.length;s++)subs[s].style.display='none';document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
+function showBizOverview(){pageHistory.push(_capState());document.getElementById('biz-overview').style.display='block';document.querySelectorAll('.biz-sub, .biz-flow-sub').forEach(function(f){f.style.display='none';});window.scrollTo({top:0,behavior:'smooth'});}
+function showBizFlowSub(id){pageHistory.push(_capState());document.getElementById('biz-flow').style.display='none';document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});}
+function showBizFlowBack(){pageHistory.push(_capState());document.querySelectorAll('.biz-flow-sub').forEach(function(f){f.style.display='none';});document.getElementById('biz-flow').style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+function togglePanel(h){h.parentElement.classList.toggle('open');}
+function searchQA(){var q=document.getElementById('qaInput').value.trim().toLowerCase();if(!q)return;
+if(!knowledgeBaseLoaded){loadKnowledgeBase(function(){searchQA();});return;}
+var r=document.getElementById('qaResults');r.innerHTML='';r.className='qa-results show';
+var found=[];var keys=q.replace(/[？?，,。.！!、；;：:]/g,' ').split(/\s+/).filter(function(k){return k.length>=1;});
+for(var i=0;i<knowledgeBase.length;i++){var item=knowledgeBase[i];var score=0;
+if(item.q.toLowerCase().indexOf(q)!==-1)score+=100;
+else if(q.indexOf(item.q.toLowerCase())!==-1)score+=90;
+if(keys.length>1){var hitCount=0;for(var k=0;k<keys.length;k++){var kw=keys[k];if(kw.length<1)continue;
+if(item.q.toLowerCase().indexOf(kw)!==-1){hitCount+=3;score+=15;}
+if(item.a.toLowerCase().indexOf(kw)!==-1){hitCount+=2;score+=10;}
+var tagHit=false;for(var t=0;t<item.tags.length;t++){if(item.tags[t].toLowerCase().indexOf(kw)!==-1){tagHit=true;break;}}
+if(tagHit){hitCount+=1;score+=5;}}
+if(hitCount>0)score+=hitCount*2;}
+else{
+var qMatch=item.q.toLowerCase().indexOf(q)!==-1;var aMatch=item.a.toLowerCase().indexOf(q)!==-1;
+var tagMatch=false;for(var t=0;t<item.tags.length;t++){if(item.tags[t].toLowerCase().indexOf(q)!==-1){tagMatch=true;break;}}
+if(qMatch)score+=50;if(aMatch)score+=30;if(tagMatch)score+=20;
+var subWords=q.match(/[\u4e00-\u9fff]+|[a-zA-Z0-9]+/g)||[];
+if(subWords.length>1){
+var hitCount=0;
+for(var k=0;k<subWords.length;k++){
+var kw=subWords[k];if(kw.length<1)continue;
+if(item.q.toLowerCase().indexOf(kw)!==-1){hitCount+=3;score+=15;}
+if(item.a.toLowerCase().indexOf(kw)!==-1){hitCount+=2;score+=10;}
+var subTagHit=false;for(var t2=0;t2<item.tags.length;t2++){if(item.tags[t2].toLowerCase().indexOf(kw)!==-1){subTagHit=true;break;}}
+if(subTagHit){hitCount+=1;score+=5;}
+}
+if(hitCount>0)score+=hitCount*2;
+}
+// 中文bigram降级匹配：处理纯中文长句查询
+var chineseChars=q.match(/[\u4e00-\u9fff]/g);
+if(chineseChars&&q.length>=2){
+var bigrams=[];for(var bi=0;bi<q.length-1;bi++){var bg=q.substring(bi,bi+2);if(bigrams.indexOf(bg)===-1)bigrams.push(bg);}
+for(var bg=0;bg<bigrams.length;bg++){
+var bgWord=bigrams[bg];
+var bgQMatch=item.q.toLowerCase().indexOf(bgWord)!==-1;
+var bgAMatch=item.a.toLowerCase().indexOf(bgWord)!==-1;
+var bgTagMatch=false;for(var bt=0;bt<item.tags.length;bt++){if(item.tags[bt].toLowerCase().indexOf(bgWord)!==-1){bgTagMatch=true;break;}}
+if(bgQMatch)score+=7;if(bgAMatch)score+=5;if(bgTagMatch)score+=3;
+var bgHit=0;if(bgQMatch)bgHit++;if(bgAMatch)bgHit++;if(bgTagMatch)bgHit++;
+if(bgHit>0)score+=bgHit*2;
+}}
+}
+if(score>0)found.push({item:item,score:score});}
+found.sort(function(a,b){return b.score-a.score;});
+if(found.length===0){r.innerHTML='<div class="qa-noresult"><div style="font-size:40px;margin-bottom:12px">&#128533;</div>未找到相关问题<br><br><b>试试这些热门问题：</b><br><br>&#128172; <b>这个项目的意义是什么</b><br>&#127919; <b>为什么需要精神压力管理</b><br>&#128176; <b>做这个项目能赚钱吗</b><br>&#129302; <b>和竞品比有什么优势</b><br>&#128218; <b>报告怎么看</b><br>&#128200; <b>压力大对身体有什么影响</b><br>&#127978; <b>抑郁症现状有多严重</b><br>&#127973; <b>慢病患者为什么也要关注心理</b></div>';return;}
+for(var j=0;j<Math.min(found.length,6);j++){var item=found[j].item;
+var div=document.createElement('div');div.className='qa-item';
+var tagHtml='';if(found[j].score>=80&&item.tags.length>0){tagHtml='<div class="qa-tags">'+item.tags.slice(0,4).map(function(t){return '<span>'+t+'</span>';}).join('')+'</div>';}
+div.innerHTML='<div class="qa-q">'+(found[j].score>=80?'&#11088; ':'')+item.q+'</div><div class="qa-a">'+item.a+'</div>'+tagHtml;
+r.appendChild(div);}}
+</script>
+<div class="install-banner" id="installBanner">
+<div class="ibx" id="installText">将此知识库添加到主屏幕，离线也能用</div>
+<button class="ibb" id="installBtn" onclick="installPWA()">添加到主屏幕</button>
+<button class="ibc" onclick="closeInstallBanner()">&times;</button>
+</div>
+<script>
+let deferredPrompt;
+const instBanner = document.getElementById('installBanner');
+const instText = document.getElementById('installText');
+const instBtn = document.getElementById('installBtn');
+
+// Detect iOS
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => instBanner.classList.add('show'), 3000);
+});
+
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(r => {
+      instBanner.classList.remove('show');
+      deferredPrompt = null;
+    });
+  } else if (isIOS) {
+    instText.textContent = '点击浏览器底部「分享」按钮 → 选择「添加到主屏幕」';
+    instBtn.style.display = 'none';
+  }
+}
+
+function closeInstallBanner() { instBanner.classList.remove('show'); }
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+/* ===== Carousel ===== */
+function Carousel(container){
+    var self=this;
+    this.container=container;
+    this.container.classList.add('img-carousel');
+    var cards=container.querySelectorAll('.img-card');
+    if(cards.length<=1)return;
+    this.total=cards.length;this.current=0;this.slideW=86;
+    this.track=document.createElement('div');this.track.className='img-carousel-track';
+    this.slides=[];this.dots=[];
+    this.wasDrag=false;
+    var dotsDiv=document.createElement('div');dotsDiv.className='img-carousel-dots';
+    for(var i=0;i<cards.length;i++){
+        var slide=document.createElement('div');slide.className='img-carousel-slide';
+        this.track.appendChild(slide);
+        var card=cards[i];
+        slide.appendChild(card);this.slides.push(slide);
+        var dot=document.createElement('span');dot.className='img-carousel-dot';dot.setAttribute('data-index',i);
+        (function(idx){dot.addEventListener('click',function(e){e.stopPropagation();self.goTo(idx);});})(i);
+        dotsDiv.appendChild(dot);this.dots.push(dot);
+    }
+    // 点击图片：单点翻页右侧，双击放大
+    for(var j=0;j<this.slides.length;j++){
+        (function(slide,idx){
+            var img=slide.querySelector('img');
+            if(!img)return;
+            img.removeAttribute('onclick');
+            var tapTimer=null,tapCount=0,lbOpened=false;
+            img.addEventListener('click',function(e){
+                if(self.wasDrag){self.wasDrag=false;return;}
+                tapCount++;
+                if(tapCount===1){
+                    tapTimer=setTimeout(function(){
+                        tapCount=0;
+                        lbOpened=false;
+                        // 单点：翻到下一页
+                        if(idx<self.total-1)self.goTo(idx+1);
+                    },300);
+                }else if(tapCount>=2&&!lbOpened){
+                    clearTimeout(tapTimer);
+                    tapCount=0;lbOpened=true;
+                    openLightbox(this.src);
+                }
+            });
+        })(this.slides[j],j);
+    }
+    var pageNav=document.createElement('div');pageNav.className='img-carousel-page-nav';pageNav.textContent='第1页 / 共'+this.total+'页';this.pageNav=pageNav;
+    container.appendChild(pageNav);
+    // 左右翻页箭头
+    var prevBtn=document.createElement('button');prevBtn.className='img-carousel-arrow img-carousel-prev';prevBtn.innerHTML='&#10094;';prevBtn.setAttribute('aria-label','上一页');
+    var nextBtn=document.createElement('button');nextBtn.className='img-carousel-arrow img-carousel-next';nextBtn.innerHTML='&#10095;';nextBtn.setAttribute('aria-label','下一页');
+    var trackWrap=document.createElement('div');trackWrap.className='img-carousel-track-wrap';
+    trackWrap.appendChild(prevBtn);trackWrap.appendChild(nextBtn);trackWrap.appendChild(this.track);
+    container.appendChild(trackWrap);container.appendChild(dotsDiv);
+    this.trackWrap=trackWrap;
+    // 监听滚动，更新页码和 dots
+    trackWrap.addEventListener('scroll',function(){
+        var sw=self.container.offsetWidth*self.slideW/100;
+        var idx=Math.round(trackWrap.scrollLeft/sw);
+        idx=Math.max(0,Math.min(self.total-1,idx));
+        if(idx===self.current)return;
+        self.current=idx;
+        pageNav.textContent='第'+(idx+1)+'页 / 共'+self.total+'页';
+        for(var i=0;i<self.dots.length;i++){self.dots[i].className='img-carousel-dot'+(i===idx?' active':'');self.slides[i].className='img-carousel-slide'+(i===idx?' active-slide':'');}
+    },{passive:true});
+    // 箭头点击：使用 scrollBy
+    prevBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();trackWrap.scrollBy({left:-self.container.offsetWidth,behavior:'smooth'});});
+    nextBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();trackWrap.scrollBy({left:self.container.offsetWidth,behavior:'smooth'});});
+    // Touch 拖动检测
+    var touchStartX=0,touchStartY=0;
+    trackWrap.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;self.wasDrag=false;},{passive:true});
+    trackWrap.addEventListener('touchmove',function(e){if(Math.abs(e.touches[0].clientX-touchStartX)>5&&Math.abs(e.touches[0].clientX-touchStartX)>Math.abs(e.touches[0].clientY-touchStartY)){self.wasDrag=true;}},{passive:true});
+    // 初始化第一页
+    this.dots[0].className='img-carousel-dot active';
+    this.slides[0].className='img-carousel-slide active-slide';
+}
+Carousel.prototype.goTo=function(idx){
+    this.current=idx;
+    var sw=this.container.offsetWidth*this.slideW/100;
+    this.trackWrap.scrollTo({left:idx*sw,behavior:'smooth'});
+    this.pageNav.textContent='第'+(idx+1)+'页 / 共'+this.total+'页';
+    for(var i=0;i<this.dots.length;i++){this.dots[i].className='img-carousel-dot'+(i===idx?' active':'');this.slides[i].className='img-carousel-slide'+(i===idx?' active-slide':'');}
+};
+
+var carouselRegistry=[];
+function initCarousels(){
+    carouselRegistry=[];
+    var gals=document.querySelectorAll('.img-gallery-flex:not(.img-carousel)');
+    for(var i=0;i<gals.length;i++){if(gals[i].offsetParent===null)continue;carouselRegistry.push(new Carousel(gals[i]));}
+}
+// init on load via rAF — 消除 100ms setTimeout 延迟
+requestAnimationFrame(function(){requestAnimationFrame(function(){initCarousels();});});
+
+var lbImages=[],lbIndex=-1,lbTouchStartX=0,lbTouchStartY=0,lbMouseDown=false,lbMouseStartX=0;
+
+function openLightbox(src){
+    lbImages=[];lbIndex=-1;
+    // 以当前可见页面为范围，收集所有可放大图片（包括独立图和画廊图）
+    var activePg=document.querySelector('.pg.active')||document.body;
+    var allImgs=activePg.querySelectorAll('img[onclick*="openLightbox"]');
+    for(var i=0;i<allImgs.length;i++){
+        var img=allImgs[i];
+        if(img.offsetParent===null)continue; // 跳过隐藏子页面内的图
+        if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
+        lbImages.push(img.src);
+    }
+    // 同时收集 carousel 内图片（onclick 已被移除，改用双击触发）
+    var carouselImgs=activePg.querySelectorAll('.img-carousel-slide .img-card img');
+    for(var i=0;i<carouselImgs.length;i++){
+        var img=carouselImgs[i];
+        if(img.offsetParent===null)continue;
+        if(lbImages.indexOf(img.src)===-1){
+            if(lbIndex===-1&&img.src===src)lbIndex=lbImages.length;
+            lbImages.push(img.src);
+        }
+    }
+    if(!lbImages.length){lbImages=[src];lbIndex=0;}
+    if(lbIndex===-1){lbImages=[src];lbIndex=0;}
+    ensureLightbox();
+    updateLightboxImage();
+    document.getElementById('lightbox-overlay').classList.add('active');
+    updateNavButtons();
+    updateCounter();
+}
+
+function ensureLightbox(){
+    if(document.getElementById('lightbox-overlay'))return;
+    var overlay=document.createElement('div');
+    overlay.id='lightbox-overlay';
+    overlay.className='lightbox-overlay';
+    overlay.addEventListener('click',function(e){
+        if(e.target===overlay||e.target===document.getElementById('lightbox-img-wrap')){
+            overlay.classList.remove('active');
+        }
+    });
+    var wrap=document.createElement('div');
+    wrap.id='lightbox-img-wrap';
+    wrap.style.cssText='position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%';
+    var img=document.createElement('img');
+    img.id='lightbox-img';
+    wrap.appendChild(img);
+    overlay.appendChild(wrap);
+    var prevBtn=document.createElement('button');
+    prevBtn.className='lb-nav lb-prev';
+    prevBtn.innerHTML='&#10094;';
+    prevBtn.onclick=function(e){e.stopPropagation();lightboxPrev();};
+    overlay.appendChild(prevBtn);
+    var nextBtn=document.createElement('button');
+    nextBtn.className='lb-nav lb-next';
+    nextBtn.innerHTML='&#10095;';
+    nextBtn.onclick=function(e){e.stopPropagation();lightboxNext();};
+    overlay.appendChild(nextBtn);
+    var counter=document.createElement('div');
+    counter.id='lb-counter';
+    counter.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:13px;font-weight:500;z-index:10001;background:rgba(0,0,0,.25);padding:6px 16px;border-radius:20px;letter-spacing:1px';
+    overlay.appendChild(counter);
+    // Zoom state
+    var lbZ={scale:1,panX:0,panY:0,zoomed:false,lastTap:0};
+    var lbPinch={dist:0,startScale:1,cx:0,cy:0,startPanX:0,startPanY:0};
+    var lbPM={moved:false,sX:0,sY:0,sPX:0,sPY:0};
+    function _lbApply(){img.style.transform='translate('+lbZ.panX+'px,'+lbZ.panY+'px) scale('+lbZ.scale+')';}
+    function _lbZoomIn(cx,cy){lbZ.scale=2.5;lbZ.zoomed=true;lbZ.panX=(window.innerWidth/2-cx)*1.5;lbZ.panY=(window.innerHeight/2-cy)*1.5;_lbApply();img.style.transition='transform .3s ease';}
+    function _lbReset(){lbZ.scale=1;lbZ.panX=0;lbZ.panY=0;lbZ.zoomed=false;img.style.transform='';img.style.transition='';}
+    // Pinch zoom
+    overlay.addEventListener('touchstart',function(e){
+        if(e.touches.length===2){
+            e.preventDefault();
+            lbPinch.dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+            lbPinch.startScale=lbZ.scale;lbPinch.cx=(e.touches[0].clientX+e.touches[1].clientX)/2;lbPinch.cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+            lbPinch.startPanX=lbZ.panX;lbPinch.startPanY=lbZ.panY;
+        }else if(e.touches.length===1){
+            lbTouchStartX=e.touches[0].clientX;lbTouchStartY=e.touches[0].clientY;
+            if(lbZ.zoomed){lbPM.sPX=lbZ.panX;lbPM.sPY=lbZ.panY;lbPM.sX=e.touches[0].clientX;lbPM.sY=e.touches[0].clientY;lbPM.moved=false;}
+        }
+    },{passive:false});
+    overlay.addEventListener('touchmove',function(e){
+        if(e.touches.length===2){
+            e.preventDefault();
+            var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+            var cx=(e.touches[0].clientX+e.touches[1].clientX)/2,cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+            lbZ.scale=Math.max(1,Math.min(5,lbPinch.startScale*d/lbPinch.dist));lbZ.zoomed=lbZ.scale>1.01;
+            var r=lbZ.scale/lbPinch.startScale;
+            lbZ.panX=cx-r*(lbPinch.cx-lbPinch.startPanX);lbZ.panY=cy-r*(lbPinch.cy-lbPinch.startPanY);
+            _lbApply();img.style.transition='none';
+        }else if(e.touches.length===1&&lbZ.zoomed){
+            lbPM.moved=true;lbZ.panX=lbPM.sPX+(e.touches[0].clientX-lbPM.sX);lbZ.panY=lbPM.sPY+(e.touches[0].clientY-lbPM.sY);
+            _lbApply();img.style.transition='none';
+        }else if(e.touches.length===1&&lbTouchStartX!==undefined){
+            var dx=e.touches[0].clientX-lbTouchStartX;
+            if(Math.abs(dx)>Math.abs(e.touches[0].clientY-lbTouchStartY)){img.style.transform='translateX('+dx+'px)';img.style.transition='none';}
+        }
+    },{passive:false});
+    overlay.addEventListener('touchend',function(e){
+        if(lbZ.zoomed&&lbPinch.dist&&!lbPM.moved){lbPinch.dist=0;return;}
+        if(lbZ.zoomed&&lbPM.moved){lbPM.moved=false;return;}
+        img.style.transform='';img.style.transition='';
+        var dx=e.changedTouches[0].clientX-lbTouchStartX;
+        var dy=e.changedTouches[0].clientY-lbTouchStartY;
+        if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){if(dx>0)lightboxPrev();else lightboxNext();return;}
+        // Double tap detection
+        if(!lbZ.zoomed){
+            var now=Date.now();
+            if(now-lbZ.lastTap<320){_lbZoomIn(e.changedTouches[0].clientX,e.changedTouches[0].clientY);lbZ.lastTap=0;}
+            else{lbZ.lastTap=now;}
+        }
+    });
+    overlay.addEventListener('click',function(e){
+        if(e.target===overlay||e.target===wrap){if(!lbZ.zoomed)overlay.classList.remove('active');else _lbReset();}
+    });
+    img.addEventListener('click',function(e){e.stopPropagation();if(!lbZ.zoomed)overlay.classList.remove('active');else _lbReset();});
+    img.addEventListener('dblclick',function(e){e.stopPropagation();if(lbZ.zoomed)_lbReset();else _lbZoomIn(e.clientX,e.clientY);});
+    // Wheel zoom
+    overlay.addEventListener('wheel',function(e){
+        e.preventDefault();
+        var ns=lbZ.scale*(1-e.deltaY*0.002);ns=Math.max(1,Math.min(5,ns));
+        var r=ns/lbZ.scale;lbZ.panX=e.clientX-r*(e.clientX-lbZ.panX);lbZ.panY=e.clientY-r*(e.clientY-lbZ.panY);
+        lbZ.scale=ns;lbZ.zoomed=lbZ.scale>1.01;if(!lbZ.zoomed){lbZ.scale=1;lbZ.panX=0;lbZ.panY=0;}
+        _lbApply();img.style.transition='none';
+    },{passive:false});
+    // Mouse drag for navigation (not zoomed) or pan (zoomed)
+    var lbMSX=0,lbMDown=false;
+    overlay.addEventListener('mousedown',function(e){
+        if(e.target===overlay||e.target===wrap||e.target===img){
+            lbMDown=true;lbMSX=e.clientX;lbMouseStartX=e.clientX;
+            if(lbZ.zoomed){lbPM.sPX=lbZ.panX;lbPM.sPY=lbZ.panY;lbPM.sX=e.clientX;lbPM.sY=e.clientY;}
+        }
+    });
+    overlay.addEventListener('mousemove',function(e){
+        if(!lbMDown)return;
+        if(lbZ.zoomed){lbZ.panX=lbPM.sPX+(e.clientX-lbPM.sX);lbZ.panY=lbPM.sPY+(e.clientY-lbPM.sY);_lbApply();img.style.transition='none';}
+        else{var dx=e.clientX-lbMSX;img.style.transform='translateX('+dx+'px)';img.style.transition='none';}
+    });
+    overlay.addEventListener('mouseup',function(e){
+        if(!lbMDown){lbMDown=false;return;}lbMDown=false;
+        if(lbZ.zoomed){lbMouseDown=false;return;}
+        img.style.transform='';img.style.transition='';
+        var dx=e.clientX-lbMouseStartX;
+        if(Math.abs(dx)>60){if(dx>0)lightboxPrev();else lightboxNext();}
+    });
+    document.addEventListener('keydown',function(e){
+        var ov=document.getElementById('lightbox-overlay');
+        if(!ov||!ov.classList.contains('active'))return;
+        if(e.key==='ArrowLeft'){e.preventDefault();lightboxPrev();}
+        else if(e.key==='ArrowRight'){e.preventDefault();lightboxNext();}
+        else if(e.key==='Escape'){if(lbZ.zoomed)_lbReset();else ov.classList.remove('active');}
+    });
+    document.body.appendChild(overlay);
+}
+
+function updateLightboxImage(){
+    var img=document.getElementById('lightbox-img');
+    img.style.transform='';img.style.transition='opacity .15s ease';
+    img.style.opacity='0';
+    setTimeout(function(){
+        img.src=lbImages[lbIndex];
+        img.onload=function(){img.style.opacity='1';};
+        // fallback if onload doesn't fire
+        setTimeout(function(){img.style.opacity='1';},100);
+    },80);
+}
+
+function updateNavButtons(){
+    var prev=document.querySelector('.lb-prev');
+    var next=document.querySelector('.lb-next');
+    if(prev)prev.style.display=lbIndex>0?'flex':'none';
+    if(next)next.style.display=lbIndex<lbImages.length-1?'flex':'none';
+    updateCounter();
+}
+
+function updateCounter(){
+    var c=document.getElementById('lb-counter');
+    if(c)c.textContent=(lbIndex+1)+'/'+lbImages.length;
+}
+
+function lightboxNext(){
+    if(lbIndex<lbImages.length-1){lbIndex++;updateLightboxImage();updateNavButtons();}
+}
+
+function lightboxPrev(){
+    if(lbIndex>0){lbIndex--;updateLightboxImage();updateNavButtons();}
+}
+
+function scrollToSection(pageId,idx){var el=document.getElementById(pageId+'-s'+idx);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){updateIdxHighlight(pageId);},500);}
+function updateIdxHighlight(pageId){var items=document.querySelectorAll('#p-'+pageId+' .idx-item');items.forEach(function(item){item.classList.remove('hl-idx');});var sections=document.querySelectorAll('#p-'+pageId+' [id^="'+pageId+'-s"]');var closest=null,minDist=Infinity;sections.forEach(function(s){var rect=s.getBoundingClientRect();var dist=Math.abs(rect.top-100);if(dist<minDist){minDist=dist;closest=s;}});if(closest){var activeIdx=closest.id.replace(pageId+'-s','');items.forEach(function(item){if(item.getAttribute('onclick')&&item.getAttribute('onclick').indexOf(','+activeIdx+')')!==-1){item.classList.add('hl-idx');}});}}
+
+(function(){
+    var els=document.querySelectorAll('.img-gallery-flex, .sec>img, .cs>img');
+    for(var i=0;i<els.length;i++){
+        var p=els[i].parentElement;
+        while(p){
+            if(p.matches('.sec,.cs')){p.style.overflow='visible';}
+            p=p.parentElement;
+        }
+    }
+})();
+
+</script>
+
+<div class="float-home-btn" onclick="goParent()" title="返回上一级">&#8962;</div>
+
+<script>
+/* ===== Lazy Load Manager with IntersectionObserver ===== */
+(function(){
+    if(!('IntersectionObserver' in window)){
+        // Fallback: load all data-src images immediately
+        window._loadAllLazy = function(){
+            var imgs = document.querySelectorAll('img[data-src]');
+            for(var i=0;i<imgs.length;i++){
+                var img=imgs[i];
+                img.src=img.dataset.src;
+                img.removeAttribute('data-src');
+            }
+        };
+        if(document.readyState==='complete') window._loadAllLazy();
+        else window.addEventListener('load',window._loadAllLazy);
+        return;
+    }
+
+    var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+            if(entry.isIntersecting){
+                var img = entry.target;
+                if(img.dataset.src){
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    img.style.opacity = '0';
+                    img.onload = function(){ img.style.transition='opacity .35s ease'; img.style.opacity='1'; };
+                    // Fallback if onload doesn't fire
+                    setTimeout(function(){ img.style.opacity='1'; }, 800);
+                }
+                io.unobserve(img);
+            }
+        });
+    }, { rootMargin: '400px 0px' });
+
+    // Observe all images with data-src
+    function scanLazyImgs(root){
+        root = root || document;
+        var imgs = root.querySelectorAll('img[data-src]');
+        for(var i=0;i<imgs.length;i++){
+            io.observe(imgs[i]);
+        }
+    }
+
+    // Preload a specific image immediately (for carousel adjacent images)
+    window._preloadImg = function(img){
+        if(img && img.dataset.src){
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            io.unobserve(img);
+        }
+    };
+
+    window._scanLazyImgs = scanLazyImgs;
+
+    // Initial scan on DOM ready
+    if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded', function(){ scanLazyImgs(); });
+    } else {
+        scanLazyImgs();
+    }
+})();
+
+/* ===== Report Page Lazy Loading Hook ===== */
+(function(){
+    var origShowBizPage = showBizPage;
+    showBizPage = function(id){
+        origShowBizPage(id);
+        // When report page is shown, load all its images
+        if(id === 'biz-report'){
+            var reportImgs = document.querySelectorAll('#biz-report img[data-src]');
+            for(var i=0;i<reportImgs.length;i++){
+                window._preloadImg && window._preloadImg(reportImgs[i]);
+            }
+        }
+    };
+})();
+
+/* ===== Carousel Lazy Preloading ===== */
+(function(){
+    var _Carousel = Carousel;
+    Carousel = function(container){
+        _Carousel.call(this, container);
+        if(this.total <= 1) return;
+
+        // Convert all but first slide's image to data-src
+        var self = this;
+        for(var i=1;i<this.total;i++){
+            var slideImg = this.slides[i].querySelector('img');
+            if(slideImg && !slideImg.dataset.src && slideImg.src){
+                slideImg.dataset.src = slideImg.src;
+                slideImg.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 2000 1125%22%3E%3Crect fill=%22%23f5f3f0%22 width=%222000%22 height=%221125%22/%3E%3C/svg%3E';
+                if(window._scanLazyImgs) window._scanLazyImgs(container);
+            }
+        }
+        // Preload adjacent image (index 1)
+        if(this.total > 1){
+            var adjImg = this.slides[1].querySelector('img');
+            if(adjImg && adjImg.dataset.src){
+                window._preloadImg && window._preloadImg(adjImg);
+            }
+        }
+
+        // Override goTo to preload adjacent images
+        var _goTo = this.goTo;
+        this.goTo = function(idx){
+            _goTo.call(self, idx);
+            // Preload next and previous images
+            [-1, 1].forEach(function(offset){
+                var adjIdx = idx + offset;
+                if(adjIdx >= 0 && adjIdx < self.total){
+                    var adjImg = self.slides[adjIdx].querySelector('img');
+                    if(adjImg && adjImg.dataset.src){
+                        window._preloadImg && window._preloadImg(adjImg);
+                    }
+                }
+            });
+        };
+    };
+})();
+</script>
+
+<div style="position:fixed;bottom:4px;left:4px;font-size:9px;color:rgba(86,149,84,.25);z-index:1;pointer-events:none">v2026.06.17-btnfix</div>
+</body>
+</html>

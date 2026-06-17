@@ -1,0 +1,22 @@
+{
+  "name": "智心同检知识库 2.0",
+  "short_name": "鏅哄績鍚屾",
+  "description": "鍩轰簬HRV蹇冪巼鍙樺紓鍒嗘瀽鐨勭簿绁炲帇鍔涚鐞嗙煡璇嗗簱",
+  "start_url": "./zhi-xin-tong-jian-kb-pwa.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1890ff",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
