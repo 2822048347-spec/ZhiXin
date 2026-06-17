@@ -323,7 +323,7 @@ tr:hover td{background:rgba(155,133,149,.03)}
 .img-carousel-dot.active{background:var(--p);width:22px;border-radius:4px}
 .img-zoom-hint{font-size:11px;color:var(--t4);text-align:center;padding:2px 0 0;opacity:.55;letter-spacing:.5px;user-select:none;-webkit-user-select:none}
 .img-carousel-page-nav{text-align:center;font-size:14px;font-weight:600;color:var(--p);padding:8px 0 4px;letter-spacing:1px;user-select:none;-webkit-user-select:none}
-.img-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--p);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:all .2s;outline:none;-webkit-tap-highlight-color:transparent}
+.img-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--p);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:all .2s;outline:none;-webkit-tap-highlight-color:transparent;pointer-events:auto;touch-action:manipulation}
 .img-carousel-arrow:active{background:var(--p);color:#fff;transform:translateY(-50%) scale(.92)}
 .img-carousel-prev{left:4px}
 .img-carousel-next{right:4px}
@@ -943,11 +943,14 @@ function Carousel(container){
     }
     var pageNav=document.createElement('div');pageNav.className='img-carousel-page-nav';pageNav.textContent='第1页 / 共'+this.total+'页';this.pageNav=pageNav;
     container.appendChild(pageNav);
-    // 左右翻页箭头（放在 track 包裹层内，定位相对于图片区域）
+    // 左右翻页箭头
     var prevBtn=document.createElement('button');prevBtn.className='img-carousel-arrow img-carousel-prev';prevBtn.innerHTML='&#10094;';prevBtn.setAttribute('aria-label','上一页');
     var nextBtn=document.createElement('button');nextBtn.className='img-carousel-arrow img-carousel-next';nextBtn.innerHTML='&#10095;';nextBtn.setAttribute('aria-label','下一页');
-    prevBtn.addEventListener('click',function(e){e.stopPropagation();self.goTo(Math.max(0,self.current-1));});
-    nextBtn.addEventListener('click',function(e){e.stopPropagation();self.goTo(Math.min(self.total-1,self.current+1));});
+    // 使用 onclick 确保在移动端也能触发，同时绑定 touchend 做兜底
+    prevBtn.onclick=function(e){e.stopPropagation();self.goTo(Math.max(0,self.current-1));};
+    nextBtn.onclick=function(e){e.stopPropagation();self.goTo(Math.min(self.total-1,self.current+1));};
+    prevBtn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();self.goTo(Math.max(0,self.current-1));});
+    nextBtn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();self.goTo(Math.min(self.total-1,self.current+1));});
     var trackWrap=document.createElement('div');trackWrap.className='img-carousel-track-wrap';
     trackWrap.appendChild(prevBtn);trackWrap.appendChild(nextBtn);trackWrap.appendChild(this.track);
     container.appendChild(trackWrap);container.appendChild(dotsDiv);
@@ -966,7 +969,7 @@ function Carousel(container){
     this.track.addEventListener('click',function(e){if(self.wasDrag){self.wasDrag=false;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return false;}},true);
     this.goTo(0);
 }
-Carousel.prototype._pos=function(px){this.track.style.transform='translateX('+px+'px)';};
+Carousel.prototype._pos=function(px){var t='translate3d('+px+'px,0,0)';this.track.style.transform=t;this.track.style.webkitTransform=t;};
 Carousel.prototype.goTo=function(idx){
     this.current=idx;
     var cw=this.container.offsetWidth;
