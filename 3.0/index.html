@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>智心同检知识库 3.0</title>
+<title>智心同检知识库 3.0</title><!-- v2026.06.17-btnfix -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#9b8595">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -946,15 +946,15 @@ function Carousel(container){
     // 左右翻页箭头
     var prevBtn=document.createElement('button');prevBtn.className='img-carousel-arrow img-carousel-prev';prevBtn.innerHTML='&#10094;';prevBtn.setAttribute('aria-label','上一页');
     var nextBtn=document.createElement('button');nextBtn.className='img-carousel-arrow img-carousel-next';nextBtn.innerHTML='&#10095;';nextBtn.setAttribute('aria-label','下一页');
-    function updateUI(c,idx){
-        c.current=idx;
-        var cw=c.container.offsetWidth,sw=cw*c.slideW/100,off=-idx*sw+(cw-sw)/2;
-        c._pos(off);
-        c.pageNav.textContent='第'+(idx+1)+'页 / 共'+c.total+'页';
-        c.dots.forEach(function(d,i){d.classList.toggle('active',i===idx);});
-    }
-    prevBtn.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();updateUI(self,Math.max(0,self.current-1));});
-    nextBtn.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();updateUI(self,Math.min(self.total-1,self.current+1));});
+    var goPrev=function(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();self.goTo(Math.max(0,self.current-1));return false;};
+    var goNext=function(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();self.goTo(Math.min(self.total-1,self.current+1));return false;};
+    [prevBtn,nextBtn].forEach(function(btn,idx){
+        var fn=idx===0?goPrev:goNext;
+        btn.onclick=fn;
+        btn.addEventListener('pointerdown',fn,true);
+        btn.addEventListener('mousedown',fn,true);
+        btn.addEventListener('touchstart',fn,{passive:false,capture:true});
+    });
     var trackWrap=document.createElement('div');trackWrap.className='img-carousel-track-wrap';
     trackWrap.appendChild(prevBtn);trackWrap.appendChild(nextBtn);trackWrap.appendChild(this.track);
     container.appendChild(trackWrap);container.appendChild(dotsDiv);
@@ -1323,5 +1323,7 @@ function updateIdxHighlight(pageId){var items=document.querySelectorAll('#p-'+pa
     };
 })();
 </script>
+
+<div style="position:fixed;bottom:4px;left:4px;font-size:9px;color:rgba(155,133,149,.25);z-index:1;pointer-events:none">v2026.06.17-btnfix</div>
 </body>
 </html>
