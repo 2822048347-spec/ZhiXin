@@ -1,5 +1,5 @@
-// Service Worker for 民法宝 1.0
-const CACHE = 'mf-1.0-v1';
+// Service Worker for 民法宝
+const CACHE = 'mf-v2';
 
 self.addEventListener('install', e => {
   e.waitUntil(
