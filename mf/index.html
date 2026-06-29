@@ -286,7 +286,7 @@ body::after{
 </div>
 <h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128270; 法条检索</h3>
 <div class="qa-bar">
-    <input type="text" class="qa-input" id="qaInput" placeholder="输入关键词或条款号搜索... 如：合同解除 / 第一千零三条 / 离婚冷静期" onkeypress="if(event.key==='Enter')searchQA()">
+    <input type="text" class="qa-input" id="qaInput" placeholder="输入关键词或条款号搜索... 如：合同解除 / 第一千零三条 / 离婚冷静期" oninput="handleInput()" onkeypress="if(event.key==='Enter')searchQA()">
     <button class="qa-btn" onclick="searchQA()">&#128269;</button>
 </div>
 <div class="hot-tags">
@@ -483,79 +483,146 @@ function escapeHtml(text) {
 }
 
 // ===== Search =====
+
+// 关联词词典：常用口语化搜索词 → 民法典中实际对应的术语
+const RELATED_TERMS = {
+    '高空抛物': ['抛掷物品', '从建筑物中抛掷', '高空坠物', '第一千二百五十四条'],
+    '离婚冷静期': ['离婚冷静', '登记离婚', '撤回离婚', '第一千零七十七条'],
+    '居住权': ['居住权', '用益物权', '第三百六十六条'],
+    '借款合同': ['借款合同', '借款利息', '第六百六十七条'],
+    '夫妻共同财产': ['共同财产', '夫妻财产', '第一千零六十二条'],
+    '不动产登记': ['不动产登记', '第二百零九条'],
+    '物业服务合同': ['物业服务', '第九百三十七条'],
+    '遗嘱': ['遗嘱', '遗产', '遗赠', '第一千一百三十三条'],
+    '人格权': ['人格权', '名誉权', '肖像权', '隐私权', '个人信息', '第九百九十条'],
+    '侵权责任': ['侵权责任', '损害赔偿', '第一千一百六十四条'],
+    '担保': ['担保物权', '抵押', '质押', '留置'],
+    '合同解除': ['解除合同', '解除权', '第五百六十三条'],
+    '诉讼时效': ['诉讼时效', '第一百八十八条'],
+    '代理': ['代理权', '委托代理', '法定代理'],
+    '收养': ['收养关系', '被收养人', '第一千零九十三条'],
+    '继承': ['法定继承', '遗嘱继承', '第一千一百一十九条'],
+    '隐私': ['隐私权', '个人信息', '第一千零三十二条'],
+    '名誉': ['名誉权', '第一千零二十四条'],
+    '肖像': ['肖像权', '第一千零一十八条'],
+    '定金': ['定金', '违约金', '第五百八十六条'],
+    '租赁': ['租赁合同', '承租人', '出租人', '第七百零三条'],
+    '买卖': ['买卖合同', '买受人', '出卖人', '第五百九十五条'],
+};
+
+// 中文分词：拆成单字+双字组合
+function tokenize(str) {
+    const tokens = new Set();
+    for (let i = 0; i < str.length; i++) {
+        tokens.add(str[i]);
+        if (i + 1 < str.length) tokens.add(str.substring(i, i + 2));
+    }
+    return [...tokens];
+}
+
+// 模糊匹配得分 0~1
+function fuzzyScore(text, tokens) {
+    let hits = 0;
+    for (const t of tokens) hits += text.includes(t) ? 1 : 0;
+    return hits / tokens.length;
+}
+
+// 扩展搜索词：原始词 + 关联词
+function expandQuery(rawQuery) {
+    const terms = [rawQuery];
+    for (const [key, related] of Object.entries(RELATED_TERMS)) {
+        if (rawQuery.includes(key) || key.includes(rawQuery)) {
+            for (const r of related) terms.push(r);
+        }
+    }
+    return [...new Set(terms)];
+}
+
 async function searchQA() {
     const q = document.getElementById('qaInput').value.trim();
-    if (!q) return;
+    const resultsDiv = document.getElementById('qaResults');
+    if (!q) { resultsDiv.classList.remove('show'); return; }
     
     const kb = await loadKB();
     if (!kb) return;
     
-    const resultsDiv = document.getElementById('qaResults');
-    
-    // Check if it's an article number search (e.g., "第一千零三条", "第103条")
     const articleNumMatch = q.match(/第[零一二三四五六七八九十百千\d]+条/);
+    const results = [];
+    const seenNums = new Set();
     
-    let results = [];
-    
+    // 1. 精确条款号匹配
     if (articleNumMatch) {
-        // Direct article number search
         const num = articleNumMatch[0];
         for (const [mk, mv] of Object.entries(kb.modules)) {
             for (const sec of mv.sections) {
                 for (const art of sec.articles) {
-                    if (art.num === num) {
-                        results.push({
-                            module: mv.title,
-                            section: sec.title,
-                            chapter: sec.chapter,
-                            article: art,
-                            moduleKey: mk
+                    if (art.num === num && !seenNums.has(art.num)) {
+                        seenNums.add(art.num);
+                        results.push({module: mv.title, section: sec.title, chapter: sec.chapter, article: art, moduleKey: mk, score: 1.0});
+                    }
+                }
+            }
+        }
+    }
+    
+    // 2. 关键词+模糊+关联词搜索
+    const coreQuery = q.replace(/第[零一二三四五六七八九十百千\d]+条/g, '').trim();
+    const queryTokens = coreQuery ? tokenize(coreQuery) : [];
+    const expandedTerms = coreQuery ? expandQuery(coreQuery) : [];
+    
+    if (coreQuery && queryTokens.length > 0) {
+        const candidates = [];
+        for (const [mk, mv] of Object.entries(kb.modules)) {
+            for (const sec of mv.sections) {
+                for (const art of sec.articles) {
+                    if (seenNums.has(art.num)) continue;
+                    const text = art.num + ' ' + art.content;
+                    let score = 0;
+                    
+                    // 精确包含原始词
+                    if (text.includes(coreQuery)) score = 0.95;
+                    
+                    // 关联词命中
+                    let eh = 0;
+                    for (const et of expandedTerms) { if (text.includes(et)) eh++; }
+                    if (eh > 0) score = Math.max(score, 0.75 + eh * 0.04);
+                    
+                    // 分词模糊匹配
+                    score = Math.max(score, fuzzyScore(text, queryTokens));
+                    
+                    if (score >= 0.4) {
+                        candidates.push({
+                            module: mv.title, section: sec.title, chapter: sec.chapter,
+                            article: art, moduleKey: mk, score
                         });
                     }
                 }
             }
         }
-    }
-    
-    // Keyword search (always do this)
-    const keywords = q.replace(/第[零一二三四五六七八九十百千\d]+条/g, '').trim();
-    if (keywords) {
-        const kwLower = keywords.toLowerCase();
-        const keywordResults = [];
-        for (const [mk, mv] of Object.entries(kb.modules)) {
-            for (const sec of mv.sections) {
-                for (const art of sec.articles) {
-                    const searchText = art.content;
-                    if (searchText.includes(keywords)) {
-                        // Avoid duplicates from article number search
-                        if (!results.find(r => r.article.num === art.num)) {
-                            keywordResults.push({
-                                module: mv.title,
-                                section: sec.title,
-                                chapter: sec.chapter,
-                                article: art,
-                                moduleKey: mk
-                            });
-                        }
-                    }
-                }
+        candidates.sort((a, b) => b.score - a.score);
+        for (const c of candidates) {
+            if (!seenNums.has(c.article.num)) {
+                seenNums.add(c.article.num);
+                results.push(c);
             }
         }
-        results = results.concat(keywordResults);
     }
     
     if (results.length === 0) {
-        resultsDiv.innerHTML = '<div class="qa-noresult">未找到匹配的法条，请尝试其他关键词</div>';
+        resultsDiv.innerHTML = '<div class="qa-noresult">未找到匹配的法条，请尝试其他关键词<br><span style="font-size:11px;opacity:.6">试试：合同解除 / 遗嘱继承 / 损害赔偿 / 定金</span></div>';
     } else {
         let html = `<div style="font-size:12px;color:var(--t3);margin-bottom:12px">找到 ${results.length} 条结果</div>`;
         results.slice(0, 50).forEach(r => {
-            const highlightedContent = r.article.content.replace(
-                new RegExp(escapeRegExp(keywords), 'g'),
-                m => `<mark style="background:rgba(26,58,92,.12);padding:1px 3px;border-radius:3px">${m}</mark>`
-            );
-            html += `<div class="qa-item" onclick="showPage('${r.moduleKey}');setTimeout(()=>{document.querySelectorAll('.pnl').forEach(p=>p.classList.add('open'))},600)">
+            let hc = r.article.content;
+            if (coreQuery) {
+                try {
+                    hc = hc.replace(new RegExp(escapeRegExp(coreQuery), 'g'),
+                        m => `<mark style="background:rgba(26,58,92,.12);padding:1px 3px;border-radius:3px">${m}</mark>`);
+                } catch(e) {}
+            }
+            html += `<div class="qa-item" onclick="showPage('${r.moduleKey}');setTimeout(()=>{document.querySelectorAll('.pnl').forEach(p=>p.classList.add('open'))},600)" style="cursor:pointer">
                 <div class="qa-q"><span class="article-num">${r.article.num}</span> ${r.module} · ${r.chapter || r.section}</div>
-                <div class="qa-a">${highlightedContent.replace(/\\n/g, '<br>')}</div>
+                <div class="qa-a">${hc.replace(/\\n/g, '<br>')}</div>
             </div>`;
         });
         if (results.length > 50) {
@@ -567,19 +634,25 @@ async function searchQA() {
     resultsDiv.scrollIntoView({behavior:'smooth'});
 }
 
+// 输入框内容变化时，清空则隐藏结果
+function handleInput() {
+    const q = document.getElementById('qaInput').value.trim();
+    if (!q) {
+        const rd = document.getElementById('qaResults');
+        rd.classList.remove('show');
+        rd.innerHTML = '';
+    }
+}
+
 async function searchModule(moduleKey, q) {
     if (!q.trim()) return;
-    
     const kb = await loadKB();
     if (!kb) return;
-    
     const module = kb.modules[moduleKey];
     const container = document.getElementById('content-' + moduleKey);
     if (!container) return;
-    
     const keywords = q.trim();
     let results = [];
-    
     for (const sec of module.sections) {
         for (const art of sec.articles) {
             if (art.content.includes(keywords) || art.num.includes(keywords)) {
@@ -587,7 +660,6 @@ async function searchModule(moduleKey, q) {
             }
         }
     }
-    
     if (results.length === 0) {
         container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--t3)">未找到匹配的法条</div>';
     } else {
