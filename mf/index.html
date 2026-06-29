@@ -238,6 +238,18 @@ body::after{
 .install-banner .ibb:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,58,92,.3)}
 .install-banner .ibc{background:transparent;border:none;color:rgba(0,0,0,.25);font-size:22px;cursor:pointer;padding:0 0 0 8px}
 
+/* Judicial Interpretation */
+.ji-wrap{margin-top:8px}
+.ji-toggle{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--p);cursor:pointer;padding:4px 10px;background:rgba(26,58,92,.06);border-radius:6px;border:1px solid rgba(26,58,92,.1);transition:all .3s var(--ease);font-weight:600;user-select:none}
+.ji-toggle:hover{background:rgba(26,58,92,.1);border-color:rgba(26,58,92,.2)}
+.ji-toggle::after{content:"\25B6";font-size:8px;transition:transform .3s;display:inline-block}
+.ji-toggle.open::after{transform:rotate(90deg)}
+.ji-list{display:none;margin-top:6px}
+.ji-list.open{display:block}
+.ji-item{background:rgba(26,58,92,.03);border-left:3px solid rgba(26,58,92,.15);padding:8px 12px;margin-bottom:4px;border-radius:0 6px 6px 0;font-size:11px;line-height:1.7;color:var(--t2)}
+.ji-item:last-child{margin-bottom:0}
+.ji-source{font-size:10px;color:var(--p);font-weight:600;margin-bottom:3px}
+
 /* Info Box */
 .ib{border-radius:0 16px 16px 0;padding:18px 20px;margin:16px 0;font-size:12px;line-height:1.9;color:var(--t2);border-left:4px solid var(--p);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.03)}
 
@@ -462,7 +474,16 @@ async function renderModule(moduleKey) {
             <div class="pnb"><div class="pnbd">`;
         
         sec.articles.forEach(art => {
-            html += `<div class="article-item"><span class="article-num">${art.num}</span>${escapeHtml(art.content).replace(/\\n/g, '<br>')}</div>`;
+            html += `<div class="article-item"><span class="article-num">${art.num}</span>${escapeHtml(art.content).replace(/\\n/g, '<br>')}`;
+            if (art.judicial_interpretations && art.judicial_interpretations.length > 0) {
+                html += `<div class="ji-wrap"><span class="ji-toggle" onclick="toggleJI(this)">司法解释 (${art.judicial_interpretations.length}条)</span>`;
+                html += `<div class="ji-list">`;
+                art.judicial_interpretations.forEach(ji => {
+                    html += `<div class="ji-item"><div class="ji-source">${escapeHtml(ji.source)}</div>${escapeHtml(ji.content)}</div>`;
+                });
+                html += `</div></div>`;
+            }
+            html += `</div>`;
         });
         
         html += `</div></div></div>`;
@@ -480,6 +501,11 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+function toggleJI(el) {
+    el.classList.toggle('open');
+    el.nextElementSibling.classList.toggle('open');
 }
 
 // ===== Search =====
