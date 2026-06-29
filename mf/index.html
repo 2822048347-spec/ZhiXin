@@ -335,6 +335,25 @@ body::after{
 }
 @media print{.nb,.sb,.so,.bb,.tb,.mb,.float-home-btn{display:none!important}.mn{margin-top:0}body{background:#fff;color:#0f172a}}
 
+/* Function Nav */
+.fn-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:600px;margin:0 auto 20px}
+.fn-btn{background:#f8f9fa;border-radius:12px;padding:16px 8px;text-align:center;cursor:pointer;border:1px solid rgba(26,58,92,.06);transition:all .3s var(--ease);user-select:none;display:flex;flex-direction:column;align-items:center;gap:6px}
+.fn-btn:hover{background:#e3ebf3;border-color:rgba(26,58,92,.15);transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,58,92,.06)}
+.fn-btn:active{transform:scale(.96)}
+.fn-btn.active{background:rgba(26,58,92,.08);border-color:rgba(26,58,92,.2)}
+.fn-btn-icon{font-size:28px;line-height:1}
+.fn-btn-label{font-size:13px;color:var(--t2);font-weight:500}
+
+.fn-panel{background:#fff;border-radius:var(--rm);margin-bottom:20px;overflow:hidden;box-shadow:var(--sh-card);border:1px solid var(--b);animation:panelIn .35s var(--ease)}
+@keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.fn-panel-head{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(26,58,92,.03);font-size:14px;font-weight:700;color:var(--p);border-bottom:1px solid rgba(0,0,0,.04)}
+.fn-panel-close{cursor:pointer;font-size:16px;color:var(--t3);padding:4px 8px;border-radius:6px;transition:all .2s}
+.fn-panel-close:hover{background:rgba(0,0,0,.06);color:var(--t)}
+.fn-panel-body{padding:16px 20px}
+
+@media(max-width:480px){.fn-nav{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:360px){.fn-nav{grid-template-columns:repeat(3,1fr);gap:8px}.fn-btn{padding:12px 6px}.fn-btn-icon{font-size:22px}.fn-btn-label{font-size:11px}}
+
 @font-face{font-family:'PingFang SC';font-display:swap}
 </style>
 </head>
@@ -386,7 +405,20 @@ body::after{
 <span class="hot-tag" onclick="quickSearch('物业服务合同')">物业服务合同</span>
 </div>
 <div class="qa-results" id="qaResults"></div>
-<div class="faq-section">
+<div class="fn-nav">
+<div class="fn-btn" onclick="openPanel(0)"><div class="fn-btn-icon">&#10067;</div><div class="fn-btn-label">生活常见问题</div></div>
+<div class="fn-btn" onclick="openPanel(1)"><div class="fn-btn-icon">&#128218;</div><div class="fn-btn-label">法律小课堂</div></div>
+<div class="fn-btn" onclick="openPanel(2)"><div class="fn-btn-icon">&#9201;</div><div class="fn-btn-label">诉讼时效计算</div></div>
+<div class="fn-btn" onclick="openPanel(3)"><div class="fn-btn-icon">&#128176;</div><div class="fn-btn-label">损害赔偿估算</div></div>
+<div class="fn-btn" onclick="openPanel(4)"><div class="fn-btn-icon">&#128221;</div><div class="fn-btn-label">法律文书指引</div></div>
+<div class="fn-btn" onclick="openPanel(5)"><div class="fn-btn-icon">&#9878;</div><div class="fn-btn-label">法律援助</div></div>
+<div class="fn-btn" onclick="openPanel(6)"><div class="fn-btn-icon">&#128269;</div><div class="fn-btn-label">经典案例</div></div>
+</div>
+
+<div id="fn-panel-0" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#10067; 生活常见问题</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<div class="faq-section" style="margin-bottom:0">
 <h3>&#128172; 生活常见问题</h3>
 <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">朋友欠钱不还怎么办？</div><div class="faq-a">先协商→保留借条/转账记录→诉讼时效3年（<b>第188条</b>）→可起诉。民间借贷利率上限受<b>第680条</b>约束。</div></div>
 <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">借条没写利息还能要利息吗？</div><div class="faq-a">视为无利息（<b>第680条</b>）。但逾期不还可以主张逾期利息。</div></div>
@@ -399,8 +431,12 @@ body::after{
 <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">诉讼时效过了还能起诉吗？</div><div class="faq-a">可以起诉，但对方提时效抗辩则丧失胜诉权（<b>第192条、第193条</b>）。一般时效3年（<b>第188条</b>）。</div></div>
 <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">婚前财产离婚时怎么分？</div><div class="faq-a">婚前个人财产归个人（<b>第1063条</b>）。婚后增值部分可能为共同财产。</div></div>
 </div>
+</div></div>
 
-<div class="lt-section">
+<div id="fn-panel-1" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#128218; 法律小课堂</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<div class="lt-section" style="margin-bottom:0">
 <h3>&#128218; 法律小课堂</h3>
 <p style="font-size:14px;color:var(--t3);margin:-4px 0 16px 0;">懂一点法理，少踩一些坑</p>
 
@@ -441,8 +477,12 @@ body::after{
 <p style="color:var(--t3);margin-top:6px;">涉及法律：民法典第194条（中止）、第195条（中断）</p>
 </div></div>
 </div>
+</div></div>
 
-<div class="lim-calc">
+<div id="fn-panel-2" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#9201; 诉讼时效计算器</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<div class="lim-calc" style="margin-bottom:0">
 <h3>&#9200; 诉讼时效计算器</h3>
 <div class="lim-row"><label>权利受损日期</label><input type="date" id="limDate"></div>
 <div class="lim-row"><label>事由类型</label><select id="limType">
@@ -456,7 +496,12 @@ body::after{
 <button class="lim-btn" onclick="calcLimitation()">计算时效</button>
 <div class="lim-result" id="limResult"></div>
 </div>
-<div class="dam-calc">
+</div></div>
+
+<div id="fn-panel-3" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#128176; 损害赔偿估算</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<div class="dam-calc" style="margin-bottom:0">
 <h3>&#128176; 损害赔偿参考估算</h3>
 <div class="dam-note">仅供参考，实际以法院判决为准</div>
 <div class="dam-fields">
@@ -466,6 +511,8 @@ body::after{
 <button class="dam-btn" onclick="calcDamage()">计算赔偿</button>
 <div class="dam-result" id="damResult"></div>
 </div>
+</div></div>
+
 <h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128214; 法典七编</h3>
 <div class="gd" id="homeCards">
     <div class="cd" onclick="showPage('general')"><div class="ci">&#9878;</div><div class="ct">第一编 总则</div><div class="cdesc">第1-204条 | 基本规定、自然人、法人、民事法律行为、代理、诉讼时效</div></div>
@@ -477,7 +524,11 @@ body::after{
     <div class="cd" onclick="showPage('tort')"><div class="ci">&#9888;</div><div class="ct">第七编 侵权责任</div><div class="cdesc">第1164-1260条 | 损害赔偿、产品责任、医疗损害、机动车事故</div></div>
 </div>
 <div class="ib"><strong>&#128161; 提示：</strong>点击卡片进入各编详情页，支持关键词和条款号搜索。附则见第七编末尾。</div>
-<div class="lt-section">
+
+<div id="fn-panel-4" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#128221; 法律文书指引</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<div class="lt-section" style="margin-bottom:0">
 <h3>&#128221; 常见法律文书指引</h3>
 <div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">民事起诉状</div><div class="lt-a">①原告被告信息(姓名/住址/电话)<br>②诉讼请求(列明要啥)<br>③事实与理由<br>④证据清单<br>⑤此致XX人民法院<br>⑥具状人签名+日期</div></div>
 <div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">借条</div><div class="lt-a">①借款人/出借人信息<br>②借款金额(大写+小写)<br>③借款用途<br>④利息约定(年利率不超过LPR4倍)<br>⑤还款日期<br>⑥违约责任<br>⑦借款人签名+按手印+日期<br>⑧附身份证号</div></div>
@@ -487,8 +538,12 @@ body::after{
 <div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">劳务合同</div><div class="lt-a">①双方信息<br>②工作内容/地点<br>③工作期限<br>④劳动报酬<br>⑤工作时间/休息休假<br>⑥社会保险<br>⑦签名+日期</div></div>
 <div class="lt-note">以上为格式指引，具体内容建议咨询律师后填写</div>
 </div>
+</div></div>
 
-<div class="lt-section">
+<div id="fn-panel-5" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#9878; 法律援助</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<div class="lt-section" style="margin-bottom:0">
 <h3>&#9878; 法律援助申请指引</h3>
 
 <div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">什么是法律援助</div><div class="lt-a">法律援助是国家建立的为经济困难公民和符合法定条件的其他当事人无偿提供法律咨询、代理、刑事辩护等法律服务的制度（《法律援助法》第二条）。</div></div>
@@ -506,7 +561,7 @@ body::after{
 <div class="lt-note">全国统一法律援助热线：<strong>12348</strong></div>
 </div>
 
-<div class="lt-section">
+<div class="lt-section" style="margin-bottom:0">
 <h3>&#127970; 防城港市法律服务信息</h3>
 
 <div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">法律援助中心（点击展开）</div>
@@ -525,6 +580,14 @@ body::after{
 
 <div class="lt-note">全国法律援助热线：<strong>12348</strong></div>
 </div>
+</div></div>
+
+<div id="fn-panel-6" class="fn-panel" style="display:none">
+<div class="fn-panel-head"><span>&#128269; 经典案例</span><span class="fn-panel-close" onclick="event.stopPropagation();closePanel()">&#10005;</span></div>
+<div class="fn-panel-body">
+<p style="font-size:13px;line-height:2;color:var(--t2);margin:0;">经典案例已关联到各法条详情页，点击任意一编 → 展开法条 → 即可查看对应案例。</p>
+<p style="font-size:13px;line-height:2;color:var(--t2);margin:12px 0 0;"><strong>热门案例：</strong>高空抛物谁担责、离婚冷静期撤回、遗嘱效力冲突、格式条款无效、宠物伤人赔偿、好意同乘减责、自甘风险免责、婚前财产认定……</p>
+</div></div>
 
 <div class="spacer"></div>
 </div>
@@ -1131,6 +1194,32 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
+}
+
+// ===== Panel Toggle =====
+let currentPanel = -1;
+
+function openPanel(n) {
+    if (currentPanel === n) { closePanel(); return; }
+    if (currentPanel >= 0) {
+        document.getElementById('fn-panel-' + currentPanel).style.display = 'none';
+        document.querySelectorAll('.fn-btn')[currentPanel].classList.remove('active');
+    }
+    const panel = document.getElementById('fn-panel-' + n);
+    if (panel) {
+        panel.style.display = 'block';
+        document.querySelectorAll('.fn-btn')[n].classList.add('active');
+        currentPanel = n;
+        panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+}
+
+function closePanel() {
+    if (currentPanel >= 0) {
+        document.getElementById('fn-panel-' + currentPanel).style.display = 'none';
+        document.querySelectorAll('.fn-btn')[currentPanel].classList.remove('active');
+        currentPanel = -1;
+    }
 }
 
 // Init
