@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>民法宝 1.0</title><!-- v2026.06.17-mf -->
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#1a3a5c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="民法宝">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --p:#1a3a5c;--pd:#0d2240;--ps:#2c5f8a;--pl:#4a7fb5;
+  --ac1:#8fa4b8;--ac2:#6b8aab;--ac3:#7d94a8;--ac4:#7a8494;
+  --bg:#f0ede5;--bg2:#e6e2d8;--bg3:#d9d4c9;
+  --cs:rgba(0,0,0,.015);--c2:rgba(0,0,0,.03);
+  --glass:rgba(255,255,255,.68);--glass2:rgba(255,255,255,.78);
+  --t:#2d2a32;--t2:#5b5560;--t3:#8b848e;
+  --b:rgba(0,0,0,.04);--b2:rgba(0,0,0,.06);
+  --glow1:rgba(26,58,92,.1);--glow2:rgba(44,95,138,.06);
+  --r:32px;--rm:30px;--rs:28px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.03),0 0 0 1px rgba(0,0,0,.015);
+  --sh-md:0 6px 24px rgba(0,0,0,.04),0 0 0 1px rgba(0,0,0,.02);
+  --sh-lg:0 16px 48px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.025);
+  --sh-card:0 0 0 1px rgba(0,0,0,.02),0 4px 18px rgba(0,0,0,.04),0 8px 36px rgba(0,0,0,.025);
+  --sh-card-hover:0 0 0 1px rgba(26,58,92,.12),0 12px 44px rgba(26,58,92,.07);
+  --duration:0.5s;
+  --ease:cubic-bezier(.25,1,.3,1);
+  --ease-bounce:cubic-bezier(.3,1.4,.5,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","SimSun",serif;
+  font-size:15px;line-height:1.8;color:var(--t);background:var(--bg);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(26,58,92,.04) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 70%,rgba(44,95,138,.025) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 40%,rgba(74,127,181,.02) 0%,transparent 70%);
+  opacity:1;
+}
+body::after{
+  content:"";position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* Nav */
+.nb{
+  position:fixed;top:0;left:0;right:0;height:56px;
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
+  color:var(--t);display:flex;align-items:center;padding:0 18px;z-index:1000;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 2px 16px rgba(0,0,0,.06);
+  border-bottom:1px solid rgba(0,0,0,.04);
+}
+.nb::after{
+  content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(26,58,92,.18),rgba(44,95,138,.08),transparent);
+}
+.mb,.tb{width:40px;height:40px;border:none;background:rgba(0,0,0,.03);color:#5b5560;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:20px;transition:all var(--duration) var(--ease);border:1px solid rgba(0,0,0,.03)}
+.mb:hover,.tb:hover{background:rgba(26,58,92,.06);transform:scale(1.05);border-color:rgba(26,58,92,.12);box-shadow:0 0 24px rgba(26,58,92,.08)}
+.nt{flex:1;text-align:center;font-size:16px;font-weight:700;letter-spacing:4px;background:linear-gradient(135deg,#1a3a5c 0%,#2c5f8a 50%,#4a7fb5 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Sidebar */
+.so{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,18,22,.25);z-index:1999;opacity:0;visibility:hidden;transition:all .5s var(--ease);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.so.active{opacity:1;visibility:visible}
+.sb{position:fixed;top:0;left:-285px;width:285px;height:100%;background:rgba(240,237,229,.95);z-index:2000;transition:left .5s var(--ease);overflow-y:auto;box-shadow:12px 0 48px rgba(0,0,0,.08);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-right:1px solid rgba(0,0,0,.03)}.sb.active{left:0}
+.sh{background:linear-gradient(160deg,#1a3a5c 0%,#2c5f8a 35%,#4a7fb5 65%,#1a3a5c 100%);color:#fff;padding:60px 20px 26px;text-align:center;position:relative;overflow:hidden}
+.sh::before{content:"";position:absolute;top:-60px;left:-40px;width:160px;height:160px;background:rgba(255,255,255,.03);border-radius:50%;animation:shOrb1 8s ease-in-out infinite}
+.sh::after{content:"";position:absolute;bottom:-40px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%;animation:shOrb2 10s ease-in-out infinite}
+@keyframes shOrb1{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-10px)}}
+@keyframes shOrb2{0%,100%{transform:translate(0,0)}50%{transform:translate(-15px,15px)}}
+.sh h3{font-size:17px;font-weight:800;margin-bottom:6px;letter-spacing:3px;position:relative;z-index:1}.sh p{font-size:11px;opacity:.65;position:relative;z-index:1;letter-spacing:.8px}
+.ni{display:flex;align-items:center;padding:14px 24px;color:var(--t3);cursor:pointer;font-size:14px;border-left:3px solid transparent;transition:all var(--duration) var(--ease);font-weight:500;border-radius:0 16px 16px 0;margin:3px 10px 3px 0}
+.ni:hover{color:var(--ps);background:rgba(26,58,92,.04)}
+.ni.active{background:linear-gradient(90deg,rgba(26,58,92,.1),transparent);border-left-color:var(--p);color:var(--p);font-weight:600}
+.ni-icon{width:38px;height:38px;background:linear-gradient(135deg,rgba(26,58,92,.12),rgba(26,58,92,.06));border-radius:14px;display:flex;align-items:center;justify-content:center;margin-right:14px;font-size:16px;color:var(--p);flex-shrink:0;border:1px solid rgba(26,58,92,.08);box-shadow:0 2px 10px rgba(26,58,92,.06)}
+
+/* Main */
+.mn{margin-top:56px;padding:16px 16px 48px}
+.pg{display:none}.pg.active{display:block;animation:pageIn .6s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.pg:not(.active){content-visibility:auto;contain-intrinsic-size:auto 500px}
+
+/* Hero */
+.hero{
+  background:linear-gradient(160deg,#1a3a5c 0%,#2c5f8a 30%,#4a7fb5 60%,#1a3a5c 100%);
+  border-radius:var(--r);padding:36px 28px;color:#fff;margin-bottom:24px;
+  box-shadow:0 12px 40px rgba(26,58,92,.15),0 0 80px rgba(26,58,92,.05),inset 0 1px 0 rgba(255,255,255,.08);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;top:-100px;left:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;animation:heroOrb1 12s ease-in-out infinite;
+}
+.hero::after{
+  content:"";position:absolute;bottom:-80px;right:-70px;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(255,255,255,.03) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;animation:heroOrb2 14s ease-in-out infinite;
+}
+@keyframes heroOrb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(15px,-10px) scale(1.06)}}
+@keyframes heroOrb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10px,15px) scale(1.04)}}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:12px;letter-spacing:6px;position:relative;z-index:1;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+.hero p{font-size:13px;line-height:1.9;opacity:.82;position:relative;z-index:1;font-weight:400;letter-spacing:.5px}
+.sts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;position:relative;z-index:1}
+.st{
+  background:rgba(255,255,255,.1);border-radius:22px;padding:18px 8px;text-align:center;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08);transition:all var(--duration) var(--ease);
+}
+.st:hover{transform:translateY(-4px);background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.2);box-shadow:0 8px 28px rgba(0,0,0,.08)}
+.st:active{transform:translateY(0) scale(.96);transition:all .08s var(--ease)}
+.st-n{font-size:30px;font-weight:800;display:block;letter-spacing:-1px}.st-l{font-size:10px;opacity:.65;margin-top:6px}
+
+/* Grid Cards */
+.gd{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px}
+.gd .cd:last-child:nth-child(odd){grid-column:1/-1}
+.cd{
+  background:#f5f2ec;border-radius:var(--rm);padding:18px 14px 16px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05);cursor:pointer;
+  transition:all var(--duration) var(--ease);
+  border:1px solid rgba(26,58,92,.12);position:relative;overflow:hidden;
+}
+.cd::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;opacity:.5;transition:all var(--duration)}
+.cd:nth-child(1)::before{background:linear-gradient(90deg,#1a3a5c,#2c5f8a)}
+.cd:nth-child(2)::before{background:linear-gradient(90deg,#2c5f8a,#4a7fb5)}
+.cd:nth-child(3)::before{background:linear-gradient(90deg,#1a3a5c,#4a7fb5)}
+.cd:nth-child(4)::before{background:linear-gradient(90deg,#2c5f8a,#5a8fb5)}
+.cd:nth-child(5)::before{background:linear-gradient(90deg,#1a3a5c,#3c6f9a)}
+.cd:nth-child(6)::before{background:linear-gradient(90deg,#2c5f8a,#6a9fc5)}
+.cd:nth-child(7)::before{background:linear-gradient(90deg,#1a3a5c,#5a8fb5)}
+.cd:hover{transform:translateY(-6px);box-shadow:var(--sh-card-hover);border-color:rgba(26,58,92,.25);background:#f5f2ec}
+.cd:hover::before{opacity:1;height:4px}
+.cd:active{transform:translateY(0) scale(.97);transition:all .08s var(--ease)}
+.ci{width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;color:var(--p);background:linear-gradient(135deg,rgba(26,58,92,.1),rgba(44,95,138,.04));border:1px solid rgba(26,58,92,.08)}
+.ct{font-size:14px;font-weight:700;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(0,0,0,.05);letter-spacing:.5px;color:var(--p)}
+.cdesc{font-size:11px;color:var(--t2);line-height:1.65;letter-spacing:.2px}
+
+/* Page Header */
+.ph{
+  background:#ffffff;border-radius:var(--rm);padding:22px 24px;margin-bottom:20px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05);position:relative;overflow:hidden;
+  border:1px solid rgba(26,58,92,.1);
+}
+.ph::after{content:"";position:absolute;left:0;top:20%;bottom:20%;width:4px;background:linear-gradient(180deg,var(--p),var(--ps),transparent);border-radius:0 4px 4px 0;opacity:.7}
+.ph h2{font-size:20px;font-weight:800;margin-bottom:8px;letter-spacing:1px;background:linear-gradient(135deg,#1a3a5c,#2c5f8a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ph p{font-size:12px;color:var(--t3);line-height:1.7}
+
+/* Section Card */
+.sec{
+  background:#ffffff;border-radius:var(--rm);padding:22px;margin-bottom:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(26,58,92,.08);
+  transition:all var(--duration) var(--ease);
+}
+.sec:hover{box-shadow:var(--sh-card-hover);transform:translateY(-2px);border-color:rgba(26,58,92,.12)}
+.stitle{font-size:16px;font-weight:700;color:var(--p);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(26,58,92,.08);display:flex;align-items:center}
+.stitle::before{content:"";width:5px;height:22px;background:linear-gradient(180deg,var(--p),var(--ps));border-radius:4px;margin-right:12px;flex-shrink:0}
+
+/* Article styling */
+.article-item{padding:10px 0;border-bottom:1px solid rgba(0,0,0,.03);font-size:13px;line-height:1.9;color:var(--t2)}
+.article-item:last-child{border-bottom:none}
+.article-num{display:inline-block;background:rgba(26,58,92,.08);color:var(--p);font-weight:700;font-size:11px;padding:2px 8px;border-radius:6px;margin-right:8px;white-space:nowrap}
+
+/* Panel */
+.pnl{background:#fff;border-radius:var(--rm);margin-bottom:16px;overflow:hidden;box-shadow:var(--sh-card);border:1px solid var(--b)}
+.pnh{padding:16px 20px;background:rgba(26,58,92,.02);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;color:var(--p);transition:all var(--duration) var(--ease)}
+.pnh:hover{background:rgba(26,58,92,.05);color:var(--ps)}.pnh::after{content:"\\25BC";font-size:10px;color:var(--t3);transition:transform .3s}
+.pnl.open .pnh::after{transform:rotate(180deg)}.pnb{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}.pnl.open .pnb{max-height:none;overflow:visible}
+.pnbd{padding:20px}
+
+/* Back Button */
+.bb{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#fffdfc;border:1px solid rgba(0,0,0,.05);border-radius:24px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:18px;transition:all var(--duration) var(--ease);box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.bb:hover{background:rgba(26,58,92,.04);border-color:rgba(26,58,92,.2);color:var(--p);box-shadow:0 6px 20px rgba(26,58,92,.06);transform:translateX(-4px)}
+.bb:active{transform:scale(.95)!important;transition:all .08s var(--ease)}
+
+/* Search */
+.qa-bar{position:relative;margin-bottom:20px}
+.qa-input{
+  width:100%;padding:18px 56px 18px 22px;border:1px solid rgba(0,0,0,.06);border-radius:18px;
+  font-size:15px;color:var(--t);background:#fff;outline:none;
+  transition:all var(--duration) var(--ease);box-shadow:var(--sh-sm);
+}
+.qa-input::placeholder{color:var(--t3)}
+.qa-input:focus{border-color:rgba(26,58,92,.3);box-shadow:0 0 0 4px rgba(26,58,92,.04),0 4px 16px rgba(26,58,92,.04)}
+.qa-btn{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);width:44px;height:44px;
+  border:none;background:linear-gradient(135deg,var(--p),var(--ps));color:#fff;
+  border-radius:14px;font-size:18px;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;box-shadow:0 4px 16px rgba(26,58,92,.25);
+  transition:all var(--duration) var(--ease-bounce);
+}
+.qa-btn:hover{transform:translateY(-50%) scale(1.08);box-shadow:0 6px 24px rgba(26,58,92,.2)}
+.qa-btn:active{transform:translateY(-50%) scale(.95)}
+.qa-results{display:none}.qa-results.show{display:block}
+.qa-item{
+  background:#fff;border-radius:var(--rm);padding:22px;margin-bottom:16px;
+  box-shadow:var(--sh-card);border-left:4px solid var(--p);
+  animation:fadeIn .5s var(--ease);
+}
+.qa-item:hover{box-shadow:var(--sh-card-hover);transform:translateY(-2px)}
+.qa-q{font-size:15px;font-weight:700;color:var(--p);margin-bottom:12px}.qa-a{font-size:13px;line-height:1.9;color:var(--t2)}
+.qa-noresult{text-align:center;padding:36px;color:var(--t3);font-size:14px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Hot Tags */
+.hot-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.hot-tag{
+  background:rgba(26,58,92,.05);border:1px solid rgba(26,58,92,.1);border-radius:20px;
+  padding:8px 16px;font-size:12px;color:var(--p);cursor:pointer;
+  transition:all var(--duration) var(--ease);font-weight:500;
+}
+.hot-tag:hover{background:rgba(26,58,92,.08);transform:translateY(-2px);box-shadow:0 4px 12px rgba(26,58,92,.06)}
+
+/* Floating Button */
+.float-home-btn{
+  position:fixed;bottom:28px;right:28px;width:56px;height:56px;
+  border-radius:50%;background:linear-gradient(135deg,var(--p),var(--ps));
+  color:#fff;border:none;font-size:22px;cursor:pointer;
+  box-shadow:0 8px 24px rgba(26,58,92,.2),0 0 0 1px rgba(255,255,255,.15);
+  z-index:9999;display:flex;align-items:center;justify-content:center;
+  transition:all .4s var(--ease-bounce);
+}
+.float-home-btn:hover{transform:scale(1.12);box-shadow:0 12px 32px rgba(26,58,92,.28)}
+.float-home-btn:active{transform:scale(.85)}
+
+/* Install Banner */
+.install-banner{position:fixed;bottom:0;left:0;right:0;background:rgba(240,237,229,.94);color:var(--t);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;z-index:3000;box-shadow:0 -6px 28px rgba(0,0,0,.06);transform:translateY(100%);transition:transform .5s var(--ease);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-top:1px solid rgba(0,0,0,.03)}
+.install-banner.show{transform:translateY(0)}
+.install-banner .ibx{font-size:13px;line-height:1.5;flex:1}
+.install-banner .ibb{background:linear-gradient(135deg,var(--p),var(--ps));color:#fff;border:none;padding:10px 20px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;margin-left:16px;white-space:nowrap;box-shadow:0 6px 20px rgba(26,58,92,.2)}
+.install-banner .ibb:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,58,92,.3)}
+.install-banner .ibc{background:transparent;border:none;color:rgba(0,0,0,.25);font-size:22px;cursor:pointer;padding:0 0 0 8px}
+
+/* Info Box */
+.ib{border-radius:0 16px 16px 0;padding:18px 20px;margin:16px 0;font-size:12px;line-height:1.9;color:var(--t2);border-left:4px solid var(--p);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+
+.spacer{height:48px}
+
+/* Responsive */
+@media(max-width:380px){.gd{grid-template-columns:1fr}.hero h1{font-size:22px}.hero{padding:28px 20px}}
+@media(min-width:768px){.mn{max-width:740px;margin-left:auto;margin-right:auto;padding:28px 24px 56px}.gd{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){
+  .float-home-btn{bottom:20px;right:20px;width:50px;height:50px;font-size:18px}
+}
+@media print{.nb,.sb,.so,.bb,.tb,.mb,.float-home-btn{display:none!important}.mn{margin-top:0}body{background:#fff;color:#0f172a}}
+
+@font-face{font-family:'PingFang SC';font-display:swap}
+</style>
+</head>
+<body>
+
+<div class="nb">
+    <button class="mb" onclick="toggleSidebar()">&#9776;</button>
+    <div class="nt">民法宝 1.0</div>
+    <button class="tb" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+</div>
+<div class="so" onclick="toggleSidebar()"></div>
+<div class="sb">
+    <div class="sh"><h3>&#9878; 民法宝 1.0</h3><p>中华人民共和国民法典全文</p></div>
+    <div class="ni active" data-p="home" onclick="showPage('home')"><div class="ni-icon">&#127968;</div><span>首页概览</span></div>
+    <div class="ni" data-p="general" onclick="showPage('general')"><div class="ni-icon">&#9878;</div><span>第一编 总则</span></div>
+    <div class="ni" data-p="property" onclick="showPage('property')"><div class="ni-icon">&#127968;</div><span>第二编 物权</span></div>
+    <div class="ni" data-p="contract" onclick="showPage('contract')"><div class="ni-icon">&#128221;</div><span>第三编 合同</span></div>
+    <div class="ni" data-p="personality" onclick="showPage('personality')"><div class="ni-icon">&#128100;</div><span>第四编 人格权</span></div>
+    <div class="ni" data-p="marriage" onclick="showPage('marriage')"><div class="ni-icon">&#128106;</div><span>第五编 婚姻家庭</span></div>
+    <div class="ni" data-p="inheritance" onclick="showPage('inheritance')"><div class="ni-icon">&#128220;</div><span>第六编 继承</span></div>
+    <div class="ni" data-p="tort" onclick="showPage('tort')"><div class="ni-icon">&#9888;</div><span>第七编 侵权责任</span></div>
+</div>
+<div class="mn">
+<div id="p-home" class="pg active">
+<div class="hero">
+    <h1>民法宝 1.0</h1>
+    <p>《中华人民共和国民法典》全文知识库。2021年1月1日起施行，共7编1260条。涵盖总则、物权、合同、人格权、婚姻家庭、继承、侵权责任，是新中国第一部以法典命名的法律。</p>
+    <div class="sts">
+        <div class="st"><span class="st-n">7</span><span class="st-l">编</span></div>
+        <div class="st"><span class="st-n">1260</span><span class="st-l">条</span></div>
+        <div class="st"><span class="st-n">2021</span><span class="st-l">施行</span></div>
+    </div>
+</div>
+<h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128270; 法条检索</h3>
+<div class="qa-bar">
+    <input type="text" class="qa-input" id="qaInput" placeholder="输入关键词或条款号搜索... 如：合同解除 / 第一千零三条 / 离婚冷静期" onkeypress="if(event.key==='Enter')searchQA()">
+    <button class="qa-btn" onclick="searchQA()">&#128269;</button>
+</div>
+<div class="hot-tags">
+<span class="hot-tag" onclick="quickSearch('离婚冷静期')">离婚冷静期</span>
+<span class="hot-tag" onclick="quickSearch('居住权')">居住权</span>
+<span class="hot-tag" onclick="quickSearch('高空抛物')">高空抛物</span>
+<span class="hot-tag" onclick="quickSearch('借款合同')">借款合同</span>
+<span class="hot-tag" onclick="quickSearch('遗嘱')">遗嘱</span>
+<span class="hot-tag" onclick="quickSearch('人格权')">人格权</span>
+<span class="hot-tag" onclick="quickSearch('夫妻共同财产')">夫妻共同财产</span>
+<span class="hot-tag" onclick="quickSearch('侵权责任')">侵权责任</span>
+<span class="hot-tag" onclick="quickSearch('不动产登记')">不动产登记</span>
+<span class="hot-tag" onclick="quickSearch('物业服务合同')">物业服务合同</span>
+</div>
+<div class="qa-results" id="qaResults"></div>
+<h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128214; 法典七编</h3>
+<div class="gd" id="homeCards">
+    <div class="cd" onclick="showPage('general')"><div class="ci">&#9878;</div><div class="ct">第一编 总则</div><div class="cdesc">第1-204条 | 基本规定、自然人、法人、民事法律行为、代理、诉讼时效</div></div>
+    <div class="cd" onclick="showPage('property')"><div class="ci">&#127968;</div><div class="ct">第二编 物权</div><div class="cdesc">第205-462条 | 所有权、用益物权、担保物权、占有</div></div>
+    <div class="cd" onclick="showPage('contract')"><div class="ci">&#128221;</div><div class="ct">第三编 合同</div><div class="cdesc">第463-988条 | 通则、典型合同、准合同</div></div>
+    <div class="cd" onclick="showPage('personality')"><div class="ci">&#128100;</div><div class="ct">第四编 人格权</div><div class="cdesc">第989-1039条 | 生命权、肖像权、名誉权、隐私权</div></div>
+    <div class="cd" onclick="showPage('marriage')"><div class="ci">&#128106;</div><div class="ct">第五编 婚姻家庭</div><div class="cdesc">第1040-1118条 | 结婚、家庭关系、离婚、收养</div></div>
+    <div class="cd" onclick="showPage('inheritance')"><div class="ci">&#128220;</div><div class="ct">第六编 继承</div><div class="cdesc">第1119-1163条 | 法定继承、遗嘱继承、遗产处理</div></div>
+    <div class="cd" onclick="showPage('tort')"><div class="ci">&#9888;</div><div class="ct">第七编 侵权责任</div><div class="cdesc">第1164-1260条 | 损害赔偿、产品责任、医疗损害、机动车事故</div></div>
+</div>
+<div class="ib"><strong>&#128161; 提示：</strong>点击卡片进入各编详情页，支持关键词和条款号搜索。附则见第七编末尾。</div>
+<div class="spacer"></div>
+</div>
+
+<div id="p-general" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#9878; 第一编 总则</h2><p>第1-204条 | 基本规定、自然人、法人、非法人组织、民事权利、民事法律行为、代理、民事责任、诉讼时效、期间计算</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索总则篇..." onkeypress="if(event.key==='Enter')searchModule('general',this.value)">
+    <button class="qa-btn" onclick="searchModule('general',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-general" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+
+<div id="p-property" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#127968; 第二编 物权</h2><p>第205-462条 | 通则、所有权、用益物权、担保物权、占有</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索物权编..." onkeypress="if(event.key==='Enter')searchModule('property',this.value)">
+    <button class="qa-btn" onclick="searchModule('property',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-property" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+
+<div id="p-contract" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128221; 第三编 合同</h2><p>第463-988条 | 通则、典型合同、准合同</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索合同编..." onkeypress="if(event.key==='Enter')searchModule('contract',this.value)">
+    <button class="qa-btn" onclick="searchModule('contract',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-contract" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+
+<div id="p-personality" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128100; 第四编 人格权</h2><p>第989-1039条 | 一般规定、生命权身体权和健康权、姓名权和名称权、肖像权、名誉权和荣誉权、隐私权和个人信息保护</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索人格权编..." onkeypress="if(event.key==='Enter')searchModule('personality',this.value)">
+    <button class="qa-btn" onclick="searchModule('personality',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-personality" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+
+<div id="p-marriage" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128106; 第五编 婚姻家庭</h2><p>第1040-1118条 | 一般规定、结婚、家庭关系、离婚、收养</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索婚姻家庭编..." onkeypress="if(event.key==='Enter')searchModule('marriage',this.value)">
+    <button class="qa-btn" onclick="searchModule('marriage',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-marriage" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+
+<div id="p-inheritance" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#128220; 第六编 继承</h2><p>第1119-1163条 | 一般规定、法定继承、遗嘱继承和遗赠、遗产的处理</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索继承编..." onkeypress="if(event.key==='Enter')searchModule('inheritance',this.value)">
+    <button class="qa-btn" onclick="searchModule('inheritance',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-inheritance" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+
+<div id="p-tort" class="pg">
+<button class="bb" onclick="showPage('home')">&larr; 返回首页</button>
+<div class="ph"><h2>&#9888; 第七编 侵权责任</h2><p>第1164-1260条 | 一般规定、损害赔偿、责任主体的特殊规定、产品责任、机动车交通事故责任、医疗损害责任、环境污染和生态破坏责任、高度危险责任、饲养动物损害责任、建筑物和物件损害责任、附则</p></div>
+<div class="qa-bar">
+    <input type="text" class="qa-input" placeholder="搜索侵权责任编..." onkeypress="if(event.key==='Enter')searchModule('tort',this.value)">
+    <button class="qa-btn" onclick="searchModule('tort',this.previousElementSibling.value)">&#128269;</button>
+</div>
+<div id="content-tort" class="module-content"><div style="text-align:center;padding:24px;color:var(--t3)">加载中...</div></div>
+<div class="spacer"></div></div>
+</div>
+
+<button class="float-home-btn" onclick="showPage('home')" title="回到首页">&#127968;</button>
+
+<div class="install-banner" id="installBanner">
+    <div class="ibx"><strong>民法宝 1.0</strong><br>添加到主屏幕，离线也可查阅法条</div>
+    <button class="ibb" onclick="installPWA()">安装</button>
+    <button class="ibc" onclick="dismissInstall()">&times;</button>
+</div>
+
+<script>
+// ===== Knowledge Base Loader =====
+let knowledgeBase = null;
+let pageCache = {};
+
+async function loadKB() {
+    if (knowledgeBase) return knowledgeBase;
+    try {
+        const resp = await fetch('./knowledgebase.json');
+        knowledgeBase = await resp.json();
+        console.log('民法宝知识库加载完成:', knowledgeBase.modules.general.sections.length + ' sections in 总则');
+        return knowledgeBase;
+    } catch(e) {
+        console.error('知识库加载失败:', e);
+        return null;
+    }
+}
+
+// ===== Page Navigation =====
+let currentPage = 'home';
+
+function showPage(pageId) {
+    document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('p-' + pageId);
+    if (target) target.classList.add('active');
+    
+    document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+    const ni = document.querySelector(`.ni[data-p="${pageId}"]`);
+    if (ni) ni.classList.add('active');
+    
+    currentPage = pageId;
+    window.scrollTo({top:0,behavior:'smooth'});
+    
+    // Load module content if needed
+    if (pageId !== 'home' && !pageCache[pageId]) {
+        renderModule(pageId);
+    }
+    
+    // Close sidebar on mobile
+    document.querySelector('.so').classList.remove('active');
+    document.querySelector('.sb').classList.remove('active');
+}
+
+function toggleSidebar() {
+    document.querySelector('.so').classList.toggle('active');
+    document.querySelector('.sb').classList.toggle('active');
+}
+
+// ===== Module Rendering =====
+async function renderModule(moduleKey) {
+    const kb = await loadKB();
+    if (!kb) return;
+    
+    const module = kb.modules[moduleKey];
+    if (!module) return;
+    
+    const container = document.getElementById('content-' + moduleKey);
+    if (!container) return;
+    
+    let html = '';
+    module.sections.forEach((sec, secIdx) => {
+        const secId = moduleKey + '-sec-' + secIdx;
+        html += `<div class="pnl" id="${secId}">
+            <div class="pnh" onclick="togglePanel('${secId}')">${sec.title} <span style="font-size:11px;color:var(--t3);margin-left:8px">(${sec.articles.length}条)</span></div>
+            <div class="pnb"><div class="pnbd">`;
+        
+        sec.articles.forEach(art => {
+            html += `<div class="article-item"><span class="article-num">${art.num}</span>${escapeHtml(art.content).replace(/\\n/g, '<br>')}</div>`;
+        });
+        
+        html += `</div></div></div>`;
+    });
+    
+    container.innerHTML = html;
+    pageCache[moduleKey] = true;
+}
+
+function togglePanel(id) {
+    document.getElementById(id).classList.toggle('open');
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ===== Search =====
+async function searchQA() {
+    const q = document.getElementById('qaInput').value.trim();
+    if (!q) return;
+    
+    const kb = await loadKB();
+    if (!kb) return;
+    
+    const resultsDiv = document.getElementById('qaResults');
+    
+    // Check if it's an article number search (e.g., "第一千零三条", "第103条")
+    const articleNumMatch = q.match(/第[零一二三四五六七八九十百千\d]+条/);
+    
+    let results = [];
+    
+    if (articleNumMatch) {
+        // Direct article number search
+        const num = articleNumMatch[0];
+        for (const [mk, mv] of Object.entries(kb.modules)) {
+            for (const sec of mv.sections) {
+                for (const art of sec.articles) {
+                    if (art.num === num) {
+                        results.push({
+                            module: mv.title,
+                            section: sec.title,
+                            chapter: sec.chapter,
+                            article: art,
+                            moduleKey: mk
+                        });
+                    }
+                }
+            }
+        }
+    }
+    
+    // Keyword search (always do this)
+    const keywords = q.replace(/第[零一二三四五六七八九十百千\d]+条/g, '').trim();
+    if (keywords) {
+        const kwLower = keywords.toLowerCase();
+        const keywordResults = [];
+        for (const [mk, mv] of Object.entries(kb.modules)) {
+            for (const sec of mv.sections) {
+                for (const art of sec.articles) {
+                    const searchText = art.content;
+                    if (searchText.includes(keywords)) {
+                        // Avoid duplicates from article number search
+                        if (!results.find(r => r.article.num === art.num)) {
+                            keywordResults.push({
+                                module: mv.title,
+                                section: sec.title,
+                                chapter: sec.chapter,
+                                article: art,
+                                moduleKey: mk
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        results = results.concat(keywordResults);
+    }
+    
+    if (results.length === 0) {
+        resultsDiv.innerHTML = '<div class="qa-noresult">未找到匹配的法条，请尝试其他关键词</div>';
+    } else {
+        let html = `<div style="font-size:12px;color:var(--t3);margin-bottom:12px">找到 ${results.length} 条结果</div>`;
+        results.slice(0, 50).forEach(r => {
+            const highlightedContent = r.article.content.replace(
+                new RegExp(escapeRegExp(keywords), 'g'),
+                m => `<mark style="background:rgba(26,58,92,.12);padding:1px 3px;border-radius:3px">${m}</mark>`
+            );
+            html += `<div class="qa-item" onclick="showPage('${r.moduleKey}');setTimeout(()=>{document.querySelectorAll('.pnl').forEach(p=>p.classList.add('open'))},600)">
+                <div class="qa-q"><span class="article-num">${r.article.num}</span> ${r.module} · ${r.chapter || r.section}</div>
+                <div class="qa-a">${highlightedContent.replace(/\\n/g, '<br>')}</div>
+            </div>`;
+        });
+        if (results.length > 50) {
+            html += `<div style="text-align:center;color:var(--t3);font-size:12px;padding:12px">仅显示前50条，请缩小搜索范围</div>`;
+        }
+        resultsDiv.innerHTML = html;
+    }
+    resultsDiv.classList.add('show');
+    resultsDiv.scrollIntoView({behavior:'smooth'});
+}
+
+async function searchModule(moduleKey, q) {
+    if (!q.trim()) return;
+    
+    const kb = await loadKB();
+    if (!kb) return;
+    
+    const module = kb.modules[moduleKey];
+    const container = document.getElementById('content-' + moduleKey);
+    if (!container) return;
+    
+    const keywords = q.trim();
+    let results = [];
+    
+    for (const sec of module.sections) {
+        for (const art of sec.articles) {
+            if (art.content.includes(keywords) || art.num.includes(keywords)) {
+                results.push({section: sec.title, article: art});
+            }
+        }
+    }
+    
+    if (results.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--t3)">未找到匹配的法条</div>';
+    } else {
+        let html = `<div style="font-size:12px;color:var(--t3);margin-bottom:12px">找到 ${results.length} 条结果</div>`;
+        results.forEach(r => {
+            html += `<div class="sec">
+                <div class="stitle">${r.section}</div>
+                <div class="article-item"><span class="article-num">${r.article.num}</span>${escapeHtml(r.article.content).replace(/\\n/g, '<br>')}</div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    }
+}
+
+function quickSearch(q) {
+    document.getElementById('qaInput').value = q;
+    searchQA();
+}
+
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ===== PWA =====
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBanner').classList.add('show');
+});
+
+function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => {
+            deferredPrompt = null;
+            document.getElementById('installBanner').classList.remove('show');
+        });
+    }
+}
+
+function dismissInstall() {
+    document.getElementById('installBanner').classList.remove('show');
+}
+
+// iOS detection
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+const isStandalone = window.navigator.standalone;
+if (isIOS && !isStandalone) {
+    setTimeout(() => {
+        document.getElementById('installBanner').classList.add('show');
+    }, 3000);
+}
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+}
+
+// Init
+loadKB();
+</script>
+</body>
+</html>
