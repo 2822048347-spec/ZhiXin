@@ -287,6 +287,46 @@ body::after{
 .term::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a3a5c;color:#fff;font-size:11px;padding:6px 12px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:100;font-weight:400}
 .term:hover::after{opacity:1}
 
+/* Damage Calculator */
+.dam-calc{background:rgba(26,58,92,.02);border-radius:var(--rm);padding:20px;margin-bottom:22px;border:1px solid rgba(26,58,92,.1);box-shadow:0 2px 12px rgba(0,0,0,.03)}
+.dam-calc h3{font-size:16px;font-weight:600;margin:0 0 6px;color:var(--t)}
+.dam-note{font-size:11px;color:var(--t3);margin-bottom:14px;font-style:italic}
+.dam-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.dam-fields .dam-field{display:flex;flex-direction:column}
+.dam-fields .dam-field label{font-size:11px;color:var(--t2);margin-bottom:4px;font-weight:500}
+.dam-fields .dam-field input,.dam-fields .dam-field select{padding:9px 12px;border:1px solid rgba(0,0,0,.08);border-radius:10px;font-size:12px;background:#fff;color:var(--t);outline:none;transition:all .3s}
+.dam-fields .dam-field input:focus,.dam-fields .dam-field select:focus{border-color:rgba(26,58,92,.25);box-shadow:0 0 0 3px rgba(26,58,92,.04)}
+.dam-btn{padding:10px 24px;background:linear-gradient(135deg,var(--p),var(--ps));color:#fff;border:none;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;box-shadow:0 4px 14px rgba(26,58,92,.18);transition:all var(--duration) var(--ease-bounce)}
+.dam-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,58,92,.28)}
+.dam-result{display:none;margin-top:16px;padding:16px;background:#fff;border-radius:16px;border:1px solid rgba(26,58,92,.1);font-size:13px;line-height:2;color:var(--t2)}
+.dam-result.show{display:block}
+.dam-result .dam-total{font-size:18px;font-weight:800;color:var(--p)}
+
+/* Case Panel */
+.cs-wrap{margin-top:8px}
+.cs-toggle{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#2e7d32;cursor:pointer;padding:4px 10px;background:rgba(76,175,80,.08);border-radius:6px;border:1px solid rgba(76,175,80,.15);transition:all .3s var(--ease);font-weight:600;user-select:none}
+.cs-toggle:hover{background:rgba(76,175,80,.14);border-color:rgba(76,175,80,.25)}
+.cs-toggle::after{content:"\25B6";font-size:8px;transition:transform .3s;display:inline-block}
+.cs-toggle.open::after{transform:rotate(90deg)}
+.cs-list{display:none;margin-top:6px}
+.cs-list.open{display:block}
+.cs-item{background:rgba(76,175,80,.04);border-left:3px solid rgba(76,175,80,.2);padding:8px 12px;margin-bottom:4px;border-radius:0 6px 6px 0;font-size:11px;line-height:1.7;color:var(--t2)}
+.cs-item:last-child{margin-bottom:0}
+.cs-title{font-size:12px;font-weight:700;color:#2e7d32;margin-bottom:4px}
+.cs-summary{font-size:11px}
+
+/* Legal Templates */
+.lt-section{margin-bottom:22px}
+.lt-section h3{font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)}
+.lt-card{background:rgba(26,58,92,.02);border-radius:var(--rm);margin-bottom:10px;overflow:hidden;cursor:pointer;border:1px solid rgba(26,58,92,.08);transition:all var(--duration) var(--ease);box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.lt-card:hover{border-color:rgba(26,58,92,.15);box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.lt-q{padding:14px 18px;font-size:13px;font-weight:600;color:var(--p);display:flex;justify-content:space-between;align-items:center;user-select:none}
+.lt-q::after{content:"\25BC";font-size:9px;color:var(--t3);transition:transform .3s;flex-shrink:0;margin-left:10px}
+.lt-card.open .lt-q::after{transform:rotate(180deg)}
+.lt-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);font-size:12px;line-height:2;color:var(--t2);padding:0 18px}
+.lt-card.open .lt-a{max-height:600px;padding:4px 18px 16px}
+.lt-note{font-size:11px;color:var(--t3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,.04);font-style:italic}
+
 /* Responsive */
 @media(max-width:380px){.gd{grid-template-columns:1fr}.hero h1{font-size:22px}.hero{padding:28px 20px}}
 @media(min-width:768px){.mn{max-width:740px;margin-left:auto;margin-right:auto;padding:28px 24px 56px}.gd{grid-template-columns:repeat(3,1fr)}}
@@ -373,6 +413,16 @@ body::after{
 <button class="lim-btn" onclick="calcLimitation()">计算时效</button>
 <div class="lim-result" id="limResult"></div>
 </div>
+<div class="dam-calc">
+<h3>&#128176; 损害赔偿参考估算</h3>
+<div class="dam-note">仅供参考，实际以法院判决为准</div>
+<div class="dam-fields">
+<div class="dam-field"><label>损害类型</label><select id="damType" onchange="updateDamageFields()"><option value="personal">人身损害</option><option value="property">财产损失</option><option value="mental">精神损害</option></select></div>
+</div>
+<div class="dam-fields" id="damFields"></div>
+<button class="dam-btn" onclick="calcDamage()">计算赔偿</button>
+<div class="dam-result" id="damResult"></div>
+</div>
 <h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128214; 法典七编</h3>
 <div class="gd" id="homeCards">
     <div class="cd" onclick="showPage('general')"><div class="ci">&#9878;</div><div class="ct">第一编 总则</div><div class="cdesc">第1-204条 | 基本规定、自然人、法人、民事法律行为、代理、诉讼时效</div></div>
@@ -384,6 +434,55 @@ body::after{
     <div class="cd" onclick="showPage('tort')"><div class="ci">&#9888;</div><div class="ct">第七编 侵权责任</div><div class="cdesc">第1164-1260条 | 损害赔偿、产品责任、医疗损害、机动车事故</div></div>
 </div>
 <div class="ib"><strong>&#128161; 提示：</strong>点击卡片进入各编详情页，支持关键词和条款号搜索。附则见第七编末尾。</div>
+<div class="lt-section">
+<h3>&#128221; 常见法律文书指引</h3>
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">民事起诉状</div><div class="lt-a">①原告被告信息(姓名/住址/电话)<br>②诉讼请求(列明要啥)<br>③事实与理由<br>④证据清单<br>⑤此致XX人民法院<br>⑥具状人签名+日期</div></div>
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">借条</div><div class="lt-a">①借款人/出借人信息<br>②借款金额(大写+小写)<br>③借款用途<br>④利息约定(年利率不超过LPR4倍)<br>⑤还款日期<br>⑥违约责任<br>⑦借款人签名+按手印+日期<br>⑧附身份证号</div></div>
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">自书遗嘱</div><div class="lt-a">①标题"遗嘱"<br>②立遗嘱人信息<br>③财产清单<br>④分配方案<br>⑤执行人<br>⑥亲笔书写全文+签名+年月日（不可打印/不可代书）</div></div>
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">房屋租赁合同</div><div class="lt-a">①出租人/承租人信息<br>②房屋地址/面积<br>③租期<br>④租金及支付方式<br>⑤押金<br>⑥维修责任<br>⑦违约条款<br>⑧双方签名+日期</div></div>
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">离婚协议书</div><div class="lt-a">①双方信息<br>②自愿离婚声明<br>③子女抚养(抚养权+抚养费+探视权)<br>④财产分割<br>⑤债务处理<br>⑥签名+日期</div></div>
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">劳务合同</div><div class="lt-a">①双方信息<br>②工作内容/地点<br>③工作期限<br>④劳动报酬<br>⑤工作时间/休息休假<br>⑥社会保险<br>⑦签名+日期</div></div>
+<div class="lt-note">以上为格式指引，具体内容建议咨询律师后填写</div>
+</div>
+
+<div class="lt-section">
+<h3>&#9878; 法律援助申请指引</h3>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">什么是法律援助</div><div class="lt-a">法律援助是国家建立的为经济困难公民和符合法定条件的其他当事人无偿提供法律咨询、代理、刑事辩护等法律服务的制度（《法律援助法》第二条）。</div></div>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">申请条件</div><div class="lt-a">同时满足以下三项：<br>1. 申请事项属于法律援助范围（见下方）<br>2. 有证据证明为维护自己合法权益需要法律帮助<br>3. 家庭经济困难，无力支付法律服务费用。标准：申请人及其共同生活家庭成员月人均收入不高于当地最低工资标准（部分地区按低收入标准执行）</div></div>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">哪些事项可以申请（民事/行政）</div><div class="lt-a">&#8226; 依法请求国家赔偿<br>&#8226; 请求给予社会保险待遇或社会救助<br>&#8226; 请求发给抚恤金<br>&#8226; 请求给付赡养费、抚养费、扶养费<br>&#8226; 请求确认劳动关系或支付劳动报酬<br>&#8226; 请求工伤事故、交通事故、医疗事故、食品药品安全事故人身损害赔偿<br>&#8226; 请求环境污染、生态破坏损害赔偿<br>&#8226; 因见义勇为产生民事权益<br>&#8226; 因家庭暴力、虐待、遗弃主张权利<br>&#8226; 残疾人、老年人、未成年人、妇女请求人身损害赔偿<br>&#8226; 因土地承包经营流转等合法权益受侵害</div></div>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">哪些人可以免予经济困难审查</div><div class="lt-a">&#8226; 无固定生活来源的未成年人、老年人、残疾人<br>&#8226; 社会救助/司法救助/优抚对象<br>&#8226; 申请支付劳动报酬或工伤赔偿的进城务工人员<br>&#8226; 刑事案件中有盲聋哑、精神病人、可能无期/死刑等情形的</div></div>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">需要准备的材料</div><div class="lt-a">1. 法律援助申请表（可口头申请由工作人员代填）<br>2. 居民身份证或其他有效身份证明<br>3. 经济困难状况说明及诚信承诺书（免审情形除外）<br>4. 与申请事项相关的案件材料</div></div>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">申请流程</div><div class="lt-a">携带材料 &#8594; 到法律援助机构窗口提交 &#8594; 7日内审查作出决定 &#8594; 决定给予的，3日内指派律师 &#8594; 律师提供免费法律服务</div></div>
+
+<div class="lt-note">全国统一法律援助热线：<strong>12348</strong></div>
+</div>
+
+<div class="lt-section">
+<h3>&#127970; 防城港市法律服务信息</h3>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">法律援助中心（点击展开）</div>
+<div class="lt-a">
+<table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:8px;">
+<tr style="background:rgba(26,58,92,.05);"><td style="padding:6px 8px;border-bottom:1px solid var(--l2);font-weight:600;">机构</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);font-weight:600;">地址</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);font-weight:600;">电话</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">防城港市法律援助中心</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">市行政中心区平安街</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">0770-2821149</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">港口区法律援助中心</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">港口区渔洲坪建政路（公安分局斜对面）</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">0770-2203206</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">防城区法律援助中心</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">防城区金花茶大道远通上城直进500米</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">0770-3261148</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">东兴市法律援助中心</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">东兴市新华路213号11楼司法局</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">0770-7661148</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">上思县法律援助中心</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">上思县思阳镇那板路</td><td style="padding:6px 8px;border-bottom:1px solid var(--l2);">0770-8510206</td></tr>
+</table>
+</div></div>
+
+<div class="lt-card" onclick="toggleCard(this)"><div class="lt-q">政务服务中心司法局窗口</div><div class="lt-a">地址：港口区北部湾大道148号市政务服务中心1楼<br>电话：0770-2881237<br>办公时间：工作日 9:00-12:00, 13:30-16:30</div></div>
+
+<div class="lt-note">全国法律援助热线：<strong>12348</strong></div>
+</div>
+
 <div class="spacer"></div>
 </div>
 
@@ -542,6 +641,14 @@ async function renderModule(moduleKey) {
                 });
                 html += `</div></div>`;
             }
+            if (art.cases && art.cases.length > 0) {
+                html += `<div class="cs-wrap"><span class="cs-toggle" onclick="toggleCS(this)">典型案例 (${art.cases.length}个)</span>`;
+                html += `<div class="cs-list">`;
+                art.cases.forEach(cs => {
+                    html += `<div class="cs-item"><div class="cs-title">${escapeHtml(cs.title)}</div><div class="cs-summary">${escapeHtml(cs.summary)}</div></div>`;
+                });
+                html += `</div></div>`;
+            }
             html += `</div>`;
         });
         
@@ -566,6 +673,104 @@ function toggleJI(el) {
     el.classList.toggle('open');
     el.nextElementSibling.classList.toggle('open');
 }
+
+function toggleCS(el) {
+    el.classList.toggle('open');
+    el.nextElementSibling.classList.toggle('open');
+}
+
+function toggleCard(el) {
+    el.classList.toggle('open');
+}
+
+// ===== 损害赔偿计算器 =====
+const DAMAGE_FIELDS = {
+    personal: [
+        {id:'damMed',label:'医疗费(元)',def:0},
+        {id:'damWork',label:'误工费(元)',def:0},
+        {id:'damCare',label:'护理费(元)',def:0},
+        {id:'damMeal',label:'住院伙食补助(元)',def:0},
+        {id:'damNutr',label:'营养费(元)',def:0},
+        {id:'damTrans',label:'交通费(元)',def:0},
+        {id:'damDisab',label:'残疾赔偿金(元)',def:0},
+    ],
+    property: [
+        {id:'damPrice',label:'物品购买金额(元)',def:0},
+        {id:'damUsed',label:'已使用月数',def:0},
+        {id:'damLife',label:'预计使用月数（如手机36个月）',def:36},
+        {id:'damRepairable',label:'是否可修复',def:'yes',type:'select',options:[{v:'yes',l:'是'},{v:'no',l:'否'}]},
+        {id:'damRepair',label:'修复费用(元)',def:0},
+    ],
+    mental: [
+        {id:'damMental',label:'精神损害抚慰金(元，一般1000-50000)',def:5000},
+    ],
+};
+
+function updateDamageFields() {
+    const type = document.getElementById('damType').value;
+    const fields = DAMAGE_FIELDS[type];
+    const container = document.getElementById('damFields');
+    let html = '';
+    fields.forEach(f => {
+        html += `<div class="dam-field"><label>${f.label}</label>`;
+        if (f.type === 'select') {
+            html += `<select id="${f.id}">`;
+            f.options.forEach(o => {
+                html += `<option value="${o.v}"${o.v===f.def?' selected':''}>${o.l}</option>`;
+            });
+            html += `</select>`;
+        } else {
+            html += `<input type="number" id="${f.id}" value="${f.def}" min="0">`;
+        }
+        html += `</div>`;
+    });
+    container.innerHTML = html;
+    document.getElementById('damResult').classList.remove('show');
+}
+
+function calcDamage() {
+    const type = document.getElementById('damType').value;
+    const resultDiv = document.getElementById('damResult');
+    let items = [];
+    let total = 0;
+    
+    if (type === 'personal') {
+        const fields = ['damMed','damWork','damCare','damMeal','damNutr','damTrans','damDisab'];
+        const labels = ['医疗费','误工费','护理费','住院伙食补助','营养费','交通费','残疾赔偿金'];
+        fields.forEach((f,i) => {
+            const v = parseFloat(document.getElementById(f)?.value) || 0;
+            if (v > 0) items.push({label:labels[i],val:v});
+            total += v;
+        });
+    } else if (type === 'property') {
+        const price = parseFloat(document.getElementById('damPrice')?.value) || 0;
+        const used = parseFloat(document.getElementById('damUsed')?.value) || 0;
+        const life = parseFloat(document.getElementById('damLife')?.value) || 36;
+        const repairable = document.getElementById('damRepairable')?.value === 'yes';
+        const repair = parseFloat(document.getElementById('damRepair')?.value) || 0;
+        if (repairable) {
+            items.push({label:'修复费用',val:repair});
+            total = repair;
+        } else {
+            const depreciated = life > 0 ? Math.max(0, price * (1 - used / life)) : price;
+            items.push({label:`购买金额 ${price}元 × (1 - ${used}月/${life}月)`,val:depreciated});
+            total = depreciated;
+        }
+    } else if (type === 'mental') {
+        const v = parseFloat(document.getElementById('damMental')?.value) || 0;
+        items.push({label:'精神损害抚慰金',val:v});
+        total = v;
+    }
+    
+    resultDiv.className = 'dam-result show';
+    let html = items.map(i => `<div>${i.label}：<strong>${i.val.toFixed(2)} 元</strong></div>`).join('');
+    html += `<div style="margin-top:8px;padding-top:8px;border-top:2px solid rgba(26,58,92,.15)">参考赔偿总额：<span class="dam-total">${total.toFixed(2)} 元</span></div>`;
+    html += `<div class="lim-note"><strong>提示：</strong>以上为参考估算，实际赔偿金额以法院判决为准。第584条：损失赔偿额应相当于因违约所造成的损失。</div>`;
+    resultDiv.innerHTML = html;
+}
+
+// Initialize damage fields on load
+document.addEventListener('DOMContentLoaded', () => { updateDamageFields(); });
 
 // ===== Search =====
 
