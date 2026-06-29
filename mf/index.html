@@ -255,6 +255,38 @@ body::after{
 
 .spacer{height:48px}
 
+/* FAQ */
+.faq-section{margin-bottom:22px}
+.faq-section h3{font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)}
+.faq-card{background:rgba(26,58,92,.03);border-radius:var(--rm);margin-bottom:10px;overflow:hidden;cursor:pointer;border:1px solid rgba(26,58,92,.08);transition:all var(--duration) var(--ease);box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.faq-card:hover{border-color:rgba(26,58,92,.15);box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.faq-q{padding:14px 18px;font-size:13px;font-weight:600;color:var(--p);display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-q::after{content:"\25BC";font-size:9px;color:var(--t3);transition:transform .3s;flex-shrink:0;margin-left:10px}
+.faq-card.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);font-size:12px;line-height:1.9;color:var(--t2);padding:0 18px}
+.faq-card.open .faq-a{max-height:400px;padding:4px 18px 16px}
+
+/* Limitation Calculator */
+.lim-calc{background:rgba(26,58,92,.02);border-radius:var(--rm);padding:20px;margin-bottom:22px;border:1px solid rgba(26,58,92,.1);box-shadow:0 2px 12px rgba(0,0,0,.03)}
+.lim-calc h3{font-size:16px;font-weight:600;margin:0 0 16px;color:var(--t)}
+.lim-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;align-items:center}
+.lim-row label{font-size:12px;color:var(--t2);font-weight:600;min-width:60px}
+.lim-row input,.lim-row select{padding:10px 14px;border:1px solid rgba(0,0,0,.08);border-radius:12px;font-size:13px;background:#fff;color:var(--t);outline:none;flex:1;min-width:140px;transition:all .3s}
+.lim-row input:focus,.lim-row select:focus{border-color:rgba(26,58,92,.25);box-shadow:0 0 0 3px rgba(26,58,92,.04)}
+.lim-btn{padding:10px 24px;background:linear-gradient(135deg,var(--p),var(--ps));color:#fff;border:none;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;box-shadow:0 4px 14px rgba(26,58,92,.18);transition:all var(--duration) var(--ease-bounce)}
+.lim-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,58,92,.28)}
+.lim-result{display:none;margin-top:16px;padding:16px;background:#fff;border-radius:16px;border:1px solid rgba(26,58,92,.1);font-size:13px;line-height:2;color:var(--t2)}
+.lim-result.show{display:block}
+.lim-result .expired{color:#c0392b;font-weight:700}
+.lim-result .valid{color:#27ae60;font-weight:700}
+.lim-result .date-highlight{font-weight:700;color:var(--p)}
+.lim-note{font-size:11px;color:var(--t3);margin-top:12px;line-height:1.7;padding-top:10px;border-top:1px solid rgba(0,0,0,.04)}
+
+/* Term Annotation */
+.term{position:relative;border-bottom:1.5px dotted rgba(26,58,92,.35);cursor:help;color:var(--p);font-weight:500}
+.term::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a3a5c;color:#fff;font-size:11px;padding:6px 12px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:100;font-weight:400}
+.term:hover::after{opacity:1}
+
 /* Responsive */
 @media(max-width:380px){.gd{grid-template-columns:1fr}.hero h1{font-size:22px}.hero{padding:28px 20px}}
 @media(min-width:768px){.mn{max-width:740px;margin-left:auto;margin-right:auto;padding:28px 24px 56px}.gd{grid-template-columns:repeat(3,1fr)}}
@@ -314,6 +346,33 @@ body::after{
 <span class="hot-tag" onclick="quickSearch('物业服务合同')">物业服务合同</span>
 </div>
 <div class="qa-results" id="qaResults"></div>
+<div class="faq-section">
+<h3>&#128172; 生活常见问题</h3>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">朋友欠钱不还怎么办？</div><div class="faq-a">先协商→保留借条/转账记录→诉讼时效3年（<b>第188条</b>）→可起诉。民间借贷利率上限受<b>第680条</b>约束。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">借条没写利息还能要利息吗？</div><div class="faq-a">视为无利息（<b>第680条</b>）。但逾期不还可以主张逾期利息。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">离婚冷静期是多久？</div><div class="faq-a">30天（<b>第1077条</b>）。协议离婚需双方亲自到婚姻登记机关申请，30天内任何一方可撤回。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">高空抛物砸到人谁负责？</div><div class="faq-a">侵权人赔偿；找不到侵权人的，可能加害的建筑物使用人补偿（<b>第1254条</b>）。物业未尽安全保障义务也需担责。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">买到假货怎么维权？</div><div class="faq-a">退一赔三（消费者权益保护法第55条）；食品问题退一赔十。保留小票→12315投诉→起诉。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">租房合同没到期房东赶人怎么办？</div><div class="faq-a">房东违约。可要求继续履行或赔偿损失（<b>第577条、第584条</b>）。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">遗嘱怎么立才有效？</div><div class="faq-a">自书遗嘱：亲笔书写+签名+年月日。公证遗嘱效力不再优先（<b>第1142条</b>：以最后的遗嘱为准）。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">被网络暴力/造谣了怎么办？</div><div class="faq-a">侵犯名誉权/隐私权（<b>第1024条、第1032条</b>）。可要求平台删帖（<b>第1195条</b>），起诉赔偿。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">诉讼时效过了还能起诉吗？</div><div class="faq-a">可以起诉，但对方提时效抗辩则丧失胜诉权（<b>第192条、第193条</b>）。一般时效3年（<b>第188条</b>）。</div></div>
+<div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">婚前财产离婚时怎么分？</div><div class="faq-a">婚前个人财产归个人（<b>第1063条</b>）。婚后增值部分可能为共同财产。</div></div>
+</div>
+<div class="lim-calc">
+<h3>&#9200; 诉讼时效计算器</h3>
+<div class="lim-row"><label>权利受损日期</label><input type="date" id="limDate"></div>
+<div class="lim-row"><label>事由类型</label><select id="limType">
+<option value="3">借条欠款 — 3年</option>
+<option value="3">人身损害 — 3年</option>
+<option value="1">人身损害（短期） — 1年</option>
+<option value="4">国际货物买卖 — 4年</option>
+<option value="3">一般民事 — 3年</option>
+<option value="20">最长保护期 — 20年</option>
+</select></div>
+<button class="lim-btn" onclick="calcLimitation()">计算时效</button>
+<div class="lim-result" id="limResult"></div>
+</div>
 <h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;color:var(--t)">&#128214; 法典七编</h3>
 <div class="gd" id="homeCards">
     <div class="cd" onclick="showPage('general')"><div class="ci">&#9878;</div><div class="ct">第一编 总则</div><div class="cdesc">第1-204条 | 基本规定、自然人、法人、民事法律行为、代理、诉讼时效</div></div>
@@ -474,7 +533,7 @@ async function renderModule(moduleKey) {
             <div class="pnb"><div class="pnbd">`;
         
         sec.articles.forEach(art => {
-            html += `<div class="article-item"><span class="article-num">${art.num}</span>${escapeHtml(art.content).replace(/\\n/g, '<br>')}`;
+            html += `<div class="article-item"><span class="article-num">${art.num}</span>${annotateTerms(escapeHtml(art.content)).replace(/\\n/g, '<br>')}`;
             if (art.judicial_interpretations && art.judicial_interpretations.length > 0) {
                 html += `<div class="ji-wrap"><span class="ji-toggle" onclick="toggleJI(this)">司法解释 (${art.judicial_interpretations.length}条)</span>`;
                 html += `<div class="ji-list">`;
@@ -534,6 +593,22 @@ const RELATED_TERMS = {
     '定金': ['定金', '违约金', '第五百八十六条'],
     '租赁': ['租赁合同', '承租人', '出租人', '第七百零三条'],
     '买卖': ['买卖合同', '买受人', '出卖人', '第五百九十五条'],
+    '欠钱不还': ['借款合同', '民间借贷', '第六百六十七条', '诉讼时效', '第一百八十八条'],
+    '杀人': ['故意杀人', '侵权责任', '生命权', '第一千零二条'],
+    '偷东西': ['盗窃', '侵权', '返还财产', '第二百三十五条'],
+    '打人': ['人身损害', '侵权', '第一千一百六十五条'],
+    '车祸': ['机动车', '交通事故', '第一千二百零八条'],
+    '离婚': ['离婚', '第一千零七十六条', '第一千零七十七条'],
+    '房东不退押金': ['租赁合同', '押金', '第七百零三条'],
+    '买到假货': ['消费者', '欺诈', '第一百四十八条', '第五百条'],
+    '工伤': ['人身损害', '第一千一百七十九条'],
+    '被人骗了': ['欺诈', '撤销', '第一百四十八条'],
+    '遗产怎么分': ['法定继承', '第一千一百二十七条', '第一千一百三十条'],
+    '被狗咬了': ['饲养动物', '第一千二百四十五条'],
+    '楼上漏水': ['相邻关系', '第二百八十八条'],
+    '网购退款': ['合同解除', '第五百六十三条'],
+    '房子被强拆': ['物权保护', '第二百三十七条', '侵权'],
+    '老板不发工资': ['合同', '第五百七十九条', '劳动报酬'],
 };
 
 // 中文分词：拆成单字+双字组合
@@ -707,6 +782,69 @@ function quickSearch(q) {
 
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ===== 术语注释 =====
+const TERM_GLOSSARY = {
+    '诉讼时效': '你有3年时间去法院告对方，过期可能告不赢',
+    '不可抗力': '完全想不到也挡不住的事，比如地震、战争',
+    '善意第三人': '不知情的局外人',
+    '无因管理': '帮别人管事情但没经过委托',
+    '不当得利': '没有合法理由拿了别人的钱或东西',
+    '遗嘱继承': '按遗嘱分遗产',
+    '法定继承': '没遗嘱时按法律规定顺序分遗产',
+    '用益物权': '可以使用别人的东西并获得收益的权利',
+    '担保物权': '用东西做抵押保证还钱',
+    '情势变更': '签合同后发生了完全想不到的重大变化',
+    '定金': '买东西先付的一部分钱，反悔不退',
+    '违约金': '违约要赔的钱',
+};
+
+function annotateTerms(html) {
+    let result = html;
+    for (const [term, tip] of Object.entries(TERM_GLOSSARY)) {
+        const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(escapedTerm, 'g');
+        result = result.replace(regex, `<abbr class="term" data-tip="${tip}">${term}</abbr>`);
+    }
+    return result;
+}
+
+// ===== FAQ Toggle =====
+function toggleFaq(el) {
+    el.classList.toggle('open');
+}
+
+// ===== 诉讼时效计算器 =====
+function calcLimitation() {
+    const dateVal = document.getElementById('limDate').value;
+    const years = parseInt(document.getElementById('limType').value);
+    const resultDiv = document.getElementById('limResult');
+    if (!dateVal) {
+        resultDiv.className = 'lim-result show';
+        resultDiv.innerHTML = '<span class="expired">请选择权利受损日期</span>';
+        return;
+    }
+    const startDate = new Date(dateVal + 'T00:00:00');
+    const expiryDate = new Date(startDate);
+    expiryDate.setFullYear(expiryDate.getFullYear() + years);
+    const now = new Date();
+    now.setHours(0,0,0,0);
+    const diffMs = expiryDate - now;
+    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    const isExpired = diffDays < 0;
+    const fy = expiryDate.getFullYear();
+    const fm = String(expiryDate.getMonth() + 1).padStart(2, '0');
+    const fd = String(expiryDate.getDate()).padStart(2, '0');
+    const statusClass = isExpired ? 'expired' : 'valid';
+    const statusText = isExpired ? '已过期' : '未过期';
+    resultDiv.className = 'lim-result show';
+    resultDiv.innerHTML = `
+        <div>时效届满日期：<span class="date-highlight">${fy}年${fm}月${fd}日</span></div>
+        <div>距今天：<span class="${statusClass}">${Math.abs(diffDays)} 天</span></div>
+        <div>状态：<span class="${statusClass}">${statusText}</span></div>
+        <div class="lim-note"><strong>提示：</strong>时效可因主张权利、起诉或债务人承认而中断，中断后重新计算（第195条）。最长保护期20年（第188条），自权利受损之日起算，不适用中断。</div>
+    `;
 }
 
 // ===== PWA =====
